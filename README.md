@@ -1,11 +1,6 @@
-<<<<<<< HEAD
-tomnjerry
-=========
 
-Android project for tomnjerry 
-=======
-TomnJerry
-=========
+TomNJerry
+
 
 Android project for TomNJerry
->>>>>>> origin/master
+
