@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:background="@android:color/white" >
 
     <ImageView
         android:id="@+id/imageView2"
@@ -24,10 +25,11 @@
     <TextView
         android:id="@+id/userName"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:layout_alignLeft="@+id/view1"
         android:layout_alignTop="@+id/imageView1"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
         android:text="@string/hi_user_name" />
 
     <TextView
@@ -41,21 +43,34 @@
         android:gravity="center"
         android:text="@string/age" />
 
+    <TextView
+        android:id="@+id/userLoc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/imageView2"
+        android:layout_marginBottom="6dp"
+        android:layout_marginLeft="31dp"
+        android:layout_toRightOf="@+id/view3"
+        android:text="@string/user_location" />
+
+    <TextView
+        android:id="@+id/userDesignation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/view1"
+        android:layout_below="@+id/view3"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="5dp"
+        android:text="@string/usesr_designation" />
+
     <View
         android:id="@+id/view2"
         android:layout_width="200dp"
         android:layout_height="1dp"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/imageView2"
+        android:layout_marginTop="10dp"
         android:background="@android:color/darker_gray" />
-
-    <TextView
-        android:id="@+id/userDesignation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/imageView1"
-        android:layout_centerHorizontal="true"
-        android:text="@string/usesr_designation" />
 
     <View
         android:id="@+id/view3"
@@ -68,21 +83,12 @@
         android:background="@android:color/darker_gray"
         android:paddingLeft="10dp" />
 
-    <TextView
-        android:id="@+id/userLoc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/userAge"
-        android:layout_alignBottom="@+id/userAge"
-        android:layout_toRightOf="@+id/userDesignation"
-        android:gravity="center"
-        android:text="@string/user_location" />
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/imageView1"
-        android:background="@drawable/bng" >
+        android:background="@drawable/bng"
+        android:layout_marginTop="20dp" >
 
         <TextView
             android:id="@+id/textView1"
@@ -99,10 +105,12 @@
 
         <LinearLayout
             android:id="@+id/heightLayout"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/textView1"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/customborder"
             android:orientation="horizontal" >
 
             <ImageView
@@ -110,12 +118,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:src="@android:drawable/btn_radio" />
+                android:src="@drawable/ic_user_height" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:layout_marginLeft="5dp"
                 android:text="@string/user_height_info"
                 android:textColor="@android:color/white" />
 
@@ -123,9 +132,9 @@
                 android:id="@+id/spinner1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
                 android:layout_weight="3"
                 android:entries="@array/orientation_array" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -134,6 +143,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/heightLayout"
+            android:background="@drawable/customborder"
             android:orientation="horizontal" >
 
             <ImageView
@@ -141,12 +151,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:src="@android:drawable/btn_radio" />
+                android:src="@drawable/ic_user_passion" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:layout_marginLeft="5dp"
                 android:text="@string/user_passion_info"
                 android:textColor="@android:color/white" />
 
@@ -163,6 +174,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/passionLayout"
+            android:background="@drawable/customborder"
             android:orientation="horizontal" >
 
             <ImageView
@@ -170,12 +182,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:src="@android:drawable/btn_radio" />
+                android:src="@drawable/ic_user_interest" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:layout_marginLeft="5dp"
                 android:layout_weight="3"
                 android:text="@string/user_interest_info"
                 android:textColor="@android:color/white" />
@@ -184,19 +197,36 @@
                 android:id="@+id/toggleButton"
                 style="@style/toggleButton"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:background="@drawable/ic_toggle_bg" />
         </LinearLayout>
+
+        <View
+            android:id="@+id/viewLast"
+            android:layout_width="match_parent"
+            android:layout_height="0.01dp"
+            android:layout_below="@+id/interestLayout"
+            android:background="@android:color/black" />
+
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerInParent="true"
+            android:text="Done" />
+
     </RelativeLayout>
 
     <ImageView
         android:id="@+id/imageView1"
-        android:layout_width="50dp"
-        android:layout_height="75dp"
+        android:layout_width="75dp"
+        android:layout_height="100dp"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginRight="31dp"
-        android:layout_toLeftOf="@+id/userDesignation"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
         android:contentDescription="@string/user_profile_pic"
         android:src="@android:drawable/sym_def_app_icon" />
 

@@ -53,7 +53,7 @@
         <string name="usesr_designation">S/w Engineer</string>
         <string name="user_info_taken_text">How about letting others know a little more about yourself</string>
         <string name="user_height_info">How Tall are you</string>
-        <string name="user_passion_info">What are you passionate about?</string>
+        <string name="user_passion_info">Passionate about?</string>
         <string name="user_interest_info">Interest In</string>
 
 </resources>
