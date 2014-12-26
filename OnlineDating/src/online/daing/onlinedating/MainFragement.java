@@ -27,7 +27,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.facebook.HttpMethod;
 import com.facebook.Request;
@@ -188,6 +187,7 @@ public class MainFragement extends Fragment {
 	 * Stores the registration ID and app versionCode in the application's
 	 * shared preferences.
 	 */
+	@SuppressWarnings("unchecked")
 	private void registerInBackground() {
 		new AsyncTask() {
 			@Override
@@ -209,7 +209,7 @@ public class MainFragement extends Fragment {
 					// your app
 					// is using accounts.
 					sendRegistrationIdToBackend();
-					
+
 					// For this demo: we don't need to send it because the
 					// device
 					// will send upstream messages to a server that echo back
@@ -219,7 +219,7 @@ public class MainFragement extends Fragment {
 					// Persist the regID - no need to register again.
 					storeRegistrationId(context, regid);
 				} catch (IOException ex) {
-				//	msg = "Error :" + ex.getMessage();
+					// msg = "Error :" + ex.getMessage();
 					// If there is an error, don't just keep trying to register.
 					// Require the user to click a button again, or perform
 					// exponential back-off.

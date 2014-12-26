@@ -55,5 +55,19 @@
         <string name="user_height_info">How Tall are you</string>
         <string name="user_passion_info">Passionate about?</string>
         <string name="user_interest_info">Interest In</string>
+        <string name="notif_sample_text">Melisa Add You as a freind Tap Here to send message</string>
+        <string name="content_desc_user_req">Image of the User Sending request</string>
+        <string name="content_desc_coffee_invite">Image For Coffee Invitation</string>
+        <string name="content_desc_coffee_caledar">calendar image for coffee request</string>
 
+        <array name = "user_info_icons">
+            <item>@drawable/ic_user_height</item>
+            <item>@drawable/ic_user_passion</item>
+            <item>@drawable/ic_user_interest</item>
+        </array>
+          <array name = "user_info_text">
+            <item>@string/user_height_info</item>
+            <item>@string/user_passion_info</item>
+            <item>@string/user_interest_info</item>
+        </array>
 </resources>
