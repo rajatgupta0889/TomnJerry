@@ -9,6 +9,8 @@
         android:layout_height="300dp"
         android:layout_centerInParent="true"
         android:layout_centerVertical="true"
-        android:layout_margin="20dp" />
+        android:layout_margin="20dp" 
+        style="@style/Widget.CalendarView.Custom"
+        />
 
 </RelativeLayout>
