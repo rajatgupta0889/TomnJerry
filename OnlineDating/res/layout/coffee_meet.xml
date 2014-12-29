@@ -214,7 +214,7 @@
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
         android:background="#fb4e6a"
-        android:drawableEnd="@drawable/ic_ask_image"
+        android:drawableTop="@drawable/ic_ask_image"
         android:text="Ask"
         android:textAlignment="center"
         android:textColor="@android:color/white" />

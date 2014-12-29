@@ -5,7 +5,6 @@ import java.util.List;
 
 import online.dating.onlinedating.adapter.NavDrawerListAdapter;
 import online.dating.onlinedating.model.NavDrawerItem;
-import online.dating.onlinedating.model.ServiceHandler;
 
 import org.apache.http.NameValuePair;
 
@@ -14,7 +13,6 @@ import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
@@ -29,8 +27,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
+@SuppressWarnings("deprecation")
 public class LoginActivity extends ActionBarActivity implements
 		OnItemSelectedListener {
 	TextView tv_sex, tv_name, tv_email;
@@ -41,7 +39,7 @@ public class LoginActivity extends ActionBarActivity implements
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
 	private ActionBarDrawerToggle mDrawerToggle;
-
+	
 	// nav drawer title
 	private CharSequence mDrawerTitle;
 
@@ -60,7 +58,6 @@ public class LoginActivity extends ActionBarActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 		getActionBar().setDisplayShowHomeEnabled(false);
-		
 
 		// tv_sex = (TextView) findViewById(R.id.tv_sex_disp);
 		// tv_email = (TextView) findViewById(R.id.tv_email_disp);
@@ -103,8 +100,7 @@ public class LoginActivity extends ActionBarActivity implements
 		mTitle = mDrawerTitle = getTitle();
 
 		// load slide menu items
-		navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
-
+		navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);	
 		// nav drawer icons from resources
 		navMenuIcons = getResources()
 				.obtainTypedArray(R.array.nav_drawer_icons);
@@ -202,12 +198,31 @@ public class LoginActivity extends ActionBarActivity implements
 		if (mDrawerToggle.onOptionsItemSelected(item)) {
 			return true;
 		}
+
 		switch (id) {
 		case R.id.action_settings:
-			return true;
+			break;
+		case R.id.action_notification:
+			notificationSelected();
+			break;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
+		return true;
+
+	}
+
+	private void notificationSelected() {
+		// TODO Auto-generated method stub
+		Fragment frag = new PagesFragment();
+		FragmentManager fragmentManager = getFragmentManager();
+		fragmentManager.beginTransaction()
+				.replace(R.id.frame_container, frag).commit();
+
+		// update selected item and title, then close the drawer
+
+		setTitle("Notification");
+
 	}
 
 	@Override
@@ -224,48 +239,49 @@ public class LoginActivity extends ActionBarActivity implements
 
 	}
 
-	private class GetUserMatch extends AsyncTask<Void, Void, String> {
-		@Override
-		protected void onPreExecute() {
-			// TODO Auto-generated method stub
-
-			super.onPreExecute();
-		}
-
-		@Override
-		protected void onPostExecute(String result) {
-			// TODO Auto-generated method stub
-			/* proDialog.dismiss(); */
-			Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT)
-					.show();
-			super.onPostExecute(result);
-		}
-
-		String result;
-
-		@Override
-		protected String doInBackground(Void... params) {
-			// TODO Auto-generated method stub
-
-			ServiceHandler sh = new ServiceHandler();
-			result = sh.makeServiceCall(url + "getAMatch", ServiceHandler.GET
-
-			);
-
-			System.out.println(result);
-			return result;
-			/*
-			 * try { JSONObject res = new JSONObject(result);
-			 * 
-			 * } catch (JSONException e) { // TODO Auto-generated catch block
-			 * e.printStackTrace(); }
-			 */
-
-			// System.out.println(result);
-			// return null;
-		}
-
-	}
+	//
+	// private class GetUserMatch extends AsyncTask<Void, Void, String> {
+	// @Override
+	// protected void onPreExecute() {
+	// // TODO Auto-generated method stub
+	//
+	// super.onPreExecute();
+	// }
+	//
+	// @Override
+	// protected void onPostExecute(String result) {
+	// // TODO Auto-generated method stub
+	// /* proDialog.dismiss(); */
+	// Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT)
+	// .show();
+	// super.onPostExecute(result);
+	// }
+	//
+	// String result;
+	//
+	// @Override
+	// protected String doInBackground(Void... params) {
+	// // TODO Auto-generated method stub
+	//
+	// ServiceHandler sh = new ServiceHandler();
+	// result = sh.makeServiceCall(url + "getAMatch", ServiceHandler.GET
+	//
+	// );
+	//
+	// System.out.println(result);
+	// return result;
+	// /*
+	// * try { JSONObject res = new JSONObject(result);
+	// *
+	// * } catch (JSONException e) { // TODO Auto-generated catch block
+	// * e.printStackTrace(); }
+	// */
+	//
+	// // System.out.println(result);
+	// // return null;
+	// }
+	//
+	// }
 
 	/***
 	 * Called when invalidateOptionsMenu() is triggered
