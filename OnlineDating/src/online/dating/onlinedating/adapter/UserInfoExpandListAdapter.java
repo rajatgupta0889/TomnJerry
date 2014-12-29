@@ -3,6 +3,7 @@ package online.dating.onlinedating.adapter;
 import java.util.HashMap;
 import java.util.List;
 
+import online.dating.onlinedating.model.UserDetailItem;
 import online.dating.onlinedating.model.UserInfoItem;
 import android.content.Context;
 import android.view.View;
@@ -12,7 +13,7 @@ import android.widget.BaseExpandableListAdapter;
 public class UserInfoExpandListAdapter extends BaseExpandableListAdapter {
 	private Context _context;
 	private List<UserInfoItem> userInfoItems; // header titles
-
+	private HashMap<UserInfoItem,List<UserDetailItem>> userDetailItems;
 	// child data in format of header title, child title
 	public UserInfoExpandListAdapter(Context context,
 			List<UserInfoItem> userInfoItems,

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <TextView
+        android:id="@+id/buddyName"
+        android:layout_width="125dp"
+        android:layout_height="30dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="16dp"
+        android:background="#fb4e6a"
+        android:text="RAJAT GUPTA" 
+        android:gravity="center|right"
+        android:paddingRight="5dp"
+        />
+
+    <ImageView
+        android:id="@+id/buddyImage"
+        android:layout_width="125dp"
+        android:layout_height="125dp"
+        android:layout_alignRight="@+id/buddyName"
+        android:layout_below="@+id/buddyName"
+        android:src="@drawable/com_facebook_profile_picture_blank_square" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/buddyImage"
+        android:layout_marginRight="8dp"
+        android:layout_toLeftOf="@+id/buddyImage"
+        android:background="#e7e7e7"
+        android:src="@drawable/ic_coffee_pink" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/imageView3"
+        android:layout_alignLeft="@+id/imageView3"
+        android:layout_marginBottom="7dp"
+        android:background="#e7e7e7"
+        android:src="@drawable/ic_cal_pink" />
+
+</RelativeLayout>
