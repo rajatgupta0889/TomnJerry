@@ -1,46 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" >
+    android:layout_height="wrap_content"
+    android:gravity="center" >
 
     <TextView
         android:id="@+id/buddyName"
-        android:layout_width="125dp"
-        android:layout_height="30dp"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="16dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
         android:background="#fb4e6a"
-        android:text="RAJAT GUPTA" 
         android:gravity="center|right"
         android:paddingRight="5dp"
-        />
+        android:text="RAJAT GUPTA"
+        android:textColor="@android:color/white" />
 
     <ImageView
         android:id="@+id/buddyImage"
-        android:layout_width="125dp"
-        android:layout_height="125dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:layout_alignRight="@+id/buddyName"
         android:layout_below="@+id/buddyName"
+        android:layout_marginLeft="10dp"
         android:src="@drawable/com_facebook_profile_picture_blank_square" />
 
     <ImageView
         android:id="@+id/imageView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_alignBottom="@+id/buddyImage"
-        android:layout_marginRight="8dp"
         android:layout_toLeftOf="@+id/buddyImage"
         android:background="#e7e7e7"
         android:src="@drawable/ic_coffee_pink" />
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/imageView3"
-        android:layout_alignLeft="@+id/imageView3"
-        android:layout_marginBottom="7dp"
+        android:layout_width="100dp"
+        android:layout_height="90dp"
+        android:layout_alignTop="@+id/buddyImage"
+        android:layout_toLeftOf="@+id/buddyImage"
         android:background="#e7e7e7"
         android:src="@drawable/ic_cal_pink" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/buddyName"
+        android:layout_alignBottom="@+id/buddyName"
+        android:layout_alignLeft="@+id/imageView2"
+        android:layout_alignRight="@+id/imageView2"
+        android:gravity="center"
+        android:text="online"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </RelativeLayout>
