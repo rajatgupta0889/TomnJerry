@@ -5,7 +5,7 @@
     android:background="@android:color/white" >
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/calendarImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/userName"
@@ -27,7 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_alignLeft="@+id/view1"
-        android:layout_alignTop="@+id/imageView1"
+        android:layout_alignTop="@+id/coffeeMeetUserIcon"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:text="@string/hi_user_name" />
@@ -36,10 +36,10 @@
         android:id="@+id/userAge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/imageView2"
+        android:layout_alignBottom="@+id/calendarImageView"
         android:layout_marginBottom="6dp"
-        android:layout_toEndOf="@+id/imageView2"
-        android:layout_toRightOf="@+id/imageView2"
+        android:layout_toEndOf="@+id/calendarImageView"
+        android:layout_toRightOf="@+id/calendarImageView"
         android:gravity="center"
         android:text="@string/age" />
 
@@ -47,7 +47,7 @@
         android:id="@+id/userLoc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/imageView2"
+        android:layout_alignBottom="@+id/calendarImageView"
         android:layout_marginBottom="6dp"
         android:layout_marginLeft="31dp"
         android:layout_toRightOf="@+id/view3"
@@ -68,7 +68,7 @@
         android:layout_width="200dp"
         android:layout_height="1dp"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/imageView2"
+        android:layout_below="@+id/calendarImageView"
         android:layout_marginTop="10dp"
         android:background="@android:color/darker_gray" />
 
@@ -86,12 +86,12 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/imageView1"
+        android:layout_below="@+id/coffeeMeetUserIcon"
         android:layout_marginTop="20dp"
         android:background="@drawable/bng" >
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/chatMessageUserName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -119,14 +119,14 @@
             android:layout_height="wrap_content"
             android:layout_above="@+id/button1"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/textView1" >
+            android:layout_below="@+id/chatMessageUserName" >
 
         </ExpandableListView>
 
     </RelativeLayout>
 
     <ImageView
-        android:id="@+id/imageView1"
+        android:id="@+id/coffeeMeetUserIcon"
         android:layout_width="75dp"
         android:layout_height="100dp"
         android:layout_alignParentLeft="true"

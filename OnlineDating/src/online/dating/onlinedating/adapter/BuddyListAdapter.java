@@ -1,14 +1,16 @@
 package online.dating.onlinedating.adapter;
 
 import java.util.ArrayList;
-import java.util.List;
 
+import online.daing.onlinedating.CoffeeMeetUpActivity;
 import online.daing.onlinedating.R;
 import online.dating.onlinedating.model.BuddyListItem;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
@@ -42,7 +44,7 @@ public class BuddyListAdapter extends BaseAdapter {
 	}
 
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
+	public View getView(final int position, View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
 		View rowView = null;
 		if (rowView == null) {
@@ -50,7 +52,21 @@ public class BuddyListAdapter extends BaseAdapter {
 					.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 			rowView = mInflater.inflate(R.layout.buddy_list_item, null);
 		}
-
+		ImageView coffeeImageView = (ImageView) rowView
+				.findViewById(R.id.coffeeImageView);
+		coffeeImageView.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(context,CoffeeMeetUpActivity.class);
+				intent.putExtra("Name", buddyListItems.get(position)
+				.getUserName());
+				intent.putExtra("ImageIcon", buddyListItems.get(position)
+						.getUserIcon());
+				context.startActivity(intent);
+			}
+		});
 		ImageView imgIcon = (ImageView) rowView
 				.findViewById(R.id.buddyImage);
 		TextView buddyName = (TextView) rowView

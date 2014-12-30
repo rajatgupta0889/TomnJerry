@@ -70,6 +70,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".UserMessageActivity"
+            android:label="Message" >
+        </activity>
+        <activity
+            android:name=".CoffeeMeetUpActivity"
+            android:label="Meet UP" >
+        </activity>
     </application>
 
 </manifest>
