@@ -5,14 +5,13 @@ import java.util.ArrayList;
 import online.dating.onlinedating.adapter.ChatListAdapter;
 import online.dating.onlinedating.model.ChatListItem;
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
-import android.widget.Toast;
 
 public class PhotosFragment extends Fragment {
 
@@ -23,8 +22,8 @@ public class PhotosFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		View rootView = inflater.inflate(R.layout.fragment_photos, container,
-				false);
+		View rootView = inflater.inflate(R.layout.fragment_user_messages,
+				container, false);
 		final ListView userMessageList = (ListView) rootView
 				.findViewById(R.id.userMessageList);
 		ArrayList<ChatListItem> userMessageItems = new ArrayList<ChatListItem>();
@@ -61,11 +60,14 @@ public class PhotosFragment extends Fragment {
 			// ListView Clicked item value
 			ChatListAdapter ca = (ChatListAdapter) parent.getAdapter();
 			ChatListItem woid = (ChatListItem) ca.getItem(position);
-			// Show Alert
-			Toast.makeText(
-					getActivity(),
-					"Position :" + itemPosition + "  ListItem : "
-							+ woid.getChatUserName(), Toast.LENGTH_LONG).show();
+			
+			Intent intent = new Intent(getActivity(), UserMessageActivity.class);
+			startActivity(intent);
+			// // Show Alert
+			// Toast.makeText(
+			// getActivity(),
+			// "Position :" + itemPosition + "  ListItem : "
+			// + woid.getChatUserName(), Toast.LENGTH_LONG).show();
 		}
 	}
 }
