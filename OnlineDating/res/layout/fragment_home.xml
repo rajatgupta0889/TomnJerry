@@ -13,14 +13,14 @@
         android:contentDescription="@string/user_gender_image"
         android:src="@android:drawable/ic_input_add" />
 
-	    <View
-	        android:id="@+id/view1"
-	        android:layout_width="200dp"
-	        android:layout_height="1dp"
-	        android:layout_alignBottom="@+id/userName"
-	        android:layout_alignParentRight="true"
-	        android:layout_centerHorizontal="true"
-	        android:background="@android:color/darker_gray" />
+    <View
+        android:id="@+id/view1"
+        android:layout_width="200dp"
+        android:layout_height="1dp"
+        android:layout_alignBottom="@+id/userName"
+        android:layout_alignParentRight="true"
+        android:layout_centerHorizontal="true"
+        android:background="@android:color/darker_gray" />
 
     <TextView
         android:id="@+id/userName"
@@ -103,8 +103,6 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@android:color/white" />
 
-        
-
         <Button
             android:id="@+id/button1"
             android:layout_width="wrap_content"
@@ -113,16 +111,17 @@
             android:layout_centerInParent="true"
             android:text="Done" />
 
-        <ExpandableListView
-            android:id="@+id/expandableListView1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+        <RelativeLayout
             android:layout_above="@+id/button1"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/chatMessageUserName" >
+            android:layout_below="@+id/chatMessageUserName" 
+            android:layout_width="match_parent"
+            android:layout_height="100dp">
 
-        </ExpandableListView>
-
+            <ExpandableListView
+                android:id="@+id/expandableUserInfoListView"
+                android:layout_width="match_parent" 
+                android:layout_height="wrap_content"/>
+        </RelativeLayout>
     </RelativeLayout>
 
     <ImageView
