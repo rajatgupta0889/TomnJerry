@@ -7,8 +7,9 @@
     <string name="facebook_app_id">975277205832656</string>
     <string name="title_facebook_login">Facebook Login</string>
     <string name="title_activity_login">LoginActivity</string>
-	<string name="drawer_open">Slider Menu Opened</string>
+    <string name="drawer_open">Slider Menu Opened</string>
     <string name="drawer_close">Slider Menu Closed</string>
+
     <string-array name="orientation_array">
         <item>Straight</item>
         <item>Bisexual</item>
@@ -27,47 +28,49 @@
     <string name="title_activity_splash_screen">SplashScreen</string>
     <string name="content_desc_logo">Logo Image</string>
     <string name="logo_link">www.humtum.info</string>
-      <!-- Content Description -->
+    <!-- Content Description -->
     <string name="desc_list_item_icon">Item Icon</string>
-     <!-- Nav Drawer Menu Items -->
+    <!-- Nav Drawer Menu Items -->
     <string-array name="nav_drawer_items">
-        <item >Home</item>
-        <item >Buddies</item>
-        <item >Messages</item>
-        <item >Coffee</item>
-        <item >Settings</item>
+        <item>Home</item>
+        <item>Buddies</item>
+        <item>Messages</item>
+        <item>Coffee</item>
+        <item>Settings</item>
     </string-array>
-    
-      <array name="nav_drawer_icons">
+
+    <array name="nav_drawer_icons">
         <item>@drawable/ic_home_white</item>
         <item>@drawable/ic_user</item>
         <item>@drawable/ic_msg</item>
         <item>@drawable/ic_coffee</item>
         <item>@drawable/ic_settings</item>
     </array>
-        <string name="user_gender_image">user gender image</string>
-        <string name="user_profile_pic">User Profile Pic</string>
-        <string name="hi_user_name">Hi,</string>
-        <string name="age">32</string>
-        <string name="user_location">Bangalore</string>
-        <string name="usesr_designation">S/w Engineer</string>
-        <string name="user_info_taken_text">How about letting others know a little more about yourself</string>
-        <string name="user_height_info">How Tall are you</string>
-        <string name="user_passion_info">Passionate about?</string>
-        <string name="user_interest_info">Interest In</string>
-        <string name="notif_sample_text">Melisa Add You as a freind Tap Here to send message</string>
-        <string name="content_desc_user_req">Image of the User Sending request</string>
-        <string name="content_desc_coffee_invite">Image For Coffee Invitation</string>
-        <string name="content_desc_coffee_caledar">calendar image for coffee request</string>
 
-        <array name = "user_info_icons">
-            <item>@drawable/ic_user_height</item>
-            <item>@drawable/ic_user_passion</item>
-            <item>@drawable/ic_user_interest</item>
-        </array>
-          <array name = "user_info_text">
-            <item>@string/user_height_info</item>
-            <item>@string/user_passion_info</item>
-            <item>@string/user_interest_info</item>
-        </array>
+    <string name="user_gender_image">user gender image</string>
+    <string name="user_profile_pic">User Profile Pic</string>
+    <string name="hi_user_name">Hi, Rajat Gupta</string>
+    <string name="age">32</string>
+    <string name="user_location">Bangalore</string>
+    <string name="usesr_designation">S/w Engineer</string>
+    <string name="user_info_taken_text">How about letting others know a little more about yourself</string>
+    <string name="user_height_info">How Tall are you</string>
+    <string name="user_passion_info">Passionate about?</string>
+    <string name="user_interest_info">Interest In</string>
+    <string name="notif_sample_text">Melisa Add You as a freind Tap Here to send message</string>
+    <string name="content_desc_user_req">Image of the User Sending request</string>
+    <string name="content_desc_coffee_invite">Image For Coffee Invitation</string>
+    <string name="content_desc_coffee_caledar">calendar image for coffee request</string>
+
+    <array name="user_info_icons">
+        <item>@drawable/ic_user_height</item>
+        <item>@drawable/ic_user_passion</item>
+        <item>@drawable/ic_user_interest</item>
+    </array>
+    <array name="user_info_text">
+        <item>@string/user_height_info</item>
+        <item>@string/user_passion_info</item>
+        <item>@string/user_interest_info</item>
+    </array>
+
 </resources>
