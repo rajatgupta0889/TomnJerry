@@ -4,15 +4,15 @@ import java.util.ArrayList;
 
 import online.dating.onlinedating.adapter.CoffeeListAdapter;
 import online.dating.onlinedating.model.CoffeeListItem;
-import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
-import android.widget.Toast;
 
 public class CommunityFragment extends Fragment {
 
@@ -57,13 +57,16 @@ public class CommunityFragment extends Fragment {
                // ListView Clicked item value
                   CoffeeListAdapter ca = (CoffeeListAdapter) parent.getAdapter();
                   CoffeeListItem item = (CoffeeListItem) ca.getItem(position);
-                  
+                  Intent intent = new Intent(getActivity(), CoffeeMeetUpActivity.class);
+                  intent.putExtra("Name", item.getCoffeeUserName());
+                  intent.putExtra("ImageIcon", item.getCoffeeUserImage());
+                  startActivity(intent);
                   
                 // Show Alert 
-                Toast.makeText(getActivity(),
-                  "Position :"+itemPosition + "ListItem Name " + item.getCoffeeUserName(), Toast.LENGTH_SHORT)
-                  .show();
-             
+//                Toast.makeText(getActivity(),
+//                  "Position :"+itemPosition + "ListItem Name " + item.getCoffeeUserName(), Toast.LENGTH_SHORT)
+//                  .show();
+//             
               }
       });    
 

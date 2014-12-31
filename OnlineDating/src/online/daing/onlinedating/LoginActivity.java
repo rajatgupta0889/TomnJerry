@@ -8,13 +8,13 @@ import online.dating.onlinedating.model.NavDrawerItem;
 
 import org.apache.http.NameValuePair;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -39,6 +39,7 @@ public class LoginActivity extends ActionBarActivity implements
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
 	private ActionBarDrawerToggle mDrawerToggle;
+
 	
 	// nav drawer title
 	private CharSequence mDrawerTitle;
@@ -58,7 +59,7 @@ public class LoginActivity extends ActionBarActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 		getActionBar().setDisplayShowHomeEnabled(false);
-
+		
 		// tv_sex = (TextView) findViewById(R.id.tv_sex_disp);
 		// tv_email = (TextView) findViewById(R.id.tv_email_disp);
 		// tv_name = ( TextView) findViewById(R.id.tv_name_disp);
@@ -215,7 +216,7 @@ public class LoginActivity extends ActionBarActivity implements
 	private void notificationSelected() {
 		// TODO Auto-generated method stub
 		Fragment frag = new PagesFragment();
-		FragmentManager fragmentManager = getFragmentManager();
+		FragmentManager fragmentManager = getSupportFragmentManager();
 		fragmentManager.beginTransaction()
 				.replace(R.id.frame_container, frag).commit();
 
@@ -346,7 +347,7 @@ public class LoginActivity extends ActionBarActivity implements
 		}
 
 		if (fragment != null) {
-			FragmentManager fragmentManager = getFragmentManager();
+			FragmentManager fragmentManager = getSupportFragmentManager();
 			fragmentManager.beginTransaction()
 					.replace(R.id.frame_container, fragment).commit();
 
