@@ -72,11 +72,28 @@
         </activity>
         <activity
             android:name=".UserMessageActivity"
-            android:label="Message" >
+            android:label="Message"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".CoffeeMeetUpActivity"
-            android:label="Meet UP" >
+            android:label="Meet UP"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".CoffeeSetDateActivity"
+            android:label="Set Date"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".MatchViewActivity"
+            android:label="Match"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".UserDislikeActivity"
+            android:label="DisLike"
+            android:screenOrientation="portrait" >
         </activity>
     </application>
 

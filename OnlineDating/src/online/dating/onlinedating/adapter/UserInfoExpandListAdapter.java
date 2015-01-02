@@ -6,13 +6,14 @@ import online.daing.onlinedating.R;
 import online.dating.onlinedating.model.UserDetailItem;
 import online.dating.onlinedating.model.UserInfoItem;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 public class UserInfoExpandListAdapter extends BaseExpandableListAdapter {
@@ -102,12 +103,37 @@ public class UserInfoExpandListAdapter extends BaseExpandableListAdapter {
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		if (groupPosition == 0) {
 			convertView = infalInflater.inflate(R.layout.user_height, null);
+			OnClickListener listener = new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					RadioButton rb = (RadioButton) v;
+					switch (rb.getId()) {
+					case R.id.height_long:
+						_userDetailItems.setHeight(2);
+						break;
+					case R.id.height_low:
+						_userDetailItems.setHeight(0);
+						break;
+					default:
+						_userDetailItems.setHeight(1);
+						break;
+					}
+				}
+			};
+
 			RadioButton radioLow = (RadioButton) convertView
 					.findViewById(R.id.height_low);
+			radioLow.setOnClickListener(listener);
 			RadioButton radioMed = (RadioButton) convertView
 					.findViewById(R.id.height_med);
+			radioMed.setOnClickListener(listener);
 			RadioButton radioLong = (RadioButton) convertView
 					.findViewById(R.id.height_long);
+			radioLong.setOnClickListener(listener);
+			RadioGroup radioGroup = (RadioGroup) convertView
+					.findViewById(R.id.heightRadioGroup);
+			radioGroup.clearCheck();
+
 			if (item.getHeight() == 0) {
 				radioLow.setChecked(true);
 			}
