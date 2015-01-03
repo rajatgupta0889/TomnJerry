@@ -24,7 +24,7 @@ public class MainActivity extends FragmentActivity {
 		//showHashKey(getApplication());
 		if (savedInstanceState == null) {
 			// Add the fragment on initial activity setup
-
+			
 			mainFragment = new MainFragement();
 			getSupportFragmentManager().beginTransaction()
 					.add(android.R.id.content, mainFragment).commit();

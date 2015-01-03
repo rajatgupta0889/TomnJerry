@@ -31,7 +31,7 @@ public class MyFragment extends Fragment {
 		
 		int pos = this.getArguments().getInt("pos");
 		
-		TextView tv = (TextView) l.findViewById(R.id.textView1);
+		TextView tv = (TextView) l.findViewById(R.id.matchNameTextView);
 		tv.setText("Position = " + pos);
 
 		MyLinearLayout root = (MyLinearLayout) l.findViewById(R.id.root);

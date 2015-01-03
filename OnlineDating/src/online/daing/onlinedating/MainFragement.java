@@ -261,26 +261,27 @@ public class MainFragement extends Fragment {
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		System.out.println("2");
 		View view = inflater.inflate(R.layout.activity_main, container, false);
 		LoginButton authButton = (LoginButton) view
 				.findViewById(R.id.authButton);
 		authButton.setFragment(this);
+		Log.i(TAG, authButton.getText().toString());
+		if (Session.getActiveSession().getAccessToken() != null) {
+			authButton.setVisibility(View.INVISIBLE);
+		}
 		authButton.setReadPermissions(Arrays.asList("public_profile", "email"));
+
 		return view;
 	}
 
 	private void onSessionStateChange(Session session, SessionState state,
 			Exception exception) {
-		System.out.println("Log VAlue " + logIn);
 		if (state.isOpened()) {
-			System.out.println("Log In " + logIn);
-			System.out.println("3");
+
 			Log.i(TAG, "Logged in...");
 
 			System.out.println("Session " + session);
 			if (logIn == 0) {
-				logIn = 1;
 				new Request(session, "/me", null, HttpMethod.GET,
 						new Request.Callback() {
 							public void onCompleted(Response response) {
@@ -350,7 +351,6 @@ public class MainFragement extends Fragment {
 			 * }
 			 */
 		} else if (state.isClosed()) {
-			System.out.println("4");
 			Log.i(TAG, "Logged out...");
 			logIn = 0;
 		}
@@ -373,7 +373,6 @@ public class MainFragement extends Fragment {
 		if (session != null && (session.isOpened() || session.isClosed())) {
 			onSessionStateChange(session, session.getState(), null);
 		}
-		System.out.println("6");
 		if (gps.canGetLocation()) {
 			uiHelper.onResume();
 		}
@@ -382,7 +381,6 @@ public class MainFragement extends Fragment {
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		System.out.println("7");
 		System.out.print(Session.getActiveSession());
 
 		uiHelper.onActivityResult(requestCode, resultCode, data);
@@ -404,7 +402,6 @@ public class MainFragement extends Fragment {
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		System.out.println("8");
 		uiHelper.onSaveInstanceState(outState);
 	}
 
@@ -414,7 +411,9 @@ public class MainFragement extends Fragment {
 			// TODO Auto-generated method stub
 			proDialog = new ProgressDialog(getActivity());
 			proDialog.setMessage("Logging In");
+			proDialog.setCanceledOnTouchOutside(false);
 			proDialog.show();
+
 			super.onPreExecute();
 		}
 
@@ -436,7 +435,6 @@ public class MainFragement extends Fragment {
 		protected Void doInBackground(Void... params) {
 			// TODO Auto-generated method stub
 
-			System.out.println("9");
 			ServiceHandler sh = new ServiceHandler();
 			result = sh.makeServiceCall(url + "login", ServiceHandler.POST, vm);
 			Log.d("AsynTAsk", result);
@@ -466,6 +464,8 @@ public class MainFragement extends Fragment {
 						startActivity(intent);
 						getActivity().finish();
 					}
+
+				} else {
 
 				}
 			} catch (JSONException e) {

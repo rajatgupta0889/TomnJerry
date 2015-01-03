@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
@@ -85,8 +86,9 @@ public class CoffeeSetDateActivity extends FragmentActivity {
 						Toast.LENGTH_SHORT).show();
 				caldroidFragment.setBackgroundResourceForDate(R.color.green,
 						date);
-				caldroidFragment.refreshView();
-				
+				Intent intent = new Intent(getApplicationContext(),CoffeeMeetUpActivity.class);
+				intent.putExtra("Date", date);
+				startActivity(intent);
 			}
 
 			@Override

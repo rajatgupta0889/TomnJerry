@@ -20,6 +20,7 @@ import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnGroupExpandListener;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 public class HomeFragment extends Fragment {
 
@@ -41,6 +42,10 @@ public class HomeFragment extends Fragment {
 	public MyPagerAdapter adapter;
 	public ViewPager pager;
 	public ImageView profileImageView;
+	TextView matchName;
+	TextView matchLocation;
+	public final static String intentNameTag = "Name";
+	public final static String intentLocationTag = "Location";
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -104,8 +109,14 @@ public class HomeFragment extends Fragment {
 			// and
 			// // previous pages will be showed
 			// pager.setPageMargin(-350);
+			matchName = (TextView) rootView
+					.findViewById(R.id.profileMatchNameAge);
+			matchLocation = (TextView) rootView
+					.findViewById(R.id.profileMatchLocation);
+
 			profileImageView = (ImageView) rootView
 					.findViewById(R.id.profileMatchImageView);
+
 			profileImageView.setOnClickListener(new OnClickListener() {
 
 				@Override
@@ -113,6 +124,10 @@ public class HomeFragment extends Fragment {
 					// TODO Auto-generated method stub
 					Intent intent = new Intent(getActivity(),
 							MatchViewActivity.class);
+					intent.putExtra(intentNameTag, matchName.getText()
+							.toString());
+					intent.putExtra(intentLocationTag, matchLocation.getText()
+							.toString());
 					startActivity(intent);
 				}
 			});

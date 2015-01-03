@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -85,7 +86,8 @@ public class UserInfoExpandListAdapter extends BaseExpandableListAdapter {
 				.findViewById(R.id.user_info_image);
 		TextView textItem = (TextView) convertView
 				.findViewById(R.id.user_info_text);
-
+//		Button selectButton = (Button) convertView.findViewById(R.id.button1);
+//		selectButton.setText("Select");
 		imageIcon.setImageResource(item.getUser_info_image());
 		textItem.setText(item.getUser_info_text());
 
