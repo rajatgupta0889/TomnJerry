@@ -5,6 +5,7 @@
     android:orientation="horizontal" >
 
     <RadioGroup
+        android:id="@+id/heightRadioGroup"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal" >
@@ -12,25 +13,25 @@
         <RadioButton
             android:id="@+id/height_low"
             android:layout_weight="1"
-            android:button="@null"
-            android:drawableBottom="@android:drawable/btn_radio"
-            android:drawableTop="@drawable/ic_cal_pink"
+            android:button="@android:color/transparent"
+            android:drawableBottom="@drawable/radio_button_selected"
+            android:drawableTop="@drawable/custom_height_selector_small"
             android:gravity="center" />
 
         <RadioButton
             android:id="@+id/height_med"
             android:layout_weight="1"
             android:button="@null"
-            android:drawableBottom="@android:drawable/btn_radio"
-            android:drawableTop="@drawable/ic_cal_pink"
+            android:drawableBottom="@drawable/radio_button_selected"
+            android:drawableTop="@drawable/custom_height_selector_med"
             android:gravity="center" />
 
         <RadioButton
             android:id="@+id/height_long"
             android:layout_weight="1"
             android:button="@null"
-            android:drawableBottom="@android:drawable/btn_radio"
-            android:drawableTop="@drawable/ic_cal_pink"
+            android:drawableBottom="@drawable/radio_button_selected"
+            android:drawableTop="@drawable/custom_height_selector_large"
             android:gravity="center" />
     </RadioGroup>
 

@@ -5,7 +5,7 @@
     android:layout_marginLeft="10dp" >
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/userDislikeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -17,7 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignTop="@+id/button1"
+        android:layout_alignTop="@+id/userDislikeButton"
         android:src="@drawable/ic_camera" />
 
     <ImageView
@@ -34,7 +34,7 @@
         android:id="@+id/view1"
         android:layout_width="fill_parent"
         android:layout_height="1dp"
-        android:layout_above="@+id/button1"
+        android:layout_above="@+id/userDislikeButton"
         android:layout_alignParentLeft="true"
         android:background="@android:color/darker_gray" />
 
@@ -70,7 +70,7 @@
         android:src="@drawable/com_facebook_profile_default_icon" />
 
     <LinearLayout
-        android:id="@+id/linearLayout1"
+        android:id="@+id/setDateLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -102,7 +102,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/multiAutoCompleteTextView1"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/linearLayout1" >
+        android:layout_below="@+id/setDateLayout" >
 
     </ListView>
 

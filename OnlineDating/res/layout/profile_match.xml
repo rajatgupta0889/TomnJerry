@@ -1,162 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
-
-    <ImageView
-        android:id="@+id/calendarImageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/userName"
-        android:layout_below="@+id/userName"
-        android:contentDescription="@string/user_gender_image"
-        android:src="@android:drawable/ic_input_add" />
-
-    <ImageView
-        android:id="@+id/coffeeMeetUserIcon"
-        android:layout_width="75dp"
-        android:layout_height="100dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="10dp"
-        android:contentDescription="@string/user_profile_pic"
-        android:src="@drawable/com_facebook_profile_picture_blank_square" />
-
-    <View
-        android:id="@+id/view1"
-        android:layout_width="200dp"
-        android:layout_height="1dp"
-        android:layout_alignBottom="@+id/userName"
-        android:layout_alignParentRight="true"
-        android:layout_centerHorizontal="true"
-        android:background="@android:color/darker_gray" />
-
-    <TextView
-        android:id="@+id/userName"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:layout_alignLeft="@+id/view1"
-        android:layout_alignTop="@+id/coffeeMeetUserIcon"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:text="@string/hi_user_name" />
-
-    <TextView
-        android:id="@+id/userAge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/calendarImageView"
-        android:layout_marginBottom="6dp"
-        android:layout_toEndOf="@+id/calendarImageView"
-        android:layout_toRightOf="@+id/calendarImageView"
-        android:gravity="center"
-        android:text="@string/age" />
-
-    <TextView
-        android:id="@+id/userLoc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/calendarImageView"
-        android:layout_marginBottom="6dp"
-        android:layout_marginLeft="31dp"
-        android:layout_toRightOf="@+id/view3"
-        android:text="@string/user_location" />
-
-    <TextView
-        android:id="@+id/userDesignation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/view1"
-        android:layout_below="@+id/view3"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="5dp"
-        android:text="@string/usesr_designation" />
-
-    <View
-        android:id="@+id/view2"
-        android:layout_width="200dp"
-        android:layout_height="1dp"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/calendarImageView"
-        android:layout_marginTop="10dp"
-        android:background="@android:color/darker_gray" />
-
-    <View
-        android:id="@+id/view3"
-        android:layout_width="1dp"
-        android:layout_height="50dp"
-        android:layout_alignBottom="@id/view2"
-        android:layout_alignTop="@+id/view1"
-        android:layout_marginLeft="15dp"
-        android:layout_toRightOf="@+id/userAge"
-        android:background="@android:color/darker_gray"
-        android:paddingLeft="10dp" />
+    android:layout_height="match_parent"
+    android:background="@drawable/bng" >
 
     <RelativeLayout
+        android:id="@+id/progressBarRV"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/coffeeMeetUserIcon"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/bng" >
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true" >
 
-        <RelativeLayout
+        <ProgressBar
+            android:id="@+id/myProgress"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_alignParentBottom="true" >
-
-            <ProgressBar
-                android:id="@+id/myProgress"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-            <TextView
-                android:id="@+id/myTextProgress"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:background="@android:color/transparent"
-                android:text="13"
-                android:textColor="@android:color/white" />
-
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/myTextProgress"
-                android:layout_alignBottom="@+id/myTextProgress"
-                android:layout_marginLeft="28dp"
-                android:layout_toRightOf="@+id/myTextProgress"
-                android:text="Hrs"
-                android:textColor="@android:color/white" />
-
-        </RelativeLayout>
+            android:layout_height="match_parent" />
 
         <TextView
-            android:id="@+id/chatMessageUserName"
+            android:id="@+id/myTextProgress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="8dp"
-            android:gravity="center"
-            android:text="Your buddy suggestion for today"
-            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_centerVertical="true"
+            android:background="@android:color/transparent"
+            android:text="13"
             android:textColor="@android:color/white" />
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/myviewpager"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:layout_below="@+id/chatMessageUserName"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="9dp"
-            android:overScrollMode="never" >
-
-        </android.support.v4.view.ViewPager>
-
+        <TextView
+            android:id="@+id/matchAgeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/myTextProgress"
+            android:layout_alignBottom="@+id/myTextProgress"
+            android:layout_marginLeft="28dp"
+            android:layout_toRightOf="@+id/myTextProgress"
+            android:text="Hrs"
+            android:textColor="@android:color/white" />
     </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/setDateLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@drawable/layout_border_radius_white_bg"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:id="@+id/profileMatchImageView"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/user_profile" />
+
+        <LinearLayout
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/custom_border_radius"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/profileMatchNameAge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:text="Marrianne, 29"
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:id="@+id/profileMatchLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="5dp"
+                android:text="Kormangala"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/chatMessageUserName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/setDateLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="17dp"
+        android:gravity="center"
+        android:text="Your buddy suggestion for today"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@android:color/white" />
 
 </RelativeLayout>

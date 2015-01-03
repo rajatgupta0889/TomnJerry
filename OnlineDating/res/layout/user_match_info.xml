@@ -12,7 +12,7 @@
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/imageView1"
+        android:id="@+id/profileMatchImageView"
         android:layout_width="wrap_content"
         android:layout_height="400dp"
         android:layout_alignParentTop="true"
@@ -25,10 +25,10 @@
         android:src="@drawable/user_profile" />
 
     <LinearLayout
-        android:id="@+id/linearLayout2"
+        android:id="@+id/setLocationLayout"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_above="@+id/linearLayout3"
+        android:layout_above="@+id/matchPassion"
         android:background="#f04e68"
         android:orientation="horizontal" >
 
@@ -42,7 +42,7 @@
             android:src="@drawable/ic_profession" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/matchProfessionTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -55,7 +55,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayout3"
+        android:id="@+id/matchPassion"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
@@ -71,7 +71,7 @@
             android:src="@drawable/ic_passion" />
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/matchPassionTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -84,25 +84,24 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayout1"
+        android:id="@+id/setDateLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/linearLayout2"
-        android:background="#ef5c78"
-        >
+        android:layout_height="80dp"
+        android:layout_above="@+id/setLocationLayout"
+        android:background="#ef5c78" >
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/userLikeImageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="5dp"
             android:layout_marginTop="10dp"
             android:layout_weight="0.5"
             android:src="@drawable/ic_user_like" />
 
         <ImageView
-            android:id="@+id/imageView3"
+            android:id="@+id/userDisLikeImageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
@@ -118,44 +117,45 @@
             android:layout_gravity="center"
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_weight="1"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
             android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/textView1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:text="Natalie"
-                android:textColor="@android:color/white" />
-
-            <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/matchNameTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="5dp"
+                android:text="Natalie"
+                android:textColor="@android:color/white"
+                android:textSize="22sp" />
+
+            <TextView
+                android:id="@+id/matchLocationTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:text="Madgaon,Goa"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/white"
+                android:textSize="22sp" />
 
         </LinearLayout>
 
         <ImageView
-            android:id="@+id/imageView4"
+            android:id="@+id/matchGenderImageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="5dp"
             android:layout_marginTop="10dp"
             android:layout_weight="0.5"
             android:src="@drawable/ic_female" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/matchAgeTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

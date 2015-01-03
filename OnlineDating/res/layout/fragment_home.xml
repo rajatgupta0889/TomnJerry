@@ -104,7 +104,7 @@
             android:textColor="@android:color/white" />
 
         <Button
-            android:id="@+id/button1"
+            android:id="@+id/userDislikeButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -112,7 +112,7 @@
             android:text="Done" />
 
         <RelativeLayout
-            android:layout_above="@+id/button1"
+            android:layout_above="@+id/userDislikeButton"
             android:layout_below="@+id/chatMessageUserName" 
             android:layout_width="match_parent"
             android:layout_height="100dp">
