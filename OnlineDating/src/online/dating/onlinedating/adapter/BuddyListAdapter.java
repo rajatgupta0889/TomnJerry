@@ -3,6 +3,7 @@ package online.dating.onlinedating.adapter;
 import java.util.ArrayList;
 
 import online.daing.onlinedating.CoffeeMeetUpActivity;
+import online.daing.onlinedating.CoffeeSetDateActivity;
 import online.daing.onlinedating.R;
 import online.dating.onlinedating.model.BuddyListItem;
 import android.app.Activity;
@@ -19,7 +20,9 @@ import android.widget.TextView;
 public class BuddyListAdapter extends BaseAdapter {
 	ArrayList<BuddyListItem> buddyListItems;
 	Context context;
-	public BuddyListAdapter(ArrayList<BuddyListItem> buddyListItems, Context context) {
+
+	public BuddyListAdapter(ArrayList<BuddyListItem> buddyListItems,
+			Context context) {
 		super();
 		this.buddyListItems = buddyListItems;
 		this.context = context;
@@ -55,25 +58,37 @@ public class BuddyListAdapter extends BaseAdapter {
 		ImageView coffeeImageView = (ImageView) rowView
 				.findViewById(R.id.coffeeImageView);
 		coffeeImageView.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent intent = new Intent(context,CoffeeMeetUpActivity.class);
+				Intent intent = new Intent(context, CoffeeMeetUpActivity.class);
 				intent.putExtra("Name", buddyListItems.get(position)
-				.getUserName());
+						.getUserName());
 				intent.putExtra("ImageIcon", buddyListItems.get(position)
 						.getUserIcon());
 				context.startActivity(intent);
 			}
 		});
-		ImageView imgIcon = (ImageView) rowView
-				.findViewById(R.id.buddyImage);
-		TextView buddyName = (TextView) rowView
-				.findViewById(R.id.buddyName);
+		ImageView calImageView = (ImageView) rowView
+				.findViewById(R.id.calendarImageView);
+		calImageView.setOnClickListener(new OnClickListener() {
 
-		buddyName.setText(buddyListItems.get(position)
-				.getUserName());
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(context, CoffeeSetDateActivity.class);
+				intent.putExtra("Name", buddyListItems.get(position)
+						.getUserName());
+				intent.putExtra("ImageIcon", buddyListItems.get(position)
+						.getUserIcon());
+				context.startActivity(intent);
+			}
+		});
+		ImageView imgIcon = (ImageView) rowView.findViewById(R.id.buddyImage);
+		TextView buddyName = (TextView) rowView.findViewById(R.id.buddyName);
+
+		buddyName.setText(buddyListItems.get(position).getUserName());
 		imgIcon.setImageResource(buddyListItems.get(position).getUserIcon());
 
 		return rowView;

@@ -1,12 +1,12 @@
 package online.daing.onlinedating;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import online.dating.onlinedating.adapter.MyPagerAdapter;
 import online.dating.onlinedating.adapter.UserInfoExpandListAdapter;
 import online.dating.onlinedating.model.UserDetailItem;
 import online.dating.onlinedating.model.UserInfoItem;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,13 +14,20 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.ExpandableListView.OnGroupExpandListener;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 public class HomeFragment extends Fragment {
 
 	public HomeFragment() {
 	}
+
+	private int lastExpandedPosition = -1;
 
 	public final static int PAGES = 5;
 	// You can choose a bigger number for LOOPS, but you know, nobody will fling
@@ -31,9 +38,14 @@ public class HomeFragment extends Fragment {
 	public final static float SMALL_SCALE = 0.7f;
 	public final static float DIFF_SCALE = BIG_SCALE - SMALL_SCALE;
 	final String PREFS_NAME = "MyPrefsFile";
-
+	private ProgressBar timeProgress;
 	public MyPagerAdapter adapter;
 	public ViewPager pager;
+	public ImageView profileImageView;
+	TextView matchName;
+	TextView matchLocation;
+	public final static String intentNameTag = "Name";
+	public final static String intentLocationTag = "Location";
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,7 +57,7 @@ public class HomeFragment extends Fragment {
 			// the app is being launched for first time)
 			rootView = inflater.inflate(R.layout.fragment_home, container,
 					false);
-			ExpandableListView userList = (ExpandableListView) rootView
+			final ExpandableListView userList = (ExpandableListView) rootView
 					.findViewById(R.id.expandableUserInfoListView);
 
 			ArrayList<UserInfoItem> userInfoItems = new ArrayList<UserInfoItem>();
@@ -64,27 +76,62 @@ public class HomeFragment extends Fragment {
 
 			UserInfoExpandListAdapter adapter = new UserInfoExpandListAdapter(
 					getActivity(), userInfoItems, item);
+			userList.setOnGroupExpandListener(new OnGroupExpandListener() {
+
+				@Override
+				public void onGroupExpand(int groupPosition) {
+					if (lastExpandedPosition != -1
+							&& groupPosition != lastExpandedPosition) {
+						userList.collapseGroup(lastExpandedPosition);
+					}
+					lastExpandedPosition = groupPosition;
+				}
+			});
 			userList.setAdapter(adapter);
 		} else {
 			rootView = inflater.inflate(R.layout.profile_match, container,
 					false);
-			pager = (ViewPager) rootView.findViewById(R.id.myviewpager);
+			// pager = (ViewPager) rootView.findViewById(R.id.myviewpager);
+			//
+			// adapter = new MyPagerAdapter(this, getChildFragmentManager());
+			// pager.setAdapter(adapter);
+			// pager.setOnPageChangeListener(adapter);
+			//
+			// // Set current item to the middle page so we can fling to both
+			// // directions left and right
+			// pager.setCurrentItem(FIRST_PAGE);
+			//
+			// // Necessary or the pager will only have one extra page to show
+			// // make this at least however many pages you can see
+			// pager.setOffscreenPageLimit(3);
+			//
+			// // Set margin for pages as a negative number, so a part of next
+			// and
+			// // previous pages will be showed
+			// pager.setPageMargin(-350);
+			matchName = (TextView) rootView
+					.findViewById(R.id.profileMatchNameAge);
+			matchLocation = (TextView) rootView
+					.findViewById(R.id.profileMatchLocation);
 
-			adapter = new MyPagerAdapter(this, getChildFragmentManager());
-			pager.setAdapter(adapter);
-			pager.setOnPageChangeListener(adapter);
+			profileImageView = (ImageView) rootView
+					.findViewById(R.id.profileMatchImageView);
 
-			// Set current item to the middle page so we can fling to both
-			// directions left and right
-			pager.setCurrentItem(FIRST_PAGE);
+			profileImageView.setOnClickListener(new OnClickListener() {
 
-			// Necessary or the pager will only have one extra page to show
-			// make this at least however many pages you can see
-			pager.setOffscreenPageLimit(3);
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					Intent intent = new Intent(getActivity(),
+							MatchViewActivity.class);
+					intent.putExtra(intentNameTag, matchName.getText()
+							.toString());
+					intent.putExtra(intentLocationTag, matchLocation.getText()
+							.toString());
+					startActivity(intent);
+				}
+			});
 
-			// Set margin for pages as a negative number, so a part of next and
-			// previous pages will be showed
-			pager.setPageMargin(-350);
 		}
 
 		if (settings.getBoolean("my_first_time", true)) {
@@ -95,10 +142,11 @@ public class HomeFragment extends Fragment {
 
 			// record the fact that the app has been started at least once
 			settings.edit().putBoolean("my_first_time", false).commit();
-		}else{
+		} else {
 			settings.edit().putBoolean("my_first_time", true).commit();
 
 		}
+		timeProgress = (ProgressBar) rootView.findViewById(R.id.myProgress);
 
 		return rootView;
 	}

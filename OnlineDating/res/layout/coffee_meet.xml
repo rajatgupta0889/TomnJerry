@@ -52,18 +52,18 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayout2"
+        android:id="@+id/setLocationLayout"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/linearLayout1"
+        android:layout_below="@+id/setDateLayout"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:background="@drawable/customborder"
         android:gravity="center" >
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/matchProfessionTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -86,7 +86,7 @@
         android:layout_width="fill_parent"
         android:layout_height="140dp"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/linearLayout2"
+        android:layout_below="@+id/setLocationLayout"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:background="@drawable/customborder" >
@@ -162,7 +162,7 @@
                     android:src="@drawable/ic_geo_loc" />
 
                 <TextView
-                    android:id="@+id/textView5"
+                    android:id="@+id/matchPassionTextView"
                     android:layout_width="120dp
                     "
                     android:layout_height="wrap_content"
@@ -174,7 +174,7 @@
     </RelativeLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayout1"
+        android:id="@+id/setDateLayout"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_alignParentLeft="true"
@@ -193,7 +193,7 @@
             android:src="@drawable/ic_cal_pink" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/matchAgeTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right|center"
@@ -212,32 +212,32 @@
         android:layout_marginRight="10dp" >
 
         <Button
-            android:id="@+id/button1"
+            android:id="@+id/userDislikeButton"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_alignTop="@+id/imageView1"
+            android:layout_alignTop="@+id/profileMatchImageView"
             android:layout_marginTop="10dp"
             android:onClick="clickedMe"
             android:background="@drawable/custom_border_radius"
              />
 
         <ImageView
-            android:id="@+id/imageView1"
+            android:id="@+id/profileMatchImageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_toRightOf="@+id/button_text"
+            android:layout_toRightOf="@+id/askButton"
             android:paddingBottom="10dip"
             android:paddingTop="10dip"
             android:src="@drawable/ic_ask_image" />
 
         <TextView
-            android:id="@+id/button_text"
+            android:id="@+id/askButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/button1"
-            android:layout_alignBottom="@+id/button1"
+            android:layout_alignBaseline="@+id/userDislikeButton"
+            android:layout_alignBottom="@+id/userDislikeButton"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="140dp"
             android:text="Ask"

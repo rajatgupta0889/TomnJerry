@@ -3,7 +3,7 @@
     android:id="@+id/heightLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#000000"
+    android:background="#c13d52"
     android:orientation="horizontal" >
 
     <ImageView
@@ -13,6 +13,7 @@
         android:layout_gravity="top"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="5dp"
+        android:layout_weight="0.5"
         android:src="@drawable/ic_user_height" />
 
     <TextView
@@ -21,8 +22,23 @@
         android:layout_height="50dp"
         android:layout_gravity="top|center"
         android:layout_marginLeft="5dp"
-        android:layout_marginTop="20dp"
+        android:layout_weight="2"
+        android:gravity="center|left"
         android:text="@string/user_height_info"
         android:textColor="@android:color/white" />
+
+    <TextView
+        android:id="@+id/userDislikeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="5dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_weight="0.5"
+        android:background="#882b3a"
+        android:gravity="center"
+        android:text="Select"
+        android:textColor="@color/white" />
 
 </LinearLayout>
