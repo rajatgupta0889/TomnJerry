@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import online.dating.onlinedating.model.GPSTracker;
-import online.dating.onlinedating.model.ServiceHandler;
 
 import org.apache.http.NameValuePair;
 import org.json.JSONException;
@@ -58,7 +57,6 @@ public class MainFragement extends Fragment {
 	public static final String PROPERTY_REG_ID = "registration_id";
 	private static final String PROPERTY_APP_VERSION = "appVersion";
 	private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
-
 	/**
 	 * Substitute you own sender ID here. This is the project number you got
 	 * from the API Console, as described in "Getting Started."
@@ -335,7 +333,17 @@ public class MainFragement extends Fragment {
 										Log.d("MainFragement",
 												"Sending String "
 														+ vm.toString());
-										new GetUserLogin().execute();
+										GetUserLogin login = new GetUserLogin(
+												getActivity(), proDialog, vm);
+										login.setListener(new OnTaskCompleted() {
+											
+											@Override
+											public void onTaskCompleted() {
+												// TODO Auto-generated method stub
+												
+											}
+										});
+										login.execute();
 									} catch (JSONException e) {
 										// TODO Auto-generated catch block
 										e.printStackTrace();
@@ -361,7 +369,6 @@ public class MainFragement extends Fragment {
 		@Override
 		public void call(Session session, SessionState state,
 				Exception exception) {
-			System.out.println("5");
 			onSessionStateChange(session, state, exception);
 		}
 	};
@@ -381,8 +388,6 @@ public class MainFragement extends Fragment {
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		System.out.print(Session.getActiveSession());
-
 		uiHelper.onActivityResult(requestCode, resultCode, data);
 
 	}
@@ -405,76 +410,4 @@ public class MainFragement extends Fragment {
 		uiHelper.onSaveInstanceState(outState);
 	}
 
-	private class GetUserLogin extends AsyncTask<Void, Void, Void> {
-		@Override
-		protected void onPreExecute() {
-			// TODO Auto-generated method stub
-			proDialog = new ProgressDialog(getActivity());
-			proDialog.setMessage("Logging In");
-			proDialog.setCanceledOnTouchOutside(false);
-			proDialog.show();
-
-			super.onPreExecute();
-		}
-
-		@Override
-		protected void onPostExecute(Void result) {
-			// TODO Auto-generated method stub
-			proDialog.dismiss();
-
-			/*
-			 * Toast.makeText(getActivity(), "Unable to login",
-			 * Toast.LENGTH_SHORT) .show();
-			 */
-			super.onPostExecute(result);
-		}
-
-		String result;
-
-		@Override
-		protected Void doInBackground(Void... params) {
-			// TODO Auto-generated method stub
-
-			ServiceHandler sh = new ServiceHandler();
-			result = sh.makeServiceCall(url + "login", ServiceHandler.POST, vm);
-			Log.d("AsynTAsk", result);
-			// System.out.println(result);
-			try {
-				if (result != null) {
-					JSONObject res = new JSONObject(result);
-					System.out.println("Res  " + res);
-					if (res.getString("id") != null) {
-
-						Intent intent = new Intent(getActivity(),
-								LoginActivity.class);
-						/*
-						 * SharedPreferences pref =
-						 * PreferenceManager.getDefaultSharedPreferences
-						 * (getActivity()); Editor edit = pref.edit();
-						 */
-
-						intent.putExtra("name", res.getString("name"));
-						intent.putExtra("orientation",
-								res.getString("orientation"));
-						intent.putExtra("fbUserId", res.getString("fbUserId"));
-						intent.putExtra("email", res.getString("email"));
-						intent.putExtra("id", res.getString("id"));
-						intent.putExtra("gender", res.getString("gender"));
-
-						startActivity(intent);
-						getActivity().finish();
-					}
-
-				} else {
-
-				}
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-			// System.out.println(result);
-			return null;
-		}
-	}
 }

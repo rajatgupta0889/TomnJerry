@@ -38,10 +38,17 @@ public class MatchViewActivity extends Activity {
 		Intent intent = getIntent();
 		Bundle profileBundle = intent.getExtras();
 		if (!profileBundle.isEmpty()) {
-			String[] nameAge = profileBundle.getString(
-					HomeFragment.intentNameTag).split(",");
-			matchName = nameAge[0];
-			matchAge = nameAge[1];
+			if (profileBundle.getString(HomeFragment.intentNameTag).contains(
+					",")) {
+				String[] nameAge = profileBundle.getString(
+						HomeFragment.intentNameTag).split(",");
+				matchName = nameAge[0];
+				matchAge = nameAge[1];
+			}
+			else{
+				matchName = profileBundle.getString(
+						HomeFragment.intentNameTag);
+			}
 			matchLocation = profileBundle
 					.getString(HomeFragment.intentLocationTag);
 

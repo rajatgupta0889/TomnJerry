@@ -13,10 +13,21 @@
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!--
+     The following two permissions are not required to use
+     Google Maps Android API v2, but are recommended.
+    -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <permission
         android:name="online.daing.olinedating.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
+
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
 
     <uses-permission android:name="com.example.gcm.permission.C2D_MESSAGE" />
 
@@ -54,16 +65,22 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyDkDRwSsrLX2GYl8PW-Kb2GDBhluP7Bs70" />
+
+        <uses-library android:name="com.google.android.maps" />
 
         <activity
             android:name=".LoginActivity"
-            android:label="@string/title_activity_login" >
+            android:label="@string/title_activity_login"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".SplashScreen"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Black.NoTitleBar" >
+            android:theme="@android:style/Theme.DeviceDefault.Light.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -78,11 +95,13 @@
         <activity
             android:name=".CoffeeMeetUpActivity"
             android:label="Meet UP"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".CoffeeSetDateActivity"
             android:label="Set Date"
+            android:parentActivityName=".CoffeeMeetUpActivity"
             android:screenOrientation="portrait" >
         </activity>
         <activity
@@ -93,6 +112,12 @@
         <activity
             android:name=".UserDislikeActivity"
             android:label="DisLike"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".LocationSettingActivity"
+            android:label="Location"
+            android:parentActivityName=".CoffeeMeetUpActivity"
             android:screenOrientation="portrait" >
         </activity>
     </application>

@@ -37,7 +37,7 @@ public class HomeFragment extends Fragment {
 	public final static float BIG_SCALE = 1.0f;
 	public final static float SMALL_SCALE = 0.7f;
 	public final static float DIFF_SCALE = BIG_SCALE - SMALL_SCALE;
-	final String PREFS_NAME = "MyPrefsFile";
+	final String PREFS_NAME = "pref";
 	private ProgressBar timeProgress;
 	public MyPagerAdapter adapter;
 	public ViewPager pager;

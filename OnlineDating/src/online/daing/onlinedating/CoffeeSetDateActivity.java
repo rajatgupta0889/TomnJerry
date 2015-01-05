@@ -40,7 +40,7 @@ public class CoffeeSetDateActivity extends FragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.coffee_meetup_setdate);
-
+	    getActionBar().setDisplayHomeAsUpEnabled(true);
 		final SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy");
 
 		// Setup caldroid fragment
