@@ -5,7 +5,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import online.dating.onlinedating.adapter.ViewPagerAdapter;
 import online.dating.onlinedating.model.GPSTracker;
+import online.dating.onlinedating.model.User;
 
 import org.apache.http.NameValuePair;
 import org.json.JSONException;
@@ -22,6 +24,8 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,6 +42,7 @@ import com.facebook.widget.LoginButton;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.viewpagerindicator.CirclePageIndicator;
 
 @SuppressLint("NewApi")
 public class MainFragement extends Fragment {
@@ -57,6 +62,7 @@ public class MainFragement extends Fragment {
 	public static final String PROPERTY_REG_ID = "registration_id";
 	private static final String PROPERTY_APP_VERSION = "appVersion";
 	private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+	static User tom;
 	/**
 	 * Substitute you own sender ID here. This is the project number you got
 	 * from the API Console, as described in "Getting Started."
@@ -70,14 +76,20 @@ public class MainFragement extends Fragment {
 	AtomicInteger msgId = new AtomicInteger();
 	SharedPreferences prefs;
 	Context context;
-
 	String regid;
+	ViewPager viewPager;
+	PagerAdapter adapter;
+	String[] rank;
+	String[] country;
+	String[] population;
+	int[] flag;
+	CirclePageIndicator mIndicator;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		System.out.println("1");
 		context = getActivity().getApplicationContext();
+
 		if (checkPlayServices()) {
 			gcm = GoogleCloudMessaging.getInstance(getActivity());
 			regid = getRegistrationId(context);
@@ -262,11 +274,32 @@ public class MainFragement extends Fragment {
 		View view = inflater.inflate(R.layout.activity_main, container, false);
 		LoginButton authButton = (LoginButton) view
 				.findViewById(R.id.authButton);
+		rank = new String[] { "1", "2", "3", "4" };
+
+		country = new String[] { "China", "India", "United States", "Indonesia" };
+
+		population = new String[] { "1,354,040,000", "1,210,193,422",
+				"315,761,000", "237,641,326" };
+
+		flag = new int[] { R.drawable.coffe_pink, R.drawable.coffe_pink,
+				R.drawable.coffe_pink, R.drawable.coffe_pink };
+
+		// Locate the ViewPager in viewpager_main.xml
+		viewPager = (ViewPager) view.findViewById(R.id.pager);
+		// Pass results to ViewPagerAdapter Class
+		adapter = new ViewPagerAdapter(context, rank, country, population, flag);
+		// Binds the Adapter to the ViewPager
+		viewPager.setAdapter(adapter);
+
+		// ViewPager Indicator
+		mIndicator = (CirclePageIndicator) view.findViewById(R.id.indicator);
+		mIndicator.setViewPager(viewPager);
+		((CirclePageIndicator) mIndicator).setSnap(true);
 		authButton.setFragment(this);
 		Log.i(TAG, authButton.getText().toString());
-		if (Session.getActiveSession().getAccessToken() != null) {
-			authButton.setVisibility(View.INVISIBLE);
-		}
+		// if (Session.getActiveSession().getAccessToken() != null) {
+		// authButton.setVisibility(View.INVISIBLE);
+		// }
 		authButton.setReadPermissions(Arrays.asList("public_profile", "email"));
 
 		return view;
@@ -289,22 +322,30 @@ public class MainFragement extends Fragment {
 
 								user = resp.getInnerJSONObject();
 								System.out.println(user);
+
 								if (user != null) {
 
 									try {
-										vm = new JSONStringer()
-												.object()
+										tom = new User(user.getString("name"),
+												user.getString("email"), user
+														.getString("id"), user
+														.getString("gender"),
+												longitude, latitude, "");
+
+										vm = new JSONStringer().object()
 												.key("name")
-												.value(user.getString("name"))
+												.value(tom.getName())
 												.key("email")
-												.value(user.getString("email"))
+												.value(tom.getEmail())
 												.key("fbUserId")
-												.value(user.getString("id"))
+												.value(tom.getFbUserId())
 												.key("gender")
-												.value(user.getString("gender"))
+												.value(tom.getGender())
 												.key("location").object()
-												.key("x").value(longitude)
-												.key("y").value(latitude)
+												.key("x")
+												.value(tom.getLocationX())
+												.key("y")
+												.value(tom.getLocationY())
 												.endObject().endObject();
 										/*
 										 * nameValuePairs = new
@@ -336,11 +377,19 @@ public class MainFragement extends Fragment {
 										GetUserLogin login = new GetUserLogin(
 												getActivity(), proDialog, vm);
 										login.setListener(new OnTaskCompleted() {
-											
+
 											@Override
 											public void onTaskCompleted() {
-												// TODO Auto-generated method stub
-												
+												// TODO Auto-generated method
+												// stub
+
+											}
+
+											@Override
+											public void OnResult(String result) {
+												// TODO Auto-generated method
+												// stub
+
 											}
 										});
 										login.execute();

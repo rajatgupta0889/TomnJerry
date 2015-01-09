@@ -1,9 +1,11 @@
 package online.daing.onlinedating;
 
+import online.dating.onlinedating.model.ServiceHandler;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -44,10 +46,8 @@ public class MatchViewActivity extends Activity {
 						HomeFragment.intentNameTag).split(",");
 				matchName = nameAge[0];
 				matchAge = nameAge[1];
-			}
-			else{
-				matchName = profileBundle.getString(
-						HomeFragment.intentNameTag);
+			} else {
+				matchName = profileBundle.getString(HomeFragment.intentNameTag);
 			}
 			matchLocation = profileBundle
 					.getString(HomeFragment.intentLocationTag);
@@ -66,8 +66,7 @@ public class MatchViewActivity extends Activity {
 				likeImageView
 						.setImageResource(R.drawable.ic_user_like_selected);
 				disLikeImageView.setVisibility(View.GONE);
-				Toast.makeText(getApplicationContext(), "A request of liking",
-						Toast.LENGTH_SHORT).show();
+				new MatchAcceptRequest().execute();
 			}
 		});
 		disLikeImageView = (ImageView) findViewById(R.id.userDisLikeImageView);
@@ -83,4 +82,20 @@ public class MatchViewActivity extends Activity {
 		});
 	}
 
+	public class MatchAcceptRequest extends AsyncTask<Void, Void, Void> {
+
+		@Override
+		protected Void doInBackground(Void... params) {
+			// TODO Auto-generated method stub
+			ServiceHandler sh = new ServiceHandler();
+			sh.makeServiceCall(GetUserLogin.url + "accept",
+					ServiceHandler.POST, null);
+			Intent intent = new Intent(getApplicationContext(),
+					LoginActivity.class);
+			startActivity(intent);
+			finish();
+			return null;
+		}
+
+	}
 }

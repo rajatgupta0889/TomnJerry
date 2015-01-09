@@ -30,7 +30,7 @@
     </LinearLayout>
 
     <MultiAutoCompleteTextView
-        android:id="@+id/multiAutoCompleteTextView1"
+        android:id="@+id/userMessageEditText"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_alignLeft="@+id/setDateLayout"
@@ -45,7 +45,7 @@
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_alignRight="@+id/setDateLayout"
-        android:layout_alignTop="@+id/multiAutoCompleteTextView1"
+        android:layout_alignTop="@+id/userMessageEditText"
         android:background="@drawable/custom_border_radius"
         android:text="Button" />
 
@@ -69,7 +69,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/button2"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/multiAutoCompleteTextView1"
+        android:layout_below="@+id/userMessageEditText"
         android:layout_marginTop="15dp" />
 
 </RelativeLayout>

@@ -52,7 +52,7 @@ public class CoffeeMeetUpActivity extends Activity {
 			userNameTV.setText(bundle.getString(HomeFragment.intentNameTag));
 			userIconIV.setImageResource(bundle.getInt("ImageIcon"));
 		}
-		askButton = (Button) findViewById(R.id.userDislikeButton);
+		askButton = (Button) findViewById(R.id.setSettingButton);
 		askButton.setOnClickListener(new OnClickListener() {
 
 			@Override

@@ -104,15 +104,17 @@
             android:textColor="@android:color/white" />
 
         <Button
-            android:id="@+id/userDislikeButton"
-            android:layout_width="wrap_content"
+            android:id="@+id/setSettingButton"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerInParent="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:text="Done" />
 
         <RelativeLayout
-            android:layout_above="@+id/userDislikeButton"
+            android:layout_above="@+id/setSettingButton"
             android:layout_below="@+id/chatMessageUserName" 
             android:layout_width="match_parent"
             android:layout_height="100dp">

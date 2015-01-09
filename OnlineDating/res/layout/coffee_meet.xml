@@ -212,7 +212,7 @@
         android:layout_marginRight="10dp" >
 
         <Button
-            android:id="@+id/userDislikeButton"
+            android:id="@+id/setSettingButton"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -236,8 +236,8 @@
             android:id="@+id/askButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/userDislikeButton"
-            android:layout_alignBottom="@+id/userDislikeButton"
+            android:layout_alignBaseline="@+id/setSettingButton"
+            android:layout_alignBottom="@+id/setSettingButton"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="140dp"
             android:text="Ask"

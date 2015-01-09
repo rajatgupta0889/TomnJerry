@@ -4,39 +4,6 @@
     android:layout_height="match_parent"
     android:background="@drawable/bng" >
 
-    <RelativeLayout
-        android:id="@+id/progressBarRV"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentBottom="true" >
-
-        <ProgressBar
-            android:id="@+id/myProgress"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <TextView
-            android:id="@+id/myTextProgress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:background="@android:color/transparent"
-            android:text="13"
-            android:textColor="@android:color/white" />
-
-        <TextView
-            android:id="@+id/matchAgeTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/myTextProgress"
-            android:layout_alignBottom="@+id/myTextProgress"
-            android:layout_marginLeft="28dp"
-            android:layout_toRightOf="@+id/myTextProgress"
-            android:text="Hrs"
-            android:textColor="@android:color/white" />
-    </RelativeLayout>
-
     <LinearLayout
         android:id="@+id/setDateLayout"
         android:layout_width="wrap_content"
@@ -95,5 +62,43 @@
         android:text="Your buddy suggestion for today"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@android:color/white" />
+
+    <RelativeLayout
+        android:id="@+id/progressBarRV"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true" >
+
+        <TextView
+            android:id="@+id/matchAgeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/myProgress"
+            android:text="Hrs"
+            android:textColor="@android:color/white" />
+
+        <ProgressBar
+            android:id="@+id/myProgress"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:indeterminate="true"
+            android:indeterminateDrawable="@drawable/progress_bar" />
+
+        <TextView
+            android:id="@+id/myProgressText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/matchAgeTextView"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="13"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/white" />
+    </RelativeLayout>
 
 </RelativeLayout>
