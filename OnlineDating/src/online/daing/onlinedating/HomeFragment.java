@@ -1,6 +1,8 @@
 package online.daing.onlinedating;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import online.dating.onlinedating.adapter.MyPagerAdapter;
 import online.dating.onlinedating.adapter.UserInfoExpandListAdapter;
@@ -9,6 +11,8 @@ import online.dating.onlinedating.model.UserInfoItem;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -24,10 +28,17 @@ import android.widget.TextView;
 
 public class HomeFragment extends Fragment {
 
+	@Override
+	public void startActivityForResult(Intent intent, int requestCode) {
+		// TODO Auto-generated method stub
+		super.startActivityForResult(intent, requestCode);
+	}
+
 	public HomeFragment() {
 	}
 
 	private int lastExpandedPosition = -1;
+	private int mProgressStatus = 0;
 
 	public final static int PAGES = 5;
 	// You can choose a bigger number for LOOPS, but you know, nobody will fling
@@ -37,7 +48,7 @@ public class HomeFragment extends Fragment {
 	public final static float BIG_SCALE = 1.0f;
 	public final static float SMALL_SCALE = 0.7f;
 	public final static float DIFF_SCALE = BIG_SCALE - SMALL_SCALE;
-	final String PREFS_NAME = "MyPrefsFile";
+	final String PREFS_NAME = "pref";
 	private ProgressBar timeProgress;
 	public MyPagerAdapter adapter;
 	public ViewPager pager;
@@ -46,6 +57,9 @@ public class HomeFragment extends Fragment {
 	TextView matchLocation;
 	public final static String intentNameTag = "Name";
 	public final static String intentLocationTag = "Location";
+	int i = 0;
+	TextView myProgress;
+	private Handler mHandler = new Handler();
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -131,7 +145,27 @@ public class HomeFragment extends Fragment {
 					startActivity(intent);
 				}
 			});
+			timeProgress = (ProgressBar) rootView.findViewById(R.id.myProgress);
+			// Get the Drawable custom_progressbar
 
+			myProgress = (TextView) rootView.findViewById(R.id.myProgressText);
+
+			Calendar cal = Calendar.getInstance();
+			Long mil1 = cal.getTimeInMillis();
+			cal.add(Calendar.DATE, 1);
+			cal.set(Calendar.HOUR_OF_DAY, 10);
+			cal.set(Calendar.MINUTE, 00);
+			cal.set(Calendar.SECOND, 00);
+			System.out.println(cal.getTime());
+			Long mil2 = cal.getTimeInMillis();
+			Long diff = mil2 - mil1;
+			Long hours = diff / (60000 * 60);
+			hours = hours +1 ;
+			myProgress.setText("" + hours);
+			timeProgress.setMax(24);
+			timeProgress.setProgress((int) (hours+1));
+
+			
 		}
 
 		if (settings.getBoolean("my_first_time", true)) {
@@ -146,7 +180,6 @@ public class HomeFragment extends Fragment {
 			settings.edit().putBoolean("my_first_time", true).commit();
 
 		}
-		timeProgress = (ProgressBar) rootView.findViewById(R.id.myProgress);
 
 		return rootView;
 	}

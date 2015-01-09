@@ -41,17 +41,18 @@ public class CoffeeMeetUpActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Toast.makeText(getApplicationContext(), "LOCATION SETTING",
-						Toast.LENGTH_SHORT).show();
+				Intent intent = new Intent(getApplicationContext(),
+						LocationSettingActivity.class);
+				startActivity(intent);
 			}
 		});
 		Intent intent = getIntent();
 		Bundle bundle = intent.getExtras();
-		if (!bundle.isEmpty()) {
-			userNameTV.setText(bundle.getString("Name"));
+		if (bundle !=null &&!bundle.isEmpty()) {
+			userNameTV.setText(bundle.getString(HomeFragment.intentNameTag));
 			userIconIV.setImageResource(bundle.getInt("ImageIcon"));
 		}
-		askButton = (Button) findViewById(R.id.askButton);
+		askButton = (Button) findViewById(R.id.setSettingButton);
 		askButton.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -61,6 +62,12 @@ public class CoffeeMeetUpActivity extends Activity {
 						Toast.LENGTH_SHORT).show();
 			}
 		});
+	}
+
+	@Override
+	public boolean onNavigateUpFromChild(Activity child) {
+		// TODO Auto-generated method stub
+		return super.onNavigateUpFromChild(child);
 	}
 
 }

@@ -45,7 +45,7 @@
         android:layout_below="@+id/matchLocationTextView"
         android:layout_marginTop="20dp"
         android:background="#c54b5f"
-        android:button="@drawable/ic_yellow_cb"
+        android:button="@drawable/yellow_cb_selector"
         android:text="Her Intetrests"
         android:textColor="@color/white" />
 
@@ -70,7 +70,7 @@
         android:layout_below="@+id/positionCB"
         android:layout_marginTop="1dp"
         android:background="#c54b5f"
-        android:button="@drawable/ic_orange_cb"
+        android:button="@drawable/orange_cb_selector"
         android:text="Height"
         android:textColor="@color/white" />
 
@@ -82,12 +82,12 @@
         android:layout_below="@+id/heightCB"
         android:layout_marginTop="1dp"
         android:background="#c54b5f"
-        android:button="@drawable/ic_green_cb"
+        android:button="@drawable/green_cb_selector"
         android:text="Profile Images"
         android:textColor="@color/white" />
 
     <Button
-        android:id="@+id/userDislikeButton"
+        android:id="@+id/setSettingButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

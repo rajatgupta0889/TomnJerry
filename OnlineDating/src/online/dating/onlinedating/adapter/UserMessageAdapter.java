@@ -1,74 +1,42 @@
 package online.dating.onlinedating.adapter;
 
-import java.util.ArrayList;
-
 import online.daing.onlinedating.R;
 import online.dating.onlinedating.model.UserMessageItem;
 import android.app.Activity;
-import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class UserMessageAdapter extends BaseAdapter {
-	ArrayList<UserMessageItem> userMessageItems;
-	Context context;
+import com.firebase.client.Query;
 
-	public UserMessageAdapter(ArrayList<UserMessageItem> userMessageItems,
-			Context context) {
-		super();
-		this.userMessageItems = userMessageItems;
-		this.context = context;
+public class UserMessageAdapter extends FirebaseListAdapter<UserMessageItem> {
+	LayoutInflater mInflater;
+	String mUserName;
+
+	public UserMessageAdapter(Query mRef, int mLayout, Activity activity,String mUserName) {
+
+		super(mRef, UserMessageItem.class, mLayout, activity);
+		this.mUserName = mUserName;
+		mInflater = activity.getLayoutInflater();
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	public int getCount() {
+	protected void populateView(View view, UserMessageItem model) {
 		// TODO Auto-generated method stub
-		return userMessageItems.size();
-	}
-
-	@Override
-	public Object getItem(int position) {
-		// TODO Auto-generated method stub
-		return userMessageItems.get(position);
-	}
-
-	@Override
-	public long getItemId(int position) {
-		// TODO Auto-generated method stub
-		return position;
-	}
-
-	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
-		// TODO Auto-generated method stub
-		View rowView = null;
-		LayoutInflater mInflater = (LayoutInflater) context
-				.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-		UserMessageItem item = userMessageItems.get(position);
-
-		if (item.getIsSelf()) {
-			rowView = mInflater.inflate(R.layout.user_message_list_item_right,
-					null);
-
+		String author = model.getAuthor();
+		if (author != null && author.equals(mUserName)) {
 		} else {
-			rowView = mInflater.inflate(R.layout.user_message_list_item_left,
-					null);
 		}
-
-		ImageView imgIcon = (ImageView) rowView
+		ImageView imgIcon = (ImageView) view
 				.findViewById(R.id.userMessageImageView);
-
-		TextView userMessage = (TextView) rowView
+		TextView userMessage = (TextView) view
 				.findViewById(R.id.userMessageTextView);
+		userMessage.setText(model.getMessage());
 
-		userMessage.setText(item.getMessage());
-		imgIcon.setImageResource(item.getImageIcon());
+		imgIcon.setImageResource(model.getImageIcon());
 
-		return rowView;
 	}
-
 }

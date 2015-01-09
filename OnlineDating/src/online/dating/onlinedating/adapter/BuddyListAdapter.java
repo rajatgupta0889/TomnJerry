@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import online.daing.onlinedating.CoffeeMeetUpActivity;
 import online.daing.onlinedating.CoffeeSetDateActivity;
 import online.daing.onlinedating.R;
+import online.daing.onlinedating.UserMessageActivity;
 import online.dating.onlinedating.model.BuddyListItem;
 import android.app.Activity;
 import android.content.Context;
@@ -55,14 +56,14 @@ public class BuddyListAdapter extends BaseAdapter {
 					.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 			rowView = mInflater.inflate(R.layout.buddy_list_item, null);
 		}
-		ImageView coffeeImageView = (ImageView) rowView
+		ImageView chatImageView = (ImageView) rowView
 				.findViewById(R.id.coffeeImageView);
-		coffeeImageView.setOnClickListener(new OnClickListener() {
+		chatImageView.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent intent = new Intent(context, CoffeeMeetUpActivity.class);
+				Intent intent = new Intent(context, UserMessageActivity.class);
 				intent.putExtra("Name", buddyListItems.get(position)
 						.getUserName());
 				intent.putExtra("ImageIcon", buddyListItems.get(position)
@@ -77,7 +78,7 @@ public class BuddyListAdapter extends BaseAdapter {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent intent = new Intent(context, CoffeeSetDateActivity.class);
+				Intent intent = new Intent(context, CoffeeMeetUpActivity.class);
 				intent.putExtra("Name", buddyListItems.get(position)
 						.getUserName());
 				intent.putExtra("ImageIcon", buddyListItems.get(position)

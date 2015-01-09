@@ -5,7 +5,7 @@
     android:layout_marginLeft="10dp" >
 
     <Button
-        android:id="@+id/userDislikeButton"
+        android:id="@+id/setSettingButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -17,7 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignTop="@+id/userDislikeButton"
+        android:layout_alignTop="@+id/setSettingButton"
         android:src="@drawable/ic_camera" />
 
     <ImageView
@@ -34,12 +34,12 @@
         android:id="@+id/view1"
         android:layout_width="fill_parent"
         android:layout_height="1dp"
-        android:layout_above="@+id/userDislikeButton"
+        android:layout_above="@+id/setSettingButton"
         android:layout_alignParentLeft="true"
         android:background="@android:color/darker_gray" />
 
     <MultiAutoCompleteTextView
-        android:id="@+id/multiAutoCompleteTextView1"
+        android:id="@+id/userMessageEditText"
         android:layout_width="250dp"
         android:layout_height="100dp"
         android:layout_above="@+id/view1"
@@ -55,7 +55,7 @@
         android:paddingLeft="10dp"
         android:paddingRight="5dp"
         android:paddingTop="10dp" >
-		
+
         <requestFocus />
     </MultiAutoCompleteTextView>
 
@@ -63,10 +63,10 @@
         android:id="@+id/coffeeImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/multiAutoCompleteTextView1"
+        android:layout_alignBottom="@+id/userMessageEditText"
         android:layout_marginBottom="20dp"
         android:layout_marginRight="8dp"
-        android:layout_toLeftOf="@+id/multiAutoCompleteTextView1"
+        android:layout_toLeftOf="@+id/userMessageEditText"
         android:src="@drawable/com_facebook_profile_default_icon" />
 
     <LinearLayout
@@ -93,17 +93,15 @@
             android:layout_marginLeft="10dp"
             android:text="RAJAT GUPTA"
             android:textAppearance="?android:attr/textAppearanceLarge" />
-
     </LinearLayout>
 
     <ListView
         android:id="@+id/chatMessageListView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/multiAutoCompleteTextView1"
+        android:layout_above="@+id/userMessageEditText"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/setDateLayout" >
-
     </ListView>
 
 </RelativeLayout>

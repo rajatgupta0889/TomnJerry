@@ -3,62 +3,67 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="top"
-  
-    android:orientation="vertical" >
-
-    <ToggleButton
-        android:id="@+id/toggleButton5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/toggleButton4"
-        android:layout_alignBottom="@+id/toggleButton4"
-        android:layout_alignLeft="@+id/toggleButton2"
-        android:text="ToggleButton" />
-
-    <ToggleButton
-        android:id="@+id/toggleButton6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/toggleButton5"
-        android:layout_alignBottom="@+id/toggleButton5"
-        android:layout_alignRight="@+id/toggleButton3"
-        android:text="ToggleButton" />
+    android:layout_marginBottom="20dp"
+    android:layout_marginEnd="10dp"
+    android:layout_marginTop="10dp" >
 
     <ToggleButton
         android:id="@+id/toggleButton1"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/toggleButton4"
         android:layout_alignParentTop="true"
         android:layout_marginTop="35dp"
-        android:text="ToggleButton" />
+        android:background="@drawable/toggle_cutomization"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:textColor="@drawable/text_color"
+        android:textOff="Software Engineer"
+        android:textOn="Software Engineer" />
 
     <ToggleButton
         android:id="@+id/toggleButton4"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/toggleButton2"
+        android:layout_marginBottom="10dp"
         android:layout_marginLeft="33dp"
         android:layout_marginTop="23dp"
-        android:text="ToggleButton" />
-
-    <ToggleButton
-        android:id="@+id/toggleButton3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/toggleButton4"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="23dp"
-        android:text="ToggleButton" />
+        android:background="@drawable/toggle_cutomization"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:textColor="@drawable/text_color"
+        android:textOff="Lawyer"
+        android:textOn="Lawyer" />
 
     <ToggleButton
         android:id="@+id/toggleButton2"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/toggleButton1"
-        android:layout_alignBottom="@+id/toggleButton1"
-        android:layout_centerHorizontal="true"
-        android:text="ToggleButton" />
+        android:layout_alignTop="@+id/toggleButton1"
+        android:layout_marginLeft="28dp"
+        android:layout_toRightOf="@+id/toggleButton1"
+        android:background="@drawable/toggle_cutomization"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:textColor="@drawable/text_color"
+        android:textOff="Manager"
+        android:textOn="Manager" />
+
+    <ToggleButton
+        android:id="@+id/toggleButton5"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/toggleButton4"
+        android:layout_alignBottom="@+id/toggleButton4"
+        android:layout_alignLeft="@+id/toggleButton2"
+        android:background="@drawable/toggle_cutomization"
+        android:minHeight="48dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:textColor="@drawable/text_color"
+        android:textOff="HR"
+        android:textOn="HR" />
 
 </RelativeLayout>

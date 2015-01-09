@@ -1,17 +1,33 @@
 package online.daing.onlinedating;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import online.dating.onlinedating.model.ServiceHandler;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONStringer;
+
 import android.app.Activity;
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.Toast;
 
-public class UserDislikeActivity extends Activity {
+public class UserDislikeActivity extends Activity implements
+		OnCheckedChangeListener {
 	Button disLikeRequestButton;
 	CheckBox interestCB, positionCB, imageCB, heightCB;
 	String reasonForDislike = "";
+	JSONStringer dislIkeData;
+	List<String> reasonForPass;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -23,29 +39,76 @@ public class UserDislikeActivity extends Activity {
 		positionCB = (CheckBox) findViewById(R.id.positionCB);
 		imageCB = (CheckBox) findViewById(R.id.imageCB);
 		heightCB = (CheckBox) findViewById(R.id.heightCB);
-		if (interestCB.isChecked()) {
-			reasonForDislike = reasonForDislike + interestCB.getText();
-		}
-		if (positionCB.isChecked()) {
-			reasonForDislike = reasonForDislike + positionCB.getText();
-		}
-		if (imageCB.isChecked()) {
-			reasonForDislike = reasonForDislike + imageCB.getText();
-		}
-		if (heightCB.isChecked()) {
-			reasonForDislike = reasonForDislike + heightCB.getText();
-		}
-		disLikeRequestButton = (Button) findViewById(R.id.userDislikeButton);
+		reasonForPass = new ArrayList<String>();
+		interestCB.setOnCheckedChangeListener(this);
+		positionCB.setOnCheckedChangeListener(this);
+		imageCB.setOnCheckedChangeListener(this);
+		heightCB.setOnCheckedChangeListener(this);
+
+		disLikeRequestButton = (Button) findViewById(R.id.setSettingButton);
+
 		disLikeRequestButton.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Toast.makeText(getApplicationContext(), "Reason of DisLike ",
-						Toast.LENGTH_SHORT).show();
+				try {
+					dislIkeData = new JSONStringer();
+
+					dislIkeData.object().key("reasonForPass")
+							.value(reasonForPass).endObject();
+					if (!reasonForPass.isEmpty()) {
+						new UserRejectMatch().execute(dislIkeData);
+						Toast.makeText(getApplicationContext(),
+								"Dislike The user", Toast.LENGTH_SHORT).show();
+					} else {
+						Toast.makeText(getApplicationContext(),
+								"Please Select a reeason", Toast.LENGTH_SHORT)
+								.show();
+					}
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
 			}
 		});
 
+	}
+
+	public class UserRejectMatch extends AsyncTask<JSONStringer, Void, Void> {
+
+		@Override
+		protected void onPostExecute(Void result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+			Toast.makeText(getApplicationContext(), "Done", Toast.LENGTH_SHORT)
+					.show();
+		}
+
+		@Override
+		protected Void doInBackground(JSONStringer... params) {
+			// TODO Auto-generated method stub
+			ServiceHandler sh = new ServiceHandler();
+			sh.makeServiceCall(GetUserLogin.url + "reject",
+					ServiceHandler.POST, params[0]);
+			Intent intent = new Intent(getApplicationContext(),
+					LoginActivity.class);
+			startActivity(intent);
+			finish();
+			return null;
+		}
+
+	}
+
+	@Override
+	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+		// TODO Auto-generated method stub
+		if (isChecked) {
+			reasonForPass.add(((CheckBox) buttonView).getText().toString());
+		} else {
+			reasonForPass.remove(((CheckBox) buttonView).getText().toString());
+		}
 	}
 
 }
