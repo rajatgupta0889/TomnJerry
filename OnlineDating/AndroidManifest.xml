@@ -5,7 +5,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="17"
+        android:minSdkVersion="15"
         android:targetSdkVersion="21" />
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -48,7 +48,7 @@
         </activity>
 
         <receiver
-            android:name=".GcmBroadcastReceiver"
+            android:name="online.daing.onlinedating.GcmBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
@@ -67,13 +67,14 @@
             android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyDkDRwSsrLX2GYl8PW-Kb2GDBhluP7Bs70" />
+            android:value="AIzaSyDJIL3bccWuQMwz7FuEkyO-X6omBQ0CFBg" />
 
         <uses-library android:name="com.google.android.maps" />
 
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait" >
         </activity>
         <activity

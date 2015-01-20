@@ -53,7 +53,7 @@
 
     <string name="user_gender_image">user gender image</string>
     <string name="user_profile_pic">User Profile Pic</string>
-    <string name="hi_user_name">Hi, Rajat Gupta</string>
+    <string name="hi_user_name">Hi, </string>
     <string name="age">32</string>
     <string name="user_location">Bangalore</string>
     <string name="usesr_designation">S/w Engineer</string>

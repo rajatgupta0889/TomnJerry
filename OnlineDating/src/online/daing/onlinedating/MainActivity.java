@@ -24,7 +24,7 @@ public class MainActivity extends FragmentActivity {
 		//showHashKey(getApplication());
 		if (savedInstanceState == null) {
 			// Add the fragment on initial activity setup
-			
+
 			mainFragment = new MainFragement();
 			getSupportFragmentManager().beginTransaction()
 					.add(android.R.id.content, mainFragment).commit();
@@ -62,6 +62,7 @@ public class MainActivity extends FragmentActivity {
 																					// package
 																					// name
 																					// here
+
 			for (Signature signature : info.signatures) {
 				MessageDigest md = MessageDigest.getInstance("SHA");
 				md.update(signature.toByteArray());

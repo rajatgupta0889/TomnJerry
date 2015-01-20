@@ -35,12 +35,11 @@ public class LoginActivity extends ActionBarActivity implements
 	Button btnFindMatch, logout;
 	Spinner orientation;
 	List<NameValuePair> nameValuePairs;
-	private static String url = "http://54.88.90.102:1337/";
+	// private static String url = "http://54.88.90.102:1337/";
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
 	private ActionBarDrawerToggle mDrawerToggle;
 
-	
 	// nav drawer title
 	private CharSequence mDrawerTitle;
 
@@ -59,49 +58,17 @@ public class LoginActivity extends ActionBarActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 		getActionBar().setDisplayShowHomeEnabled(false);
-		
+
 		// tv_sex = (TextView) findViewById(R.id.tv_sex_disp);
 		// tv_email = (TextView) findViewById(R.id.tv_email_disp);
 		// tv_name = ( TextView) findViewById(R.id.tv_name_disp);
 
 		// orientation = (Spinner) findViewById(R.id.spinner_orientation);
-		Intent intent = getIntent();
-		Bundle bundle = intent.getExtras();
-		if (bundle != null) {
-			/*
-			 * String name = bundle.getString("name"); String email =
-			 * bundle.getString("email"); String id = bundle.getString("id"); //
-			 * String orientation = bundle.getString("orientation"); String sex
-			 * = bundle.getString("gender"); ArrayAdapter<CharSequence> adapter
-			 * = ArrayAdapter .createFromResource(this,
-			 * R.array.orientation_array, android.R.layout.simple_spinner_item);
-			 * // Specify the layout to use when the list of choices appears
-			 * adapter.setDropDownViewResource(android.R.layout.
-			 * simple_spinner_dropdown_item); // Apply the adapter to the
-			 * spinner orientation.setAdapter(adapter);
-			 * orientation.setOnItemSelectedListener(this);
-			 * tv_name.setText("Hello " + name); tv_email.setText(email);
-			 * tv_sex.setText(sex); System.out.println(id); //btnFindMatch =
-			 * (Button) findViewById(R.id.findMatch);
-			 * btnFindMatch.setOnClickListener(new OnClickListener() {
-			 * 
-			 * @Override public void onClick(View v) { // TODO Auto-generated
-			 * method stub new GetUserMatch().execute(); } }); //logout =
-			 * (Button) findViewById(R.id.logout); logout.setOnClickListener(new
-			 * OnClickListener() {
-			 * 
-			 * @Override public void onClick(View v) { // TODO Auto-generated
-			 * method stub Session session = Session.getActiveSession();
-			 * session.closeAndClearTokenInformation();
-			 * 
-			 * startActivity(new Intent(getApplicationContext(),
-			 * MainActivity.class)); finish(); } });
-			 */}
-		// tv_sex.setText(sex);
+
 		mTitle = mDrawerTitle = getTitle();
 
 		// load slide menu items
-		navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);	
+		navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
 		// nav drawer icons from resources
 		navMenuIcons = getResources()
 				.obtainTypedArray(R.array.nav_drawer_icons);
@@ -163,11 +130,25 @@ public class LoginActivity extends ActionBarActivity implements
 			}
 		};
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
+		Intent intent = getIntent();
+		if (intent != null) {
+			Bundle extras = intent.getExtras();
+			if (extras != null) {
+				String match = extras.getString("Match");
+				if (match.contains("Hurrey") || match.contains("Alas")) {
+					notificationSelected();
+				} else {
+					displayView(0);
+				}
+			}
+			else {
+				if (savedInstanceState == null) {
+					// on first time display view for first nav item
+					displayView(0);
+				}
+			}
+		} 
 
-		if (savedInstanceState == null) {
-			// on first time display view for first nav item
-			displayView(0);
-		}
 	}
 
 	/**
@@ -215,10 +196,11 @@ public class LoginActivity extends ActionBarActivity implements
 
 	private void notificationSelected() {
 		// TODO Auto-generated method stub
-		Fragment frag = new PagesFragment();
+		Fragment frag = new NotificationFragment();
+
 		FragmentManager fragmentManager = getSupportFragmentManager();
-		fragmentManager.beginTransaction()
-				.replace(R.id.frame_container, frag).commit();
+		fragmentManager.beginTransaction().replace(R.id.frame_container, frag)
+				.commit();
 
 		// update selected item and title, then close the drawer
 
@@ -239,50 +221,6 @@ public class LoginActivity extends ActionBarActivity implements
 		// TODO Auto-generated method stub
 
 	}
-
-	//
-	// private class GetUserMatch extends AsyncTask<Void, Void, String> {
-	// @Override
-	// protected void onPreExecute() {
-	// // TODO Auto-generated method stub
-	//
-	// super.onPreExecute();
-	// }
-	//
-	// @Override
-	// protected void onPostExecute(String result) {
-	// // TODO Auto-generated method stub
-	// /* proDialog.dismiss(); */
-	// Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT)
-	// .show();
-	// super.onPostExecute(result);
-	// }
-	//
-	// String result;
-	//
-	// @Override
-	// protected String doInBackground(Void... params) {
-	// // TODO Auto-generated method stub
-	//
-	// ServiceHandler sh = new ServiceHandler();
-	// result = sh.makeServiceCall(url + "getAMatch", ServiceHandler.GET
-	//
-	// );
-	//
-	// System.out.println(result);
-	// return result;
-	// /*
-	// * try { JSONObject res = new JSONObject(result);
-	// *
-	// * } catch (JSONException e) { // TODO Auto-generated catch block
-	// * e.printStackTrace(); }
-	// */
-	//
-	// // System.out.println(result);
-	// // return null;
-	// }
-	//
-	// }
 
 	/***
 	 * Called when invalidateOptionsMenu() is triggered

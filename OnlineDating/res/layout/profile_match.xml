@@ -5,7 +5,7 @@
     android:background="@drawable/bng" >
 
     <LinearLayout
-        android:id="@+id/setDateLayout"
+        android:id="@+id/matchDisplayLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
@@ -55,7 +55,7 @@
         android:id="@+id/chatMessageUserName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/setDateLayout"
+        android:layout_above="@+id/matchDisplayLayout"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="17dp"
         android:gravity="center"
@@ -67,8 +67,7 @@
         android:id="@+id/progressBarRV"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true" >
+        android:layout_alignParentBottom="true" >
 
         <TextView
             android:id="@+id/matchAgeTextView"

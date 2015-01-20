@@ -1,21 +1,33 @@
 package online.daing.onlinedating;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import online.dating.onlinedating.adapter.BuddyListAdapter;
 import online.dating.onlinedating.model.BuddyListItem;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.annotation.TargetApi;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
 public class FindPeopleFragment extends Fragment implements OnTaskCompleted {
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		// TODO Auto-generated method stub
+		super.onSaveInstanceState(outState);
+
+	}
 
 	private BuddyListAdapter adapter;
 	private ListView userMessageList;
@@ -27,14 +39,17 @@ public class FindPeopleFragment extends Fragment implements OnTaskCompleted {
 
 		View rootView = inflater.inflate(R.layout.fragment_buddy, container,
 				false);
+
+		buddyListItems = new ArrayList<BuddyListItem>();
+		adapter = new BuddyListAdapter(buddyListItems, getActivity());
+		Log.d("Buddy", " " + buddyListItems);
 		GetBudddyList buddyListClass = new GetBudddyList();
 		buddyListClass.setListener(this);
 		buddyListClass.execute();
 
 		userMessageList = (ListView) rootView.findViewById(R.id.buddyListView);
 
-		buddyListItems = new ArrayList<BuddyListItem>();
-
+		Log.d("Buddy", " " + buddyListItems);
 		// buddyListItems.add(new BuddyListItem("Rajat ",
 		// R.drawable.com_facebook_profile_default_icon));
 		// buddyListItems.add(new BuddyListItem("AMar ",
@@ -45,10 +60,10 @@ public class FindPeopleFragment extends Fragment implements OnTaskCompleted {
 		// R.drawable.com_facebook_profile_default_icon));
 		// buddyListItems.add(new BuddyListItem("Saumya ",
 		// R.drawable.com_facebook_profile_default_icon));
-		buddyListItems.add(new BuddyListItem("Kailash ",
-				R.drawable.com_facebook_profile_default_icon));
-		adapter = new BuddyListAdapter(buddyListItems, getActivity());
-		userMessageList.setAdapter(adapter);
+		// buddyListItems.add(new BuddyListItem("Kailash ",
+		// R.drawable.com_facebook_profile_default_icon));
+		// adapter = new BuddyListAdapter(buddyListItems, getActivity());
+		// userMessageList.setAdapter(adapter);
 		return rootView;
 	}
 
@@ -63,17 +78,24 @@ public class FindPeopleFragment extends Fragment implements OnTaskCompleted {
 		// TODO Auto-generated method stub
 		if (result != null) {
 			try {
+				JSONObject jsonObj = new JSONObject(result);
 
-				JSONObject res = new JSONObject(result);
+				JSONArray res = jsonObj.getJSONArray("buddies");
+				JSONArray matchId = jsonObj.getJSONArray("matches");
 				/* Handle the array list here */
-
+				for (int i = 0; i < res.length() && i < matchId.length(); i++) {
+					JSONObject buddy = res.getJSONObject(i);
+					JSONObject match = matchId.getJSONObject(i);
+					BuddyListItem item = new BuddyListItem(
+							buddy.getString("name"), 0, match.getString("id"));
+					buddyListItems.add(item);
+				}
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 
-		adapter = new BuddyListAdapter(buddyListItems, getActivity());
 		userMessageList.setAdapter(adapter);
 	}
 

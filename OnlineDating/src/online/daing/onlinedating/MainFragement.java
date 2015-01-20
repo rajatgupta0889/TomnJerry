@@ -1,12 +1,18 @@
 package online.daing.onlinedating;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import online.dating.onlinedating.adapter.ViewPagerAdapter;
 import online.dating.onlinedating.model.GPSTracker;
+import online.dating.onlinedating.model.ServiceHandler;
 import online.dating.onlinedating.model.User;
 
 import org.apache.http.NameValuePair;
@@ -15,17 +21,23 @@ import org.json.JSONObject;
 import org.json.JSONStringer;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,6 +75,8 @@ public class MainFragement extends Fragment {
 	private static final String PROPERTY_APP_VERSION = "appVersion";
 	private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 	static User tom;
+	String userID;
+
 	/**
 	 * Substitute you own sender ID here. This is the project number you got
 	 * from the API Console, as described in "Getting Started."
@@ -300,7 +314,8 @@ public class MainFragement extends Fragment {
 		// if (Session.getActiveSession().getAccessToken() != null) {
 		// authButton.setVisibility(View.INVISIBLE);
 		// }
-		authButton.setReadPermissions(Arrays.asList("public_profile", "email"));
+		authButton.setReadPermissions(Arrays.asList("public_profile", "email",
+				"user_location", "user_birthday", "user_likes"));
 
 		return view;
 	}
@@ -308,99 +323,194 @@ public class MainFragement extends Fragment {
 	private void onSessionStateChange(Session session, SessionState state,
 			Exception exception) {
 		if (state.isOpened()) {
-
 			Log.i(TAG, "Logged in...");
 
 			System.out.println("Session " + session);
 			if (logIn == 0) {
+				logIn = 1;
 				new Request(session, "/me", null, HttpMethod.GET,
 						new Request.Callback() {
 							public void onCompleted(Response response) {
 								/* handle the result */
+								System.out.println("Response " + response);
+								if (response != null) {
+									GraphObject resp = response
+											.getGraphObject();
 
-								GraphObject resp = response.getGraphObject();
+									user = resp.getInnerJSONObject();
+									Log.d(TAG, " " + user);
+									if (user != null) {
 
-								user = resp.getInnerJSONObject();
-								System.out.println(user);
+										try {
+											userID = user.getString("id");
+											String age = "";
+											if (user.has("birthday")) {
+												String birthday = user
+														.getString("birthday");
 
-								if (user != null) {
+												if (birthday != null) {
+													Calendar dateOfBirth = Calendar
+															.getInstance();
+													String[] dob = birthday
+															.split("/");
+													dateOfBirth.set(
+															Integer.parseInt(dob[2]),
+															Integer.parseInt(dob[0]),
+															Integer.parseInt(dob[1]));
+													Calendar today = Calendar
+															.getInstance();
+													int year = today
+															.get(Calendar.YEAR)
+															- dateOfBirth
+																	.get(Calendar.YEAR);
 
-									try {
-										tom = new User(user.getString("name"),
-												user.getString("email"), user
-														.getString("id"), user
-														.getString("gender"),
-												longitude, latitude, "");
+													if (today
+															.get(Calendar.DAY_OF_YEAR) < dateOfBirth
+															.get(Calendar.DAY_OF_YEAR)) {
+														year--;
+													}
+													Integer ageInt = new Integer(
+															year);
+													age = ageInt.toString();
 
-										vm = new JSONStringer().object()
-												.key("name")
-												.value(tom.getName())
-												.key("email")
-												.value(tom.getEmail())
-												.key("fbUserId")
-												.value(tom.getFbUserId())
-												.key("gender")
-												.value(tom.getGender())
-												.key("location").object()
-												.key("x")
-												.value(tom.getLocationX())
-												.key("y")
-												.value(tom.getLocationY())
-												.endObject().endObject();
-										/*
-										 * nameValuePairs = new
-										 * ArrayList<NameValuePair>();
-										 * nameValuePairs.add(new
-										 * BasicNameValuePair( "name",
-										 * user.getString("name")));
-										 * nameValuePairs.add(new
-										 * BasicNameValuePair( "email", user
-										 * .getString("email"))); nameValuePairs
-										 * .add(new BasicNameValuePair(
-										 * "fbUserId", user.getString("id")));
-										 * nameValuePairs.add(new
-										 * BasicNameValuePair( "gender", user
-										 * .getString("gender")));
-										 * List<NameValuePair> local = new
-										 * ArrayList<NameValuePair>();
-										 * local.add(new BasicNameValuePair("x",
-										 * "12.966")); local.add(new
-										 * BasicNameValuePair("y", "77.566"));
-										 * System.out.println(local.toString());
-										 * nameValuePairs.add(new
-										 * BasicNameValuePair("location",
-										 * local.toString()));
-										 */
-										Log.d("MainFragement",
-												"Sending String "
-														+ vm.toString());
-										GetUserLogin login = new GetUserLogin(
-												getActivity(), proDialog, vm);
-										login.setListener(new OnTaskCompleted() {
-
-											@Override
-											public void onTaskCompleted() {
-												// TODO Auto-generated method
-												// stub
-
+												}
 											}
+											tom = new User(user
+													.getString("name"), user
+													.getString("email"), user
+													.getString("id"), user
+													.getString("gender"),
+													latitude, longitude, "",
+													getRegistrationId(context),
+													"android", age,
+													new ArrayList<String>());
 
-											@Override
-											public void OnResult(String result) {
-												// TODO Auto-generated method
-												// stub
+											vm = new JSONStringer()
+													.object()
+													.key("name")
+													.value(tom.getName())
+													.key("email")
+													.value(tom.getEmail())
+													.key("fbUserId")
+													.value(tom.getFbUserId())
+													.key("gender")
+													.value(tom.getGender())
+													.key("location")
+													.object()
+													.key("x")
+													.value(tom.getLocationX())
+													.key("y")
+													.value(tom.getLocationY())
+													.endObject()
+													.key("device_token")
+													.value(tom.getDeviceToken())
+													.key("os")
+													.value(tom.getOs())
+													.endObject();
 
-											}
-										});
-										login.execute();
-									} catch (JSONException e) {
-										// TODO Auto-generated catch block
-										e.printStackTrace();
+											Log.d("MainFragement",
+													"Sending String "
+															+ vm.toString());
+											GetUserLogin login = new GetUserLogin(
+													getActivity(), proDialog,
+													vm);
+											login.setListener(new OnTaskCompleted() {
+
+												@Override
+												public void onTaskCompleted() {
+													// TODO Auto-generated
+													// method
+													// stub
+													new AsyncTask<Void, Void, Void>() {
+
+														@Override
+														protected Void doInBackground(
+																Void... params) {
+															// TODO
+															// Auto-generated
+															// method stub
+															Bitmap userIcon = getFacebookProfilePicture(userID);
+															ByteArrayOutputStream baos = new ByteArrayOutputStream();
+															userIcon.compress(
+																	Bitmap.CompressFormat.JPEG,
+																	100, baos);
+															byte[] b = baos
+																	.toByteArray();
+															String imageEncoded = Base64
+																	.encodeToString(
+																			b,
+																			Base64.DEFAULT);
+
+															JSONStringer data = null;
+															try {
+																data = new JSONStringer()
+																		.object()
+																		.key("data")
+																		.value(imageEncoded)
+																		.endObject();
+																ServiceHandler sh = new ServiceHandler();
+																String result = sh
+																		.makeServiceCall(
+																				GetUserLogin.url
+																						+ "image",
+																				ServiceHandler.POST,
+																				data);
+																System.out
+																		.println("Result "
+																				+ result);
+															} catch (JSONException e) {
+																// TODO
+																// Auto-generated
+																// catch block
+																e.printStackTrace();
+															}
+															return null;
+														}
+
+													}.execute();
+
+												}
+
+												@Override
+												public void OnResult(
+														String result) {
+													// TODO Auto-generated
+													// method
+													// stub
+
+												}
+											});
+											login.execute();
+										} catch (JSONException e) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
+										}
 									}
+								} else {
+									new AlertDialog.Builder(context)
+											.setTitle("Error in Connection")
+											.setMessage("Login after sometime")
+											.setPositiveButton(
+													android.R.string.yes,
+													new DialogInterface.OnClickListener() {
+														public void onClick(
+																DialogInterface dialog,
+																int which) {
+															// continue with
+															// delete
+															((Activity) context)
+																	.finish();
+														}
+													})
+											.setIcon(
+													android.R.drawable.ic_dialog_alert)
+											.show();
+
 								}
 							}
 
 						}).executeAsync();
+
 			}
 			/*
 			 * else{
@@ -427,6 +537,7 @@ public class MainFragement extends Fragment {
 		super.onResume();
 		Session session = Session.getActiveSession();
 		if (session != null && (session.isOpened() || session.isClosed())) {
+			logIn = 0;
 			onSessionStateChange(session, session.getState(), null);
 		}
 		if (gps.canGetLocation()) {
@@ -451,6 +562,7 @@ public class MainFragement extends Fragment {
 	public void onDestroy() {
 		super.onDestroy();
 		uiHelper.onDestroy();
+		logIn = 0;
 	}
 
 	@Override
@@ -459,4 +571,22 @@ public class MainFragement extends Fragment {
 		uiHelper.onSaveInstanceState(outState);
 	}
 
+	public static Bitmap getFacebookProfilePicture(String userID) {
+		URL imageURL;
+		Bitmap bitmap = null;
+		try {
+			imageURL = new URL("https://graph.facebook.com/" + userID
+					+ "/picture?type=large");
+			bitmap = BitmapFactory.decodeStream(imageURL.openConnection()
+					.getInputStream());
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return bitmap;
+
+	}
 }

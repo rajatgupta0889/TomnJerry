@@ -203,7 +203,7 @@
 
     <RelativeLayout
         android:id="@+id/foreground"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
@@ -212,13 +212,13 @@
 
         <Button
             android:id="@+id/setSettingButton"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
+            android:layout_alignRight="@+id/profileMatchImageView"
             android:layout_alignTop="@+id/profileMatchImageView"
             android:layout_marginTop="10dp"
-            android:background="@drawable/custom_border_radius"
-            android:onClick="clickedMe" />
+            android:background="@drawable/custom_border_radius" />
 
         <ImageView
             android:id="@+id/profileMatchImageView"
@@ -237,8 +237,49 @@
             android:layout_alignBaseline="@+id/setSettingButton"
             android:layout_alignBottom="@+id/setSettingButton"
             android:layout_alignParentLeft="true"
-            android:layout_marginLeft="140dp"
-            android:text="Ask"
+            android:layout_marginLeft="43dp"
+            android:text="Confirm"
+            android:textColor="@android:color/white" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/foreground1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp" >
+
+        <Button
+            android:id="@+id/setSettingButton1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignRight="@+id/profileMatchImageView1"
+            android:layout_alignTop="@+id/profileMatchImageView1"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/custom_border_radius" />
+
+        <ImageView
+            android:id="@+id/profileMatchImageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@+id/askButton1"
+            android:paddingBottom="10dip"
+            android:paddingTop="10dip"
+            android:src="@drawable/ic_ask_image" />
+
+        <TextView
+            android:id="@+id/askButton1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/setSettingButton1"
+            android:layout_alignBottom="@+id/setSettingButton1"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="43dp"
+            android:text="Reject"
             android:textColor="@android:color/white" />
     </RelativeLayout>
 
