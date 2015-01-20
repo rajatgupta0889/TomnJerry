@@ -39,7 +39,7 @@
         android:background="@android:color/darker_gray" />
 
     <MultiAutoCompleteTextView
-        android:id="@+id/userMessageEditText"
+        android:id="@+id/locationSearchEditTextView"
         android:layout_width="250dp"
         android:layout_height="100dp"
         android:layout_above="@+id/view1"
@@ -63,14 +63,14 @@
         android:id="@+id/coffeeImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/userMessageEditText"
+        android:layout_alignBottom="@+id/locationSearchEditTextView"
         android:layout_marginBottom="20dp"
         android:layout_marginRight="8dp"
-        android:layout_toLeftOf="@+id/userMessageEditText"
+        android:layout_toLeftOf="@+id/locationSearchEditTextView"
         android:src="@drawable/com_facebook_profile_default_icon" />
 
     <LinearLayout
-        android:id="@+id/setDateLayout"
+        android:id="@+id/matchDisplayLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -99,9 +99,9 @@
         android:id="@+id/chatMessageListView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/userMessageEditText"
+        android:layout_above="@+id/locationSearchEditTextView"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/setDateLayout" >
+        android:layout_below="@+id/matchDisplayLayout" >
     </ListView>
 
 </RelativeLayout>

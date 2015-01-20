@@ -111,6 +111,10 @@ public class GPSTracker extends Service implements LocationListener{
 	    }
 	    @Override
 	    public void onLocationChanged(Location location) {
+	    
+			Log.e("Location Listener", "location update : " + location);
+	    	 this.location = location;
+	    	    locationManager.removeUpdates(this);
 	    }
 	 
 	    @Override

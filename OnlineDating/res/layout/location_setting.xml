@@ -4,7 +4,7 @@
     android:layout_height="match_parent" >
 
     <LinearLayout
-        android:id="@+id/setDateLayout"
+        android:id="@+id/matchDisplayLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -30,27 +30,27 @@
     </LinearLayout>
 
     <MultiAutoCompleteTextView
-        android:id="@+id/userMessageEditText"
+        android:id="@+id/locationSearchEditTextView"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:layout_alignLeft="@+id/setDateLayout"
-        android:layout_below="@+id/setDateLayout"
-        android:layout_toLeftOf="@+id/button1"
+        android:layout_alignLeft="@+id/matchDisplayLayout"
+        android:layout_below="@+id/matchDisplayLayout"
+        android:layout_toLeftOf="@+id/searchLocationButton"
         android:ems="10"
-        android:text="MultiAutoCompleteTextView" />
+        android:text="" />
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/searchLocationButton"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:layout_alignRight="@+id/setDateLayout"
-        android:layout_alignTop="@+id/userMessageEditText"
+        android:layout_alignRight="@+id/matchDisplayLayout"
+        android:layout_alignTop="@+id/locationSearchEditTextView"
         android:background="@drawable/custom_border_radius"
         android:text="Button" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/setLocationButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -67,9 +67,9 @@
         android:name="com.google.android.gms.maps.MapFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/button2"
+        android:layout_above="@+id/setLocationButton"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/userMessageEditText"
+        android:layout_below="@+id/locationSearchEditTextView"
         android:layout_marginTop="15dp" />
 
 </RelativeLayout>

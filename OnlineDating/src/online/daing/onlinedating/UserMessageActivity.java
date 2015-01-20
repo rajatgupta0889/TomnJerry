@@ -46,27 +46,7 @@ public class UserMessageActivity extends Activity {
 		TextView userName = (TextView) findViewById(R.id.chatMessageUserName);
 		author = userName.getText().toString();
 
-		myConnectionsRef = new Firebase(FIREBASE_URL + "users/" + author
-				+ "/connections");
-		lastOnlineRef = new Firebase(FIREBASE_URL + "/users/" + author
-				+ "/lastOnline");
-		mFirebaseRef.getRoot().authWithOAuthToken("facebook",
-				Session.getActiveSession().getAccessToken(),
-				new AuthResultHandler() {
-
-					@Override
-					public void onAuthenticationError(FirebaseError arg0) {
-						// TODO Auto-generated method stub
-						System.out.println("Sucees " + arg0);
-					}
-
-					@Override
-					public void onAuthenticated(AuthData arg0) {
-						// TODO Auto-generated method stub
-						System.out.println("Error " + arg0);
-					}
-				});
-		EditText inputText = (EditText) findViewById(R.id.userMessageEditText);
+		EditText inputText = (EditText) findViewById(R.id.locationSearchEditTextView);
 		inputText
 				.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 					@Override
@@ -100,6 +80,8 @@ public class UserMessageActivity extends Activity {
 		mUserMessageAdapter = new UserMessageAdapter(mFirebaseRef,
 				R.layout.user_message_list_item_left, this, author);
 		userMessageListView.setAdapter(mUserMessageAdapter);
+		userMessageListView.smoothScrollToPosition(userMessageListView
+				.getCount());
 		mUserMessageAdapter.registerDataSetObserver(new DataSetObserver() {
 			@Override
 			public void onChanged() {
@@ -127,7 +109,6 @@ public class UserMessageActivity extends Activity {
 							Toast.makeText(getApplicationContext(),
 									"Disconnected from Firebase",
 									Toast.LENGTH_SHORT).show();
-						
 
 						}
 					}
@@ -151,7 +132,7 @@ public class UserMessageActivity extends Activity {
 	}
 
 	private void sendMessage() {
-		EditText inputText = (EditText) findViewById(R.id.userMessageEditText);
+		EditText inputText = (EditText) findViewById(R.id.locationSearchEditTextView);
 		String input = inputText.getText().toString();
 		if (!input.equals("")) {
 			// Create our 'model', a Chat object

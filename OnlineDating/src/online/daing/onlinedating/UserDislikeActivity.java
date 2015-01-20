@@ -1,16 +1,15 @@
 package online.daing.onlinedating;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import online.dating.onlinedating.model.ServiceHandler;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 import org.json.JSONStringer;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -27,7 +26,8 @@ public class UserDislikeActivity extends Activity implements
 	CheckBox interestCB, positionCB, imageCB, heightCB;
 	String reasonForDislike = "";
 	JSONStringer dislIkeData;
-	List<String> reasonForPass;
+	ArrayList<String> reasonForPass;
+	String fbUserId;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +44,12 @@ public class UserDislikeActivity extends Activity implements
 		positionCB.setOnCheckedChangeListener(this);
 		imageCB.setOnCheckedChangeListener(this);
 		heightCB.setOnCheckedChangeListener(this);
+		Intent intent = getIntent();
+		Bundle extra = intent.getExtras();
+		if (extra != null) {
+			fbUserId = extra.getString("fbUserId");
 
+		}
 		disLikeRequestButton = (Button) findViewById(R.id.setSettingButton);
 
 		disLikeRequestButton.setOnClickListener(new OnClickListener() {
@@ -54,9 +59,17 @@ public class UserDislikeActivity extends Activity implements
 				// TODO Auto-generated method stub
 				try {
 					dislIkeData = new JSONStringer();
+					reasonForPass.add("not_educated_enough");
 
-					dislIkeData.object().key("reasonForPass")
-							.value(reasonForPass).endObject();
+					dislIkeData.object().key("reasonForPass").array()
+							.value(reasonForPass).endArray().key("fbUserId")
+							.value(fbUserId).endObject();
+					System.out.println(dislIkeData);
+					SharedPreferences matchPref = getSharedPreferences(
+							"matchPref", 0);
+					SharedPreferences.Editor editor = matchPref.edit();
+					editor.putString("MatchInfo", null);
+					editor.commit();
 					if (!reasonForPass.isEmpty()) {
 						new UserRejectMatch().execute(dislIkeData);
 						Toast.makeText(getApplicationContext(),

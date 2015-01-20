@@ -4,7 +4,7 @@
     android:layout_height="match_parent" >
 
     <LinearLayout
-        android:id="@+id/setDateLayout"
+        android:id="@+id/matchDisplayLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -30,7 +30,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_below="@+id/setDateLayout"
+        android:layout_below="@+id/matchDisplayLayout"
         android:id="@+id/calendar1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

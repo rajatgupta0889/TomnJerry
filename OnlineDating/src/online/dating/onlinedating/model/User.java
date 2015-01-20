@@ -1,5 +1,7 @@
 package online.dating.onlinedating.model;
 
+import java.util.ArrayList;
+
 public class User {
 	String name;
 	String email;
@@ -7,9 +9,15 @@ public class User {
 	String gender;
 	Double locationX, locationY;
 	String userToken;
+	String DeviceToken;
+	String os;
+	String age;
+	ArrayList<String> imageList;
 
 	public User(String name, String email, String fbUserId, String gender,
-			Double locationX, Double locationY, String userToken) {
+			Double locationX, Double locationY, String userToken,
+			String deviceToken, String os, String age,
+			ArrayList<String> imageList) {
 		super();
 		this.name = name;
 		this.email = email;
@@ -18,6 +26,34 @@ public class User {
 		this.locationX = locationX;
 		this.locationY = locationY;
 		this.userToken = userToken;
+		DeviceToken = deviceToken;
+		this.os = os;
+		this.age = age;
+		this.imageList = imageList;
+	}
+
+	public String getAge() {
+		return age;
+	}
+
+	public void setAge(String age) {
+		this.age = age;
+	}
+
+	public String getDeviceToken() {
+		return DeviceToken;
+	}
+
+	public void setDeviceToken(String deviceToken) {
+		DeviceToken = deviceToken;
+	}
+
+	public String getOs() {
+		return os;
+	}
+
+	public void setOs(String os) {
+		this.os = os;
 	}
 
 	public String getUserToken() {
@@ -76,12 +112,21 @@ public class User {
 		this.locationY = locationY;
 	}
 
+	public ArrayList<String> getImageList() {
+		return imageList;
+	}
+
+	public void setImageList(ArrayList<String> imageList) {
+		this.imageList = imageList;
+	}
+
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
 
 		return String.format(name + "," + email + "," + fbUserId + "," + gender
-				+ "," + userToken + "," + locationX + "," + locationY);
+				+ "," + age + "," + userToken + "," + locationX + ","
+				+ locationY + "," + DeviceToken + "," + os + "," + imageList);
 	}
 
 }

@@ -1,13 +1,11 @@
-package online.daing.onlinedating;
+package online.dating.onlinedating.Service;
 
+import online.daing.onlinedating.GetUserLogin;
+import online.daing.onlinedating.OnTaskCompleted;
 import online.dating.onlinedating.model.ServiceHandler;
-
-import org.json.JSONObject;
-
 import android.os.AsyncTask;
-import android.util.Log;
 
-public class GetBudddyList extends AsyncTask<Void, Void, String> {
+public class GetMatchService extends AsyncTask<String, Void, String> {
 	private OnTaskCompleted listener;
 
 	public void setListener(OnTaskCompleted listener) {
@@ -24,19 +22,22 @@ public class GetBudddyList extends AsyncTask<Void, Void, String> {
 	protected void onPostExecute(String result) {
 		// TODO Auto-generated method stub
 		super.onPostExecute(result);
-		if(result != null){
+		// System.out.println(result);
+		if (result != null) {
 			listener.OnResult(result);
+
 		}
 	}
 
 	@Override
-	protected String doInBackground(Void... params) {
+	protected String doInBackground(String... params) {
 		// TODO Auto-generated method stub
 		String result = null;
 		ServiceHandler sh = new ServiceHandler();
-		result = sh.makeServiceCall(GetUserLogin.url + "get-buddy-list",
+	//	System.out.println(GetUserLogin.url + "buddy/" + params[0]);
+		result = sh.makeServiceCall(GetUserLogin.url + "match-detail/" + params[0],
 				ServiceHandler.GET);
-		Log.d("BuddyList", result);
+		//Log.d("BuddyList", result);
 		return result;
 	}
 

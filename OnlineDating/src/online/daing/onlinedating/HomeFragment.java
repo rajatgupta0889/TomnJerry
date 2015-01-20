@@ -1,18 +1,24 @@
 package online.daing.onlinedating;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 import online.dating.onlinedating.adapter.MyPagerAdapter;
 import online.dating.onlinedating.adapter.UserInfoExpandListAdapter;
 import online.dating.onlinedating.model.UserDetailItem;
 import online.dating.onlinedating.model.UserInfoItem;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
-import android.os.CountDownTimer;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -23,6 +29,7 @@ import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnGroupExpandListener;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -38,7 +45,7 @@ public class HomeFragment extends Fragment {
 	}
 
 	private int lastExpandedPosition = -1;
-	private int mProgressStatus = 0;
+	// private int mProgressStatus = 0;
 
 	public final static int PAGES = 5;
 	// You can choose a bigger number for LOOPS, but you know, nobody will fling
@@ -59,7 +66,8 @@ public class HomeFragment extends Fragment {
 	public final static String intentLocationTag = "Location";
 	int i = 0;
 	TextView myProgress;
-	private Handler mHandler = new Handler();
+
+	// private Handler mHandler = new Handler();
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -97,11 +105,49 @@ public class HomeFragment extends Fragment {
 					if (lastExpandedPosition != -1
 							&& groupPosition != lastExpandedPosition) {
 						userList.collapseGroup(lastExpandedPosition);
+
 					}
 					lastExpandedPosition = groupPosition;
 				}
 			});
 			userList.setAdapter(adapter);
+			SharedPreferences pref = getActivity().getSharedPreferences("pref",
+					0);
+			if (pref.getString(GetUserLogin.UserTom, null) != null) {
+
+				String user = pref.getString(GetUserLogin.UserTom, null);
+				if (user != null) {
+					String[] token = user.split(",");
+					String Location = "";
+					Geocoder geoCoder = new Geocoder(getActivity(),
+							Locale.getDefault());
+					try {
+						List<Address> addresses = geoCoder.getFromLocation(
+								Double.parseDouble(token[6]),
+								Double.parseDouble(token[7]), 1);
+
+						if (addresses.size() > 0) {
+							Location = addresses.get(0).getLocality();
+
+						}
+
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+					TextView nameTv = (TextView) rootView
+							.findViewById(R.id.userName);
+					nameTv.setText(nameTv.getText() + token[0]);
+					TextView ageTv = (TextView) rootView
+							.findViewById(R.id.userAge);
+					ageTv.setText(token[4]);
+					TextView locTv = (TextView) rootView
+							.findViewById(R.id.userLoc);
+					locTv.setText(Location);
+					TextView userDesigTv = (TextView) rootView
+							.findViewById(R.id.userDesignation);
+
+				}
+			}
 		} else {
 			rootView = inflater.inflate(R.layout.profile_match, container,
 					false);
@@ -130,21 +176,69 @@ public class HomeFragment extends Fragment {
 
 			profileImageView = (ImageView) rootView
 					.findViewById(R.id.profileMatchImageView);
+			LinearLayout imageLayout = (LinearLayout) rootView
+					.findViewById(R.id.matchDisplayLayout);
 
-			profileImageView.setOnClickListener(new OnClickListener() {
+			Intent intent = getActivity().getIntent();
+			if (intent != null) {
 
-				@Override
-				public void onClick(View v) {
-					// TODO Auto-generated method stub
-					Intent intent = new Intent(getActivity(),
-							MatchViewActivity.class);
-					intent.putExtra(intentNameTag, matchName.getText()
-							.toString());
-					intent.putExtra(intentLocationTag, matchLocation.getText()
-							.toString());
-					startActivity(intent);
+				SharedPreferences matchPref = getActivity()
+						.getSharedPreferences("matchPref", 0);
+				final String match = matchPref.getString("MatchInfo", null);
+
+				if (match != null) {
+					Log.d("Match", match);
+					JSONObject matchObj;
+					try {
+						matchObj = new JSONObject(match);
+						matchName.setText(matchObj.getString("name"));
+						Geocoder geoCoder = new Geocoder(getActivity(),
+								Locale.getDefault());
+						JSONObject loc = matchObj.getJSONObject("location");
+						List<Address> addresses = geoCoder.getFromLocation(
+								Double.parseDouble(loc.getString("x")),
+								Double.parseDouble(loc.getString("y")), 1);
+
+						if (addresses.size() > 0) {
+							String Location = addresses.get(0).getLocality();
+							matchLocation.setText(Location);
+						}
+
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (NumberFormatException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+					profileImageView.setOnClickListener(new OnClickListener() {
+
+						@Override
+						public void onClick(View v) {
+							// TODO Auto-generated method stub
+							Intent intent = new Intent(getActivity(),
+									MatchViewActivity.class);
+							intent.putExtra(intentNameTag, matchName.getText()
+									.toString());
+							intent.putExtra(intentLocationTag, matchLocation
+									.getText().toString());
+							intent.putExtra("Match", match);
+							startActivity(intent);
+						}
+					});
+				} else {
+					imageLayout.setVisibility(View.GONE);
+
 				}
-			});
+
+			} else {
+				imageLayout.setVisibility(View.GONE);
+			}
+
 			timeProgress = (ProgressBar) rootView.findViewById(R.id.myProgress);
 			// Get the Drawable custom_progressbar
 
@@ -160,12 +254,10 @@ public class HomeFragment extends Fragment {
 			Long mil2 = cal.getTimeInMillis();
 			Long diff = mil2 - mil1;
 			Long hours = diff / (60000 * 60);
-			hours = hours +1 ;
 			myProgress.setText("" + hours);
 			timeProgress.setMax(24);
-			timeProgress.setProgress((int) (hours+1));
+			timeProgress.setProgress((int) (hours + 1));
 
-			
 		}
 
 		if (settings.getBoolean("my_first_time", true)) {

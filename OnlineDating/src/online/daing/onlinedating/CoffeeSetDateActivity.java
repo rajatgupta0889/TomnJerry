@@ -17,37 +17,56 @@ import com.roomorama.caldroid.CaldroidListener;
 
 public class CoffeeSetDateActivity extends FragmentActivity {
 	private CaldroidFragment caldroidFragment;
+	private String intentDate = null;
 
+	@SuppressWarnings("deprecation")
 	private void setCustomResourceForDates() {
 		Calendar cal = Calendar.getInstance();
 
 		// Min date is last 7 days
 		cal.add(Calendar.DATE, 0);
-		Date blueDate = cal.getTime();
-
+		Date blueDate;
+		if (intentDate != null) {
+			System.out.println("Intent String" + intentDate);
+			blueDate = new Date(intentDate);
+			System.out.println("Blue date " + blueDate);
+		} else {
+			blueDate = cal.getTime();
+		}
 		if (caldroidFragment != null) {
 			caldroidFragment.setBackgroundResourceForDate(R.color.blue,
 					blueDate);
 
 			caldroidFragment.setTextColorForDate(R.color.white, blueDate);
 			caldroidFragment.clearDisableDates();
-			
+
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	@SuppressLint("SimpleDateFormat")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.coffee_meetup_setdate);
-	    getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		Intent intent = getIntent();
+		Bundle intentData = intent.getExtras();
+		Date dateFromIntent = null;
+		Calendar intentCal = null;
+		if (intentData != null) {
+			intentDate = intentData.getString("Date");
+			dateFromIntent = new Date(intentDate);
+			intentCal = Calendar.getInstance();
+			intentCal.setTime(dateFromIntent);
+		}
 		final SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy");
 
 		// Setup caldroid fragment
 		// **** If you want normal CaldroidFragment, use below line ****
 		caldroidFragment = new CaldroidFragment();
 
-	//	caldroidFragment = new CaldroidSampleCustomFragment();
+		// caldroidFragment = new CaldroidSampleCustomFragment();
 
 		// Setup arguments
 
@@ -60,8 +79,15 @@ public class CoffeeSetDateActivity extends FragmentActivity {
 		else {
 			Bundle args = new Bundle();
 			Calendar cal = Calendar.getInstance();
-			args.putInt(CaldroidFragment.MONTH, cal.get(Calendar.MONTH) + 1);
-			args.putInt(CaldroidFragment.YEAR, cal.get(Calendar.YEAR));
+			if (intentCal != null) {
+				args.putInt(CaldroidFragment.MONTH,
+						intentCal.get(Calendar.MONTH) + 1);
+				args.putInt(CaldroidFragment.YEAR, intentCal.get(Calendar.YEAR));
+
+			} else {
+				args.putInt(CaldroidFragment.MONTH, cal.get(Calendar.MONTH) + 1);
+				args.putInt(CaldroidFragment.YEAR, cal.get(Calendar.YEAR));
+			}
 			args.putBoolean(CaldroidFragment.ENABLE_SWIPE, true);
 			args.putBoolean(CaldroidFragment.SIX_WEEKS_IN_CALENDAR, false);
 			// Uncomment this to customize startDayOfWeek
@@ -82,13 +108,20 @@ public class CoffeeSetDateActivity extends FragmentActivity {
 
 			@Override
 			public void onSelectDate(Date date, View view) {
-				Toast.makeText(getApplicationContext(), formatter.format(date),
-						Toast.LENGTH_SHORT).show();
+
 				caldroidFragment.setBackgroundResourceForDate(R.color.green,
 						date);
-				Intent intent = new Intent(getApplicationContext(),CoffeeMeetUpActivity.class);
-				intent.putExtra("Date", date);
-				startActivity(intent);
+				System.out.println(date);
+				if (date.after(Calendar.getInstance().getTime())) {
+					Intent intent = new Intent();
+					intent.putExtra("Date", date.toString());
+					setResult(RESULT_OK, intent);
+					finish();
+				} else {
+					Toast.makeText(getApplicationContext(),
+							"Please Select Correct Date", Toast.LENGTH_SHORT)
+							.show();
+				}
 			}
 
 			@Override

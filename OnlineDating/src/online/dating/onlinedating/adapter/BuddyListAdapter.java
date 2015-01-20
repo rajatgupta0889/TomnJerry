@@ -90,8 +90,12 @@ public class BuddyListAdapter extends BaseAdapter {
 		TextView buddyName = (TextView) rowView.findViewById(R.id.buddyName);
 
 		buddyName.setText(buddyListItems.get(position).getUserName());
-		imgIcon.setImageResource(buddyListItems.get(position).getUserIcon());
+		if (buddyListItems.get(position).getUserIcon() == 0) {
+			imgIcon.setImageResource(R.drawable.com_facebook_profile_default_icon);
+		} else {
+			imgIcon.setImageResource(buddyListItems.get(position).getUserIcon());
 
+		}
 		return rowView;
 	}
 

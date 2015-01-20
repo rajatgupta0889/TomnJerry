@@ -35,7 +35,7 @@
         android:layout_alignBottom="@+id/buddyImage"
         android:layout_toLeftOf="@+id/buddyImage"
         android:background="#e7e7e7"
-        android:src="@drawable/ic_coffee_pink" />
+        android:src="@drawable/ic_msg" />
 
     <ImageView
         android:id="@+id/calendarImageView"
@@ -44,7 +44,7 @@
         android:layout_alignTop="@+id/buddyImage"
         android:layout_toLeftOf="@+id/buddyImage"
         android:background="#e7e7e7"
-        android:src="@drawable/ic_cal_pink" />
+        android:src="@drawable/ic_coffee_pink" />
 
     <TextView
         android:id="@+id/chatMessageUserName"

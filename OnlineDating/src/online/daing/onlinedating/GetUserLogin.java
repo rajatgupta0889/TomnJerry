@@ -1,7 +1,10 @@
 package online.daing.onlinedating;
 
+import java.util.ArrayList;
+
 import online.dating.onlinedating.model.ServiceHandler;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONStringer;
@@ -18,7 +21,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 
-class GetUserLogin extends AsyncTask<Void, Void, String> {
+public class GetUserLogin extends AsyncTask<Void, Void, String> {
 	Context context;
 	ProgressDialog proDialog;
 	public static final String url = "http://54.88.90.102:1337/";
@@ -92,7 +95,15 @@ class GetUserLogin extends AsyncTask<Void, Void, String> {
 				JSONObject res = new JSONObject(result);
 
 				if (res.getString("id") != null) {
+
 					if (MainFragement.tom != null) {
+						ArrayList<String> temp = new ArrayList<String>();
+						System.out.println("Login Result" + res);
+						JSONArray imageArray = res.getJSONArray("images");
+						for (int i = 0; i < imageArray.length(); i++) {
+							temp.add(imageArray.getString(0));
+						}
+						MainFragement.tom.setImageList(temp);
 						Intent intent = new Intent(context, LoginActivity.class);
 
 						MainFragement.tom.setUserToken(res.getString("id"));
@@ -114,6 +125,7 @@ class GetUserLogin extends AsyncTask<Void, Void, String> {
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+
 		}
 
 		// System.out.println(result);

@@ -114,15 +114,15 @@
             android:text="Done" />
 
         <RelativeLayout
-            android:layout_above="@+id/setSettingButton"
-            android:layout_below="@+id/chatMessageUserName" 
             android:layout_width="match_parent"
-            android:layout_height="100dp">
+            android:layout_height="100dp"
+            android:layout_above="@+id/setSettingButton"
+            android:layout_below="@+id/chatMessageUserName" >
 
             <ExpandableListView
                 android:id="@+id/expandableUserInfoListView"
-                android:layout_width="match_parent" 
-                android:layout_height="wrap_content"/>
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
         </RelativeLayout>
     </RelativeLayout>
 
