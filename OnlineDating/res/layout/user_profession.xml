@@ -4,66 +4,93 @@
     android:layout_height="wrap_content"
     android:layout_gravity="top"
     android:layout_marginBottom="20dp"
-    android:layout_marginEnd="10dp"
     android:layout_marginTop="10dp" >
 
     <ToggleButton
         android:id="@+id/toggleButton1"
-        android:layout_width="100dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/toggleButton4"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="35dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/toggle_cutomization"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
+        android:padding="5dp"
         android:textColor="@drawable/text_color"
-        android:textOff="Software Engineer"
-        android:textOn="Software Engineer" />
+        android:textOff="IT Professional"
+        android:textOn="IT Professional" />
 
     <ToggleButton
         android:id="@+id/toggleButton4"
-        android:layout_width="100dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/toggleButton2"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="33dp"
-        android:layout_marginTop="23dp"
+        android:layout_below="@+id/toggleButton1"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="18dp"
         android:background="@drawable/toggle_cutomization"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:textColor="@drawable/text_color"
-        android:textOff="Lawyer"
-        android:textOn="Lawyer" />
-
-    <ToggleButton
-        android:id="@+id/toggleButton2"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/toggleButton1"
-        android:layout_marginLeft="28dp"
-        android:layout_toRightOf="@+id/toggleButton1"
-        android:background="@drawable/toggle_cutomization"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
+        android:padding="5dp"
         android:textColor="@drawable/text_color"
         android:textOff="Manager"
         android:textOn="Manager" />
 
     <ToggleButton
+        android:id="@+id/toggleButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/toggleButton4"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/toggle_cutomization"
+        android:padding="5dp"
+        android:textColor="@drawable/text_color"
+        android:textOff="HR"
+        android:textOn="HR" />
+
+    <ToggleButton
+        android:id="@+id/ToggleButton01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/toggle_cutomization"
+        android:padding="5dp"
+        android:textColor="@drawable/text_color"
+        android:textOff="Cricketer"
+        android:textOn="Cricketer" />
+
+    <ToggleButton
+        android:id="@+id/ToggleButton02"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/toggleButton5"
+        android:layout_alignBottom="@+id/toggleButton5"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/toggle_cutomization"
+        android:padding="5dp"
+        android:textColor="@drawable/text_color"
+        android:textOff="Engineer"
+        android:textOn="Engineer" />
+
+    <ToggleButton
         android:id="@+id/toggleButton5"
-        android:layout_width="100dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/toggleButton4"
         android:layout_alignBottom="@+id/toggleButton4"
         android:layout_alignLeft="@+id/toggleButton2"
         android:background="@drawable/toggle_cutomization"
-        android:minHeight="48dp"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
+        android:padding="5dp"
         android:textColor="@drawable/text_color"
-        android:textOff="HR"
-        android:textOn="HR" />
+        android:textOff="CA"
+        android:textOn="CA" />
 
 </RelativeLayout>

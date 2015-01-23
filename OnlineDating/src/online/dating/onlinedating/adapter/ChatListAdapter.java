@@ -2,7 +2,10 @@ package online.dating.onlinedating.adapter;
 
 import java.util.ArrayList;
 
+import com.google.android.gms.internal.om;
+
 import online.daing.onlinedating.R;
+import online.dating.onlinedating.Service.ImageLoader;
 import online.dating.onlinedating.model.ChatListItem;
 import android.app.Activity;
 import android.content.Context;
@@ -59,8 +62,9 @@ public class ChatListAdapter extends BaseAdapter {
 				.findViewById(R.id.userChatName);
 
 		userChatName.setText(chatListItems.get(position).getChatUserName());
-		imgIcon.setImageResource(chatListItems.get(position).getChatUserIcon());
-
+		ImageLoader imageLoader = new ImageLoader(context);
+		imageLoader.DisplayImage(chatListItems.get(position).getChatUserName(),
+				R.drawable.com_facebook_button_blue, imgIcon);
 		return rowView;
 	}
 

@@ -4,6 +4,7 @@ public class NotificationItem {
 	private String notificationText;
 	private int userImage;
 	private Boolean isCoffeeReq = false;
+	private User user;
 
 	public NotificationItem(int userImage, Boolean isCoffeeReq,
 			String notificaitionText) {
@@ -30,6 +31,14 @@ public class NotificationItem {
 
 	public void setUserImage(int userImage) {
 		this.userImage = userImage;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public void setIsCoffeeReq(Boolean isCoffeeReq) {

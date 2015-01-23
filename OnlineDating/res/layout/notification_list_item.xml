@@ -14,44 +14,41 @@
         android:contentDescription="@string/content_desc_user_req"
         android:src="@drawable/com_facebook_profile_picture_blank_square" />
 
+    <ImageView
+        android:id="@+id/sideImageCoffee"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignBottom="@+id/userImage"
+        android:layout_toRightOf="@+id/userImage"
+        android:contentDescription="@string/content_desc_coffee_invite"
+        android:src="@drawable/ic_coffee_pink" 
+         />
+
     <TextView
         android:id="@+id/notificationText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/sideImageCoffee"
-        android:layout_centerInParent="true"
-        android:layout_marginBottom="18dp"
-        android:layout_marginTop="15dp"
-        android:layout_toRightOf="@id/sideImageCoffee"
-        android:gravity="center"
+        android:layout_alignBottom="@+id/userImage"
+        android:layout_toRightOf="@+id/sideImageUser"
+        android:gravity="left"
         android:text="@string/notif_sample_text" />
 
     <ImageView
-        android:id="@+id/sideImageCoffee"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/userImage"
-        android:layout_marginTop="16dp"
-        android:layout_toRightOf="@+id/userImage"
-        android:contentDescription="@string/content_desc_coffee_invite"
-        android:src="@drawable/ic_coffee_pink" />
+        android:id="@+id/sideCalImageView"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignLeft="@+id/sideImageCoffee"
+        android:layout_alignTop="@+id/notificationText"
+        android:contentDescription="@string/content_desc_coffee_caledar"
+        android:src="@drawable/ic_cal_pink" />
 
     <ImageView
         android:id="@+id/sideImageUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/notificationText"
+        android:layout_alignBottom="@+id/userImage"
+        android:layout_toRightOf="@+id/userImage"
         android:contentDescription="@string/content_desc_user_req"
         android:src="@drawable/ic_user_pink" />
-
-    <ImageView
-        android:id="@+id/sideCalImageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/notificationText"
-        android:contentDescription="@string/content_desc_coffee_caledar"
-        android:src="@drawable/ic_cal_pink" />
 
 </RelativeLayout>

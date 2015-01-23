@@ -4,8 +4,10 @@ import java.util.ArrayList;
 
 import online.daing.onlinedating.CoffeeMeetUpActivity;
 import online.daing.onlinedating.CoffeeSetDateActivity;
+import online.daing.onlinedating.HomeFragment;
 import online.daing.onlinedating.R;
 import online.daing.onlinedating.UserMessageActivity;
+import online.dating.onlinedating.Service.ImageLoader;
 import online.dating.onlinedating.model.BuddyListItem;
 import android.app.Activity;
 import android.content.Context;
@@ -56,18 +58,26 @@ public class BuddyListAdapter extends BaseAdapter {
 					.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 			rowView = mInflater.inflate(R.layout.buddy_list_item, null);
 		}
+
 		ImageView chatImageView = (ImageView) rowView
 				.findViewById(R.id.coffeeImageView);
+		ImageView buddyImageView = (ImageView) rowView
+				.findViewById(R.id.buddyImage);
+		ImageLoader imgLoader = new ImageLoader(context);
+		imgLoader.DisplayImage(buddyListItems.get(position).getUserIcon(),
+				R.drawable.abc_ab_stacked_solid_dark_holo, buddyImageView);
+
 		chatImageView.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				Intent intent = new Intent(context, UserMessageActivity.class);
-				intent.putExtra("Name", buddyListItems.get(position)
-						.getUserName());
+				intent.putExtra(HomeFragment.intentNameTag,
+						buddyListItems.get(position).getUserName());
 				intent.putExtra("ImageIcon", buddyListItems.get(position)
 						.getUserIcon());
+				intent.putExtra("id", buddyListItems.get(position).getBuddyId());
 				context.startActivity(intent);
 			}
 		});
@@ -83,6 +93,9 @@ public class BuddyListAdapter extends BaseAdapter {
 						.getUserName());
 				intent.putExtra("ImageIcon", buddyListItems.get(position)
 						.getUserIcon());
+				intent.putExtra("fbUserId", buddyListItems.get(position)
+						.getBuddyFbId());
+				intent.putExtra("requestType", "buddyList");
 				context.startActivity(intent);
 			}
 		});
@@ -90,13 +103,12 @@ public class BuddyListAdapter extends BaseAdapter {
 		TextView buddyName = (TextView) rowView.findViewById(R.id.buddyName);
 
 		buddyName.setText(buddyListItems.get(position).getUserName());
-		if (buddyListItems.get(position).getUserIcon() == 0) {
+		if (buddyListItems.get(position).getUserIcon().equals(0)) {
 			imgIcon.setImageResource(R.drawable.com_facebook_profile_default_icon);
 		} else {
-			imgIcon.setImageResource(buddyListItems.get(position).getUserIcon());
+			imgIcon.setImageResource(R.drawable.com_facebook_profile_picture_blank_square);
 
 		}
 		return rowView;
 	}
-
 }

@@ -49,18 +49,8 @@ public class NavDrawerListAdapter extends BaseAdapter {
 		}
 
 		ImageView imgIcon = (ImageView) rowView.findViewById(R.id.icon);
-		TextView txtCount = (TextView) rowView.findViewById(R.id.counter);
 
 		imgIcon.setImageResource(navDrawerItems.get(position).getIcon());
-
-		// displaying count
-		// check whether it set visible or not
-		if (navDrawerItems.get(position).getCounterVisibility()) {
-			txtCount.setText(navDrawerItems.get(position).getCount());
-		} else {
-			// hide the counter view
-			txtCount.setVisibility(View.GONE);
-		}
 
 		return rowView;
 	}

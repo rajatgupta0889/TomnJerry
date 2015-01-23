@@ -35,9 +35,19 @@ public class NotificationFragment extends Fragment {
 		if (intent != null) {
 			Bundle extra = intent.getExtras();
 			if (extra != null) {
-				String message = extra.getString("Match");
-				notificationItems.add(new NotificationItem(
-						R.drawable.com_facebook_logo, false, message));
+				if (extra.getString("resultType").equalsIgnoreCase("match")) {
+					String message = extra.getString("Match");
+					notificationItems.add(new NotificationItem(
+							R.drawable.com_facebook_logo, false, message));
+
+				} else if (extra.getString("resultType").equalsIgnoreCase(
+						"coffee")) {
+					String message = extra.getString("coffee");
+					
+					notificationItems.add(new NotificationItem(
+							R.drawable.com_facebook_logo, true, message));
+					/* Other intent handling */
+				}
 			}
 		}
 		adapter = new NotificationListAdapter(getActivity(), notificationItems);

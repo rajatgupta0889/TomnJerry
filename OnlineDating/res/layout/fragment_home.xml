@@ -27,10 +27,10 @@
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_alignLeft="@+id/view1"
-        android:layout_alignTop="@+id/coffeeMeetUserIcon"
+        android:layout_alignTop="@+id/profilePicImageView"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:text="@string/hi_user_name" />
+        android:text="" />
 
     <TextView
         android:id="@+id/userAge"
@@ -86,37 +86,24 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/coffeeMeetUserIcon"
+        android:layout_below="@+id/profilePicImageView"
         android:layout_marginTop="20dp"
         android:background="@drawable/bng" >
 
-        <TextView
-            android:id="@+id/chatMessageUserName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="25dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="25dp"
-            android:text="@string/user_info_taken_text"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@android:color/white" />
-
         <Button
-            android:id="@+id/setSettingButton"
+            android:id="@+id/okButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerInParent="true"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:text="Done" />
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_above="@+id/setSettingButton"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/okButton"
             android:layout_below="@+id/chatMessageUserName" >
 
             <ExpandableListView
@@ -124,10 +111,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </RelativeLayout>
+
+        <TextView
+            android:id="@+id/chatMessageUserName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/sendButton"
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/user_info_taken_text"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@android:color/white" />
+
     </RelativeLayout>
 
     <ImageView
-        android:id="@+id/coffeeMeetUserIcon"
+        android:id="@+id/profilePicImageView"
         android:layout_width="75dp"
         android:layout_height="100dp"
         android:layout_alignParentLeft="true"

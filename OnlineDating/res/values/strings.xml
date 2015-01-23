@@ -44,11 +44,11 @@
     </string-array>
 
     <array name="nav_drawer_icons">
-        <item>@drawable/ic_home_white</item>
-        <item>@drawable/ic_user</item>
-        <item>@drawable/ic_msg</item>
-        <item>@drawable/ic_coffee</item>
-        <item>@drawable/ic_settings</item>
+        <item>@drawable/homerial</item>
+        <item>@drawable/homerial</item>
+        <item>@drawable/homerial</item>
+        <item>@drawable/homerial</item>
+        <item>@drawable/homerial</item>
     </array>
 
     <string name="user_gender_image">user gender image</string>

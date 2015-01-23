@@ -8,17 +8,17 @@
     <LinearLayout
         android:id="@+id/userProfile"
         android:layout_width="fill_parent"
-        android:layout_height="80dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/customborder"
         android:gravity="center"
         android:orientation="horizontal" >
 
         <ImageView
-            android:id="@+id/coffeeMeetUserIcon"
+            android:id="@+id/profilePicImageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -46,7 +46,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Rajat Gupta"
+                android:text=""
                 android:textAppearance="?android:attr/textAppearanceMedium" />
         </LinearLayout>
     </LinearLayout>
@@ -54,11 +54,13 @@
     <LinearLayout
         android:id="@+id/setLocationLayout"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/matchDisplayLayout"
+        android:layout_below="@+id/setDateLayout"
+        android:layout_marginBottom="10dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/customborder"
         android:gravity="center" >
 
@@ -83,8 +85,10 @@
     </LinearLayout>
 
     <RelativeLayout
+        android:id="@+id/relativeLayout1"
         android:layout_width="fill_parent"
-        android:layout_height="140dp"
+        android:layout_height="200dp"
+        android:layout_above="@+id/acceptButton"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/setLocationLayout"
         android:layout_marginLeft="5dp"
@@ -93,7 +97,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginBottom="10dp"
@@ -173,13 +177,15 @@
     </RelativeLayout>
 
     <LinearLayout
-        android:id="@+id/matchDisplayLayout"
+        android:id="@+id/setDateLayout"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/userProfile"
+        android:layout_marginBottom="10dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/customborder"
         android:orientation="horizontal" >
 
@@ -201,45 +207,35 @@
             android:textAppearance="?android:attr/textAppearanceMedium" />
     </LinearLayout>
 
-    <RelativeLayout
-        android:id="@+id/foreground"
+    <Button
+        android:id="@+id/acceptButton"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/profileMatchImageView"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp" >
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/button_selector"
+        android:onClick="clickedMe" />
 
-        <Button
-            android:id="@+id/setSettingButton"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignTop="@+id/profileMatchImageView"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/custom_border_radius"
-            android:onClick="clickedMe" />
+    <ImageView
+        android:id="@+id/profileMatchImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/askButton"
+        android:paddingBottom="10dip"
+        android:paddingTop="10dip"
+        android:src="@drawable/ic_ask_image" />
 
-        <ImageView
-            android:id="@+id/profileMatchImageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_toRightOf="@+id/askButton"
-            android:paddingBottom="10dip"
-            android:paddingTop="10dip"
-            android:src="@drawable/ic_ask_image" />
-
-        <TextView
-            android:id="@+id/askButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/setSettingButton"
-            android:layout_alignBottom="@+id/setSettingButton"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="140dp"
-            android:text="Ask"
-            android:textColor="@android:color/white" />
-    </RelativeLayout>
+    <TextView
+        android:id="@+id/askButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/acceptButton"
+        android:layout_alignBottom="@+id/acceptButton"
+        android:layout_centerHorizontal="true"
+        android:text="Ask"
+        android:textColor="@android:color/white" />
 
 </RelativeLayout>

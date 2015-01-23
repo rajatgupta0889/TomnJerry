@@ -5,9 +5,11 @@
     android:background="@drawable/bng" >
 
     <LinearLayout
-        android:id="@+id/matchDisplayLayout"
+        android:id="@+id/setDateLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/progressBarRV"
+        android:layout_below="@+id/chatMessageUserName"
         android:layout_centerInParent="true"
         android:background="@drawable/layout_border_radius_white_bg"
         android:gravity="center"
@@ -55,9 +57,10 @@
         android:id="@+id/chatMessageUserName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/matchDisplayLayout"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="17dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
         android:gravity="center"
         android:text="Your buddy suggestion for today"
         android:textAppearance="?android:attr/textAppearanceMedium"

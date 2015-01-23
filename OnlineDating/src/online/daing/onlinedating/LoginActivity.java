@@ -5,10 +5,12 @@ import java.util.List;
 
 import online.dating.onlinedating.adapter.NavDrawerListAdapter;
 import online.dating.onlinedating.model.NavDrawerItem;
+import online.dating.onlinedating.model.User;
 
 import org.apache.http.NameValuePair;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Bundle;
@@ -58,7 +60,13 @@ public class LoginActivity extends ActionBarActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 		getActionBar().setDisplayShowHomeEnabled(false);
-
+		if (User.tom == null) {
+			SharedPreferences pref = getSharedPreferences("pref", 0);
+			String user = pref.getString(GetUserLogin.UserTom, null);
+			if (user != null) {
+				User.tom = User.getUser(user);
+			}
+		}
 		// tv_sex = (TextView) findViewById(R.id.tv_sex_disp);
 		// tv_email = (TextView) findViewById(R.id.tv_email_disp);
 		// tv_name = ( TextView) findViewById(R.id.tv_name_disp);
@@ -89,8 +97,8 @@ public class LoginActivity extends ActionBarActivity implements
 		navDrawerItems
 				.add(new NavDrawerItem(navMenuIcons.getResourceId(2, -1)));
 		// Communities, Will add a counter here
-		navDrawerItems.add(new NavDrawerItem(navMenuIcons.getResourceId(3, -1),
-				true, "22"));
+		navDrawerItems
+				.add(new NavDrawerItem(navMenuIcons.getResourceId(3, -1)));
 		// Pages
 		navDrawerItems
 				.add(new NavDrawerItem(navMenuIcons.getResourceId(4, -1)));
@@ -134,20 +142,19 @@ public class LoginActivity extends ActionBarActivity implements
 		if (intent != null) {
 			Bundle extras = intent.getExtras();
 			if (extras != null) {
-				String match = extras.getString("Match");
-				if (match.contains("Hurrey") || match.contains("Alas")) {
+				String match = extras.getString("resultType");
+				if (match.isEmpty() || match.contains("coffee")) {
 					notificationSelected();
 				} else {
 					displayView(0);
 				}
-			}
-			else {
+			} else {
 				if (savedInstanceState == null) {
 					// on first time display view for first nav item
 					displayView(0);
 				}
 			}
-		} 
+		}
 
 	}
 
