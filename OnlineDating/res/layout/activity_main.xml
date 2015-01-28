@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bng"
     android:visibility="visible"
     tools:context="online.daing.onlinedating.MainActivity" >
 
@@ -14,9 +13,10 @@
         android:layout_alignParentBottom="true" />
 
     <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_above="@+id/authButton"
+        android:background="@drawable/pager_bg"
         android:orientation="vertical" >
 
         <android.support.v4.view.ViewPager
@@ -32,7 +32,7 @@
             android:padding="10dip"
             app:radius="10dp" />
     </LinearLayout>
-<!-- 
+    <!--
     <ImageView
         android:id="@+id/logoImage"
         android:layout_width="250dp"
@@ -43,6 +43,7 @@
         android:layout_marginTop="70dp"
         android:contentDescription="@string/content_desc_logo"
         android:src="@drawable/newlogo"
-        android:visibility="gone" /> -->
+        android:visibility="gone" />
+    -->
 
 </RelativeLayout>

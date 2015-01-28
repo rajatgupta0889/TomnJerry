@@ -1,97 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_gravity="top"
     android:layout_marginBottom="20dp"
+    android:layout_marginLeft="10dp"
     android:layout_marginTop="10dp" >
 
-    <ToggleButton
-        android:id="@+id/toggleButton5"
-        android:layout_width="100dp"
+    <LinearLayout
+        android:id="@+id/topLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/toggleButton4"
-        android:layout_alignBottom="@+id/toggleButton4"
-        android:layout_alignLeft="@+id/toggleButton2"
-        android:layout_marginBottom="20dp"
-        android:layout_marginLeft="5dp"
-        android:background="@drawable/toggle_cutomization"
-        android:padding="5dp"
-        android:textColor="@drawable/text_color"
-        android:textOff="Traveling"
-        android:textOn="Traveling" />
-
-    <ToggleButton
-        android:id="@+id/toggleButton1"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/toggle_cutomization"
-        android:padding="5dp"
-        android:textColor="@drawable/text_color"
-        android:textOff="PARTYING"
-        android:textOn="PARTYING" />
-
-    <ToggleButton
-        android:id="@+id/toggleButton4"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/toggleButton1"
-        android:layout_marginBottom="20dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="18dp"
-        android:background="@drawable/toggle_cutomization"
-        android:padding="5dp"
-        android:textColor="@drawable/text_color"
-        android:textOff="HIKING"
-        android:textOn="HIKING" />
-
-    <ToggleButton
-        android:id="@+id/toggleButton2"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/toggleButton4"
-        android:layout_centerHorizontal="true"
-        android:layout_marginLeft="5dp"
-        android:background="@drawable/toggle_cutomization"
-        android:padding="5dp"
-        android:textColor="@drawable/text_color"
-        android:textOff="Sports"
-        android:textOn="Sports" />
-
-    <ToggleButton
-        android:id="@+id/ToggleButton01"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="5dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/toggle_cutomization"
-        android:padding="5dp"
-        android:textColor="@drawable/text_color"
-        android:textOff="Sports"
-        android:textOn="Sports" />
+        android:layout_marginTop="5dp"
+        android:gravity="left"
+        android:orientation="horizontal"
+        android:padding="5dp" >
 
-    <ToggleButton
-        android:id="@+id/ToggleButton02"
-        android:layout_width="100dp"
+        <CheckBox
+            android:id="@+id/travelingCB"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:button="@drawable/checkbox_selector"
+            android:text="Traveling"
+            android:textColor="@color/white" />
+
+        <CheckBox
+            android:id="@+id/partyingCB"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_weight="1"
+            android:button="@drawable/checkbox_selector"
+            android:text="Partying"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/medLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/toggleButton5"
-        android:layout_alignBottom="@+id/toggleButton5"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="20dp"
+        android:layout_below="@+id/topLayout"
         android:layout_marginLeft="5dp"
-        android:layout_marginRight="10dp"
-        android:background="@drawable/toggle_cutomization"
-        android:padding="5dp"
-        android:textColor="@drawable/text_color"
-        android:textOff="Traveling"
-        android:textOn="Traveling" />
+        android:layout_marginTop="5dp"
+        android:gravity="left"
+        android:orientation="horizontal"
+        android:padding="5dp" >
+
+        <CheckBox
+            android:id="@+id/sportCB"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:button="@drawable/checkbox_selector"
+            android:text="Traveling"
+            android:textColor="@color/white" />
+
+        <CheckBox
+            android:id="@+id/hikingCB"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_weight="1"
+            android:button="@drawable/checkbox_selector"
+            android:text="Hyking"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/bottomLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/medLayout"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:gravity="left"
+        android:orientation="horizontal"
+        android:padding="5dp" >
+
+        <CheckBox
+            android:id="@+id/cyclingCB"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_weight="1"
+            android:button="@drawable/checkbox_selector"
+            android:text="Cycling"
+            android:textColor="@color/white" />
+
+        <CheckBox
+            android:id="@+id/paintingCB"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_weight="1"
+            android:button="@drawable/checkbox_selector"
+            android:text="Painting"
+            android:textColor="@color/white" />
+    </LinearLayout>
 
 </RelativeLayout>

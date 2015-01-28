@@ -20,6 +20,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Geocoder;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -34,6 +35,7 @@ import android.widget.ExpandableListView.OnGroupExpandListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class HomeFragment extends Fragment implements OnClickListener {
@@ -65,6 +67,8 @@ public class HomeFragment extends Fragment implements OnClickListener {
 	public ImageView profileImageView;
 	TextView matchName;
 	TextView matchLocation;
+	RelativeLayout topLayout;
+	RelativeLayout pullLayout;
 	public final static String intentNameTag = "Name";
 	public final static String intentLocationTag = "Location";
 	int i = 0;
@@ -105,8 +109,12 @@ public class HomeFragment extends Fragment implements OnClickListener {
 					R.drawable.ic_user_interest));
 			userInfoItems.add(new UserInfoItem("Profession",
 					R.drawable.ic_user_passion));
-			Boolean[] passion = { false, false };
-			Boolean[] profession = { false, false };
+			topLayout = (RelativeLayout) rootView
+					.findViewById(R.id.topRelativeLayout);
+			pullLayout = (RelativeLayout) rootView
+					.findViewById(R.id.pullLayout);
+			Boolean[] passion = { false, false, false, false, false, false };
+			Boolean[] profession = { false, false, false, false, false, false };
 			UserDetailItem item = new UserDetailItem(true, 1, passion,
 					profession);
 			/* Setting imageVIew and create on click Listener */
@@ -130,12 +138,26 @@ public class HomeFragment extends Fragment implements OnClickListener {
 
 				@Override
 				public void onGroupExpand(int groupPosition) {
+
+					topLayout.setVisibility(View.GONE);
+					topLayout.animate();
+					pullLayout.setVisibility(View.VISIBLE);
 					if (lastExpandedPosition != -1
 							&& groupPosition != lastExpandedPosition) {
 						userList.collapseGroup(lastExpandedPosition);
 
 					}
 					lastExpandedPosition = groupPosition;
+				}
+			});
+			pullLayout.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					topLayout.setVisibility(View.VISIBLE);
+					pullLayout.setVisibility(View.GONE);
+					userList.collapseGroup(lastExpandedPosition);
 				}
 			});
 			userList.setAdapter(adapter);
@@ -234,6 +256,13 @@ public class HomeFragment extends Fragment implements OnClickListener {
 							String Location = addresses.get(0).getLocality();
 							matchLocation.setText(Location);
 						}
+						ImageLoader imageLoader = new ImageLoader(getActivity());
+						imageLoader
+								.DisplayImage(
+										matchObj.getJSONArray("images")
+												.getString(0),
+										R.drawable.com_facebook_profile_picture_blank_square,
+										profileImageView);
 
 					} catch (JSONException e) {
 						// TODO Auto-generated catch block

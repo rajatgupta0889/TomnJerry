@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
@@ -23,9 +24,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -50,7 +53,7 @@ public class LoginActivity extends ActionBarActivity implements
 
 	// slide menu items
 	private String[] navMenuTitles;
-	private TypedArray navMenuIcons;
+	private TypedArray navMenuIcons, navMenuIconSelected;
 
 	private ArrayList<NavDrawerItem> navDrawerItems;
 	private NavDrawerListAdapter adapter;
@@ -80,7 +83,8 @@ public class LoginActivity extends ActionBarActivity implements
 		// nav drawer icons from resources
 		navMenuIcons = getResources()
 				.obtainTypedArray(R.array.nav_drawer_icons);
-
+		navMenuIconSelected = getResources().obtainTypedArray(
+				R.array.nav_drawer_icons_selected);
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mDrawerList = (ListView) findViewById(R.id.list_slidermenu);
 
@@ -88,20 +92,20 @@ public class LoginActivity extends ActionBarActivity implements
 
 		// adding nav drawer items to array
 		// Home
-		navDrawerItems
-				.add(new NavDrawerItem(navMenuIcons.getResourceId(0, -1)));
+		navDrawerItems.add(new NavDrawerItem(navMenuIcons.getResourceId(0, -1),
+				navMenuIconSelected.getResourceId(0, -1)));
 		// Find People
-		navDrawerItems
-				.add(new NavDrawerItem(navMenuIcons.getResourceId(1, -1)));
+		navDrawerItems.add(new NavDrawerItem(navMenuIcons.getResourceId(1, -1),
+				navMenuIconSelected.getResourceId(1, -1)));
 		// Photos
-		navDrawerItems
-				.add(new NavDrawerItem(navMenuIcons.getResourceId(2, -1)));
+		navDrawerItems.add(new NavDrawerItem(navMenuIcons.getResourceId(2, -1),
+				navMenuIconSelected.getResourceId(2, -1)));
 		// Communities, Will add a counter here
-		navDrawerItems
-				.add(new NavDrawerItem(navMenuIcons.getResourceId(3, -1)));
+		navDrawerItems.add(new NavDrawerItem(navMenuIcons.getResourceId(3, -1),
+				navMenuIconSelected.getResourceId(3, -1)));
 		// Pages
-		navDrawerItems
-				.add(new NavDrawerItem(navMenuIcons.getResourceId(4, -1)));
+		navDrawerItems.add(new NavDrawerItem(navMenuIcons.getResourceId(4, -1),
+				navMenuIconSelected.getResourceId(4, -1)));
 		// What's hot, We will add a counter here
 
 		// Recycle the typed array
@@ -111,7 +115,7 @@ public class LoginActivity extends ActionBarActivity implements
 
 		// setting the nav drawer list adapter
 		adapter = new NavDrawerListAdapter(getApplicationContext(),
-				navDrawerItems);
+				navDrawerItems, mDrawerList);
 		mDrawerList.setAdapter(adapter);
 
 		// enabling action bar app icon and behaving it as toggle button

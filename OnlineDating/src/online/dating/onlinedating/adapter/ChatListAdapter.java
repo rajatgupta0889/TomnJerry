@@ -63,8 +63,9 @@ public class ChatListAdapter extends BaseAdapter {
 
 		userChatName.setText(chatListItems.get(position).getChatUserName());
 		ImageLoader imageLoader = new ImageLoader(context);
-		imageLoader.DisplayImage(chatListItems.get(position).getChatUserName(),
-				R.drawable.com_facebook_button_blue, imgIcon);
+		
+		imageLoader.DisplayImage(chatListItems.get(position).getChatUserIcon(),
+				R.drawable.com_facebook_profile_default_icon, imgIcon);
 		return rowView;
 	}
 

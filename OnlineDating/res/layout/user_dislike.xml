@@ -45,7 +45,9 @@
         android:layout_below="@+id/matchLocationTextView"
         android:layout_marginTop="10dp"
         android:background="#c54b5f"
-        android:button="@drawable/yellow_cb_selector"
+        android:button="@android:color/transparent"
+        android:drawableLeft="@drawable/yellow_cb_selector"
+        android:drawablePadding="10dp"
         android:text="Her Intetrests"
         android:textColor="@color/white" />
 
@@ -53,11 +55,12 @@
         android:id="@+id/positionCB"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/interestCB"
         android:layout_below="@+id/interestCB"
         android:layout_marginTop="1dp"
         android:background="#c54b5f"
-        android:button="@drawable/blue_cb_selector"
+        android:button="@android:color/transparent"
+        android:drawableLeft="@drawable/blue_cb_selector"
+        android:drawablePadding="10dp"
         android:text="Her Work Position"
         android:textColor="@color/white"
         android:textColorHint="@color/white" />
@@ -66,11 +69,12 @@
         android:id="@+id/heightCB"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/positionCB"
         android:layout_below="@+id/positionCB"
         android:layout_marginTop="1dp"
         android:background="#c54b5f"
-        android:button="@drawable/orange_cb_selector"
+        android:button="@android:color/transparent"
+        android:drawableLeft="@drawable/orange_cb_selector"
+        android:drawablePadding="10dp"
         android:text="Height"
         android:textColor="@color/white" />
 
@@ -78,11 +82,12 @@
         android:id="@+id/imageCB"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/heightCB"
         android:layout_below="@+id/heightCB"
         android:layout_marginTop="1dp"
         android:background="#c54b5f"
-        android:button="@drawable/green_cb_selector"
+        android:button="@android:color/transparent"
+        android:drawableLeft="@drawable/green_cb_selector"
+        android:drawablePadding="10dp"
         android:text="Profile Images"
         android:textColor="@color/white" />
 

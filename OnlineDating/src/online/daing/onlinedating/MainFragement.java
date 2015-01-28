@@ -94,10 +94,7 @@ public class MainFragement extends Fragment {
 	String regid;
 	ViewPager viewPager;
 	PagerAdapter adapter;
-	String[] rank;
-	String[] country;
-	String[] population;
-	int[] flag;
+	String[] text, textAnswer;
 	CirclePageIndicator mIndicator;
 
 	@Override
@@ -289,20 +286,16 @@ public class MainFragement extends Fragment {
 		View view = inflater.inflate(R.layout.activity_main, container, false);
 		LoginButton authButton = (LoginButton) view
 				.findViewById(R.id.authButton);
-		rank = new String[] { "1", "2", "3", "4" };
-
-		country = new String[] { "China", "India", "United States", "Indonesia" };
-
-		population = new String[] { "1,354,040,000", "1,210,193,422",
-				"315,761,000", "237,641,326" };
-
-		flag = new int[] { R.drawable.coffe_pink, R.drawable.coffe_pink,
-				R.drawable.coffe_pink, R.drawable.coffe_pink };
-
+		text = new String[] { "Looking for Mate to Date ",
+				"Get a new date request everyday",
+				"Suggest Where you should meet up" };
+		textAnswer = new String[] { "Find out special one in your life",
+				"Thumbs up the people you like, Forget Others",
+				"Coffee house or your favourite pub" };
 		// Locate the ViewPager in viewpager_main.xml
 		viewPager = (ViewPager) view.findViewById(R.id.pager);
 		// Pass results to ViewPagerAdapter Class
-		adapter = new ViewPagerAdapter(context, rank, country, population, flag);
+		adapter = new ViewPagerAdapter(context, text, textAnswer);
 		// Binds the Adapter to the ViewPager
 		viewPager.setAdapter(adapter);
 

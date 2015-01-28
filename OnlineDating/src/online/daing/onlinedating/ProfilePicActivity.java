@@ -9,9 +9,12 @@ import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import online.dating.onlinedating.Service.ImageLoader;
 import online.dating.onlinedating.model.ServiceHandler;
+import online.dating.onlinedating.model.User;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.json.JSONStringer;
 
 import android.app.Activity;
@@ -48,6 +51,39 @@ public class ProfilePicActivity extends Activity implements OnClickListener {
 		setContentView(R.layout.user_images);
 
 		init();
+		Intent intent = getIntent();
+		if (intent != null) {
+			Bundle bundle = intent.getExtras();
+			String user = bundle.getString("user");
+			if (User.tom == null) {
+				try {
+					User.tom = User.getUser(new JSONObject(user));
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			ImageLoader imageLoader = new ImageLoader(this);
+			imageLoader.DisplayImage(User.tom.getImageList().get(0),
+					R.drawable.com_facebook_profile_default_icon,
+					profilePicImageView);
+			imageLoader.DisplayImage(User.tom.getImageList().get(1),
+					R.drawable.com_facebook_profile_default_icon,
+					profilePicImageView1);
+			imageLoader.DisplayImage(User.tom.getImageList().get(2),
+					R.drawable.com_facebook_profile_default_icon,
+					profilePicImageView2);
+			imageLoader.DisplayImage(User.tom.getImageList().get(3),
+					R.drawable.com_facebook_profile_default_icon,
+					profilePicImageView3);
+			imageLoader.DisplayImage(User.tom.getImageList().get(4),
+					R.drawable.com_facebook_profile_default_icon,
+					profilePicImageView4);
+			imageLoader.DisplayImage(User.tom.getImageList().get(5),
+					R.drawable.com_facebook_profile_default_icon,
+					profilePicImageView5);
+
+		}
 		/* Setting on click Listener */
 		profilePicImageView.setOnClickListener(this);
 		profilePicImageView1.setOnClickListener(this);
@@ -82,8 +118,23 @@ public class ProfilePicActivity extends Activity implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
-		selectedView = (ImageView) v;
-		selectImage();
+		switch (v.getId()) {
+		case R.id.profileMatchImageView:
+
+			break;
+
+		default:
+			selectedView = (ImageView) v;
+			if (selectedView.getDrawable().equals(
+					R.drawable.com_facebook_profile_default_icon)) {
+				selectImage();
+			} else {
+				profilePicImageView
+						.setImageDrawable(selectedView.getDrawable());
+			}
+			break;
+		}
+
 	}
 
 	/**
@@ -207,7 +258,7 @@ public class ProfilePicActivity extends Activity implements OnClickListener {
 							.currentTimeMillis()) + ".jpg");
 					try {
 						fOut = new FileOutputStream(file);
-						bm.compress(Bitmap.CompressFormat.JPEG, 85, fOut);
+						bm.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
 						fOut.flush();
 						fOut.close();
 					} catch (FileNotFoundException e) {
