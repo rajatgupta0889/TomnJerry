@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/heightRadioGroup"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="20dp"
+    android:background="@drawable/custom_border_radius"
+    android:gravity="center_horizontal"
+    android:orientation="horizontal" >
+
+    <RadioButton
+        android:id="@+id/height_low"
+        android:button="@null"
+        android:drawableLeft="@drawable/custom_height_selector_small"
+        android:gravity="bottom"
+        android:padding="10dp" />
+
+    <RadioButton
+        android:id="@+id/height_med"
+        android:button="@null"
+        android:drawableLeft="@drawable/custom_height_selector_med"
+        android:gravity="bottom"
+        android:padding="10dp" />
+
+    <RadioButton
+        android:id="@+id/height_long"
+        android:button="@null"
+        android:drawableLeft="@drawable/custom_height_selector_large"
+        android:gravity="bottom"
+        android:padding="10dp" />
+
+</RadioGroup>

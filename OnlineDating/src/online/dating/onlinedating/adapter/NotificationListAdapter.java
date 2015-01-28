@@ -2,14 +2,13 @@ package online.dating.onlinedating.adapter;
 
 import java.util.ArrayList;
 
-import online.daing.onlinedating.CoffeeMeetUpActivity;
-import online.daing.onlinedating.HomeFragment;
-import online.daing.onlinedating.MatchViewActivity;
+import online.daing.onlinedating.CoffeeMeetUpRequestActivity;
 import online.daing.onlinedating.R;
 import online.dating.onlinedating.model.NotificationItem;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -74,12 +73,18 @@ public class NotificationListAdapter extends BaseAdapter {
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
-					Intent intent = new Intent(context,
-							CoffeeMeetUpActivity.class);
-					intent.putExtra(HomeFragment.intentNameTag, notificationItems.get(position)
-							.getNotificationText()
-							.toString().split(" ")[0]);
-					context.startActivity(intent);
+					Intent intentExtra = ((Activity) context).getIntent();
+					Bundle bundle = intentExtra.getExtras();
+					if (bundle != null) {
+						String CoffeeData = bundle.getString("match");
+						Intent intent = new Intent(context,
+								CoffeeMeetUpRequestActivity.class);
+						intent.putExtra("coffeeData", CoffeeData);
+						intent.putExtra("requestType", "notificationList");
+						context.startActivity(intent);
+
+					}
+
 				}
 			});
 		} else {
@@ -90,12 +95,13 @@ public class NotificationListAdapter extends BaseAdapter {
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
-					Intent intent = new Intent(context,
-							MatchViewActivity.class);
-					intent.putExtra(HomeFragment.intentNameTag, notificationItems.get(position)
-							.getNotificationText()
-							.toString().split(" ")[0]);
-					context.startActivity(intent);
+					// Intent intent = new Intent(context,
+					// MatchViewActivity.class);
+					// intent.putExtra(HomeFragment.intentNameTag,
+					// notificationItems.get(position)
+					// .getNotificationText().toString()
+					// .split(" ")[0]);
+					// context.startActivity(intent);
 				}
 			});
 		}

@@ -1,13 +1,26 @@
 package online.daing.onlinedating;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Locale;
 
+import online.dating.onlinedating.Service.ImageLoader;
 import online.dating.onlinedating.adapter.MyPagerAdapter;
 import online.dating.onlinedating.adapter.UserInfoExpandListAdapter;
+import online.dating.onlinedating.model.User;
 import online.dating.onlinedating.model.UserDetailItem;
 import online.dating.onlinedating.model.UserInfoItem;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.location.Address;
+import android.location.Geocoder;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -16,19 +29,29 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnGroupExpandListener;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements OnClickListener {
+
+	@Override
+	public void startActivityForResult(Intent intent, int requestCode) {
+		// TODO Auto-generated method stub
+		super.startActivityForResult(intent, requestCode);
+	}
 
 	public HomeFragment() {
 	}
 
 	private int lastExpandedPosition = -1;
-
+	// private int mProgressStatus = 0;
+	String UserId;
 	public final static int PAGES = 5;
 	// You can choose a bigger number for LOOPS, but you know, nobody will fling
 	// more than 1000 times just in order to test your "infinite" ViewPager :D
@@ -44,8 +67,15 @@ public class HomeFragment extends Fragment {
 	public ImageView profileImageView;
 	TextView matchName;
 	TextView matchLocation;
+	RelativeLayout topLayout;
+	RelativeLayout pullLayout;
 	public final static String intentNameTag = "Name";
 	public final static String intentLocationTag = "Location";
+	int i = 0;
+	TextView myProgress;
+	Button okButton;
+
+	// private Handler mHandler = new Handler();
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -59,6 +89,16 @@ public class HomeFragment extends Fragment {
 					false);
 			final ExpandableListView userList = (ExpandableListView) rootView
 					.findViewById(R.id.expandableUserInfoListView);
+			int loader = R.drawable.com_facebook_profile_picture_blank_square;
+
+			// ImageLoader class instance
+			ImageLoader imgLoader = new ImageLoader(getActivity());
+
+			// whenever you want to load an image from url
+			// call DisplayImage function
+			// url - image url to load
+			// loader - loader image, will be displayed before getting image
+			// image - ImageView
 
 			ArrayList<UserInfoItem> userInfoItems = new ArrayList<UserInfoItem>();
 			userInfoItems.add(new UserInfoItem("How tall are you",
@@ -69,25 +109,98 @@ public class HomeFragment extends Fragment {
 					R.drawable.ic_user_interest));
 			userInfoItems.add(new UserInfoItem("Profession",
 					R.drawable.ic_user_passion));
-			Boolean[] passion = { false, false };
-			Boolean[] profession = { false, false };
+			topLayout = (RelativeLayout) rootView
+					.findViewById(R.id.topRelativeLayout);
+			pullLayout = (RelativeLayout) rootView
+					.findViewById(R.id.pullLayout);
+			Boolean[] passion = { false, false, false, false, false, false };
+			Boolean[] profession = { false, false, false, false, false, false };
 			UserDetailItem item = new UserDetailItem(true, 1, passion,
 					profession);
+			/* Setting imageVIew and create on click Listener */
+			profileImageView = (ImageView) rootView
+					.findViewById(R.id.profilePicImageView);
 
+			profileImageView.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					Intent intent = new Intent(getActivity(),
+							ProfilePicActivity.class);
+					intent.putExtra("user", User.tom.toString());
+					startActivity(intent);
+				}
+			});
 			UserInfoExpandListAdapter adapter = new UserInfoExpandListAdapter(
 					getActivity(), userInfoItems, item);
 			userList.setOnGroupExpandListener(new OnGroupExpandListener() {
 
 				@Override
 				public void onGroupExpand(int groupPosition) {
+
+					topLayout.setVisibility(View.GONE);
+					topLayout.animate();
+					pullLayout.setVisibility(View.VISIBLE);
 					if (lastExpandedPosition != -1
 							&& groupPosition != lastExpandedPosition) {
 						userList.collapseGroup(lastExpandedPosition);
+
 					}
 					lastExpandedPosition = groupPosition;
 				}
 			});
+			pullLayout.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					topLayout.setVisibility(View.VISIBLE);
+					pullLayout.setVisibility(View.GONE);
+					userList.collapseGroup(lastExpandedPosition);
+				}
+			});
 			userList.setAdapter(adapter);
+			SharedPreferences pref = getActivity().getSharedPreferences("pref",
+					0);
+			if (pref.getString(GetUserLogin.UserTom, null) != null) {
+
+				String user = pref.getString(GetUserLogin.UserTom, null);
+				if (user != null) {
+					String[] token = user.split(";");
+					String Location = "";
+					Geocoder geoCoder = new Geocoder(getActivity(),
+							Locale.getDefault());
+					try {
+						List<Address> addresses = geoCoder.getFromLocation(
+								Double.parseDouble(token[6]),
+								Double.parseDouble(token[7]), 1);
+
+						if (addresses.size() > 0) {
+							Location = addresses.get(0).getLocality();
+
+						}
+
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+					String image_url = "https://graph.facebook.com/" + token[2]
+							+ "/picture?type=large";
+					imgLoader.DisplayImage(image_url, loader, profileImageView);
+					TextView nameTv = (TextView) rootView
+							.findViewById(R.id.userName);
+					nameTv.setText(nameTv.getText() + token[0]);
+					TextView ageTv = (TextView) rootView
+							.findViewById(R.id.userAge);
+					ageTv.setText(token[4]);
+					TextView locTv = (TextView) rootView
+							.findViewById(R.id.userLoc);
+					locTv.setText(Location);
+					TextView userDesigTv = (TextView) rootView
+							.findViewById(R.id.userDesignation);
+
+				}
+			}
 		} else {
 			rootView = inflater.inflate(R.layout.profile_match, container,
 					false);
@@ -116,21 +229,94 @@ public class HomeFragment extends Fragment {
 
 			profileImageView = (ImageView) rootView
 					.findViewById(R.id.profileMatchImageView);
+			LinearLayout imageLayout = (LinearLayout) rootView
+					.findViewById(R.id.setDateLayout);
 
-			profileImageView.setOnClickListener(new OnClickListener() {
+			Intent intent = getActivity().getIntent();
+			if (intent != null) {
 
-				@Override
-				public void onClick(View v) {
-					// TODO Auto-generated method stub
-					Intent intent = new Intent(getActivity(),
-							MatchViewActivity.class);
-					intent.putExtra(intentNameTag, matchName.getText()
-							.toString());
-					intent.putExtra(intentLocationTag, matchLocation.getText()
-							.toString());
-					startActivity(intent);
+				SharedPreferences matchPref = getActivity()
+						.getSharedPreferences("matchPref", 0);
+				final String match = matchPref.getString("MatchInfo", null);
+
+				if (match != null) {
+					Log.d("Match", match);
+					JSONObject matchObj;
+					try {
+						matchObj = new JSONObject(match);
+						matchName.setText(matchObj.getString("name"));
+						Geocoder geoCoder = new Geocoder(getActivity(),
+								Locale.getDefault());
+						JSONObject loc = matchObj.getJSONObject("location");
+						List<Address> addresses = geoCoder.getFromLocation(
+								Double.parseDouble(loc.getString("x")),
+								Double.parseDouble(loc.getString("y")), 1);
+
+						if (addresses.size() > 0) {
+							String Location = addresses.get(0).getLocality();
+							matchLocation.setText(Location);
+						}
+						ImageLoader imageLoader = new ImageLoader(getActivity());
+						imageLoader
+								.DisplayImage(
+										matchObj.getJSONArray("images")
+												.getString(0),
+										R.drawable.com_facebook_profile_picture_blank_square,
+										profileImageView);
+
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (NumberFormatException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+					profileImageView.setOnClickListener(new OnClickListener() {
+
+						@Override
+						public void onClick(View v) {
+							// TODO Auto-generated method stub
+							Intent intent = new Intent(getActivity(),
+									MatchViewActivity.class);
+							intent.putExtra(intentNameTag, matchName.getText()
+									.toString());
+							intent.putExtra(intentLocationTag, matchLocation
+									.getText().toString());
+							intent.putExtra("Match", match);
+							startActivity(intent);
+						}
+					});
+				} else {
+					imageLayout.setVisibility(View.GONE);
+
 				}
-			});
+
+			} else {
+				imageLayout.setVisibility(View.GONE);
+			}
+
+			timeProgress = (ProgressBar) rootView.findViewById(R.id.myProgress);
+			// Get the Drawable custom_progressbar
+
+			myProgress = (TextView) rootView.findViewById(R.id.myProgressText);
+
+			Calendar cal = Calendar.getInstance();
+			Long mil1 = cal.getTimeInMillis();
+			cal.add(Calendar.DATE, 1);
+			cal.set(Calendar.HOUR_OF_DAY, 10);
+			cal.set(Calendar.MINUTE, 00);
+			cal.set(Calendar.SECOND, 00);
+			System.out.println(cal.getTime());
+			Long mil2 = cal.getTimeInMillis();
+			Long diff = mil2 - mil1;
+			Long hours = diff / (60000 * 60);
+			myProgress.setText("" + hours);
+			timeProgress.setMax(24);
+			timeProgress.setProgress((int) (hours + 1));
 
 		}
 
@@ -146,8 +332,20 @@ public class HomeFragment extends Fragment {
 			settings.edit().putBoolean("my_first_time", true).commit();
 
 		}
-		timeProgress = (ProgressBar) rootView.findViewById(R.id.myProgress);
 
 		return rootView;
+	}
+
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		switch (v.getId()) {
+		case R.id.sendButton:
+
+			break;
+
+		default:
+			break;
+		}
 	}
 }

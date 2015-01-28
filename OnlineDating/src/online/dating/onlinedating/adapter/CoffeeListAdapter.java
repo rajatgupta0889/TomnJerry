@@ -3,6 +3,7 @@ package online.dating.onlinedating.adapter;
 import java.util.ArrayList;
 
 import online.daing.onlinedating.R;
+import online.dating.onlinedating.Service.ImageLoader;
 import online.dating.onlinedating.model.CoffeeListItem;
 import android.app.Activity;
 import android.content.Context;
@@ -60,8 +61,10 @@ public class CoffeeListAdapter extends BaseAdapter {
 				.findViewById(R.id.userCoffeeName);
 
 		userChatName.setText(coffeeListItems.get(position).getCoffeeUserName());
-		imgIcon.setImageResource(coffeeListItems.get(position)
-				.getCoffeeUserImage());
+		ImageLoader imgLoader = new ImageLoader(context);
+		imgLoader.DisplayImage(coffeeListItems.get(position)
+				.getCoffeeUserImage(),
+				R.drawable.abc_ab_stacked_solid_dark_holo, imgIcon);
 
 		return rowView;
 	}

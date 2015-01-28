@@ -4,12 +4,27 @@ public class UserMessageItem {
 	int imageIcon;
 	String Message;
 	Boolean isSelf;
+	String author;
 
-	public UserMessageItem(int imageIcon, String message, Boolean isSelf) {
+	public UserMessageItem() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public UserMessageItem(int imageIcon, String message, Boolean isSelf,
+			String author) {
 		super();
 		this.imageIcon = imageIcon;
 		Message = message;
 		this.isSelf = isSelf;
+		this.author = author;
+	}
+
+	public String getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(String author) {
+		this.author = author;
 	}
 
 	public int getImageIcon() {

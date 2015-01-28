@@ -1,28 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:layout_height="match_parent" >
 
     <LinearLayout
+        android:id="@+id/layout"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:background="#fb4e6a"
         android:orientation="vertical" >
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/profileMatchImageView"
-        android:layout_width="wrap_content"
-        android:layout_height="400dp"
+    <com.viewpagerindicator.CirclePageIndicator
+        android:id="@+id/imageIndicator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_alignWithParentIfMissing="true"
-        android:layout_centerInParent="true"
-        android:layout_gravity="center"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
         android:layout_marginTop="10dp"
-        android:src="@drawable/user_profile" />
+        app:radius="5dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageIndicator"
+        android:gravity="top"
+        android:orientation="vertical" >
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/imagePager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="top"
+            android:layout_weight="1" />
+    </LinearLayout>
+    <!--  -->
 
     <LinearLayout
         android:id="@+id/setLocationLayout"
@@ -51,7 +64,6 @@
             android:text="Software Engineer"
             android:textColor="@android:color/white"
             android:textSize="16sp" />
-
     </LinearLayout>
 
     <LinearLayout
@@ -71,7 +83,7 @@
             android:src="@drawable/ic_passion" />
 
         <TextView
-            android:id="@+id/matchPassionTextView"
+            android:id="@+id/locationTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -80,7 +92,6 @@
             android:text="Music, Partying, Football, Hyking"
             android:textColor="@android:color/white"
             android:textSize="16sp" />
-
     </LinearLayout>
 
     <LinearLayout
@@ -139,7 +150,6 @@
                 android:text="Madgaon,Goa"
                 android:textColor="@android:color/white"
                 android:textSize="22sp" />
-
         </LinearLayout>
 
         <ImageView
@@ -166,7 +176,6 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@android:color/white"
             android:textSize="18sp" />
-
     </LinearLayout>
 
 </RelativeLayout>

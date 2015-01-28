@@ -1,27 +1,44 @@
 package online.daing.onlinedating;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import online.dating.onlinedating.adapter.ViewPagerAdapter;
 import online.dating.onlinedating.model.GPSTracker;
+import online.dating.onlinedating.model.ServiceHandler;
+import online.dating.onlinedating.model.User;
 
 import org.apache.http.NameValuePair;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONStringer;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,6 +55,8 @@ import com.facebook.widget.LoginButton;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.google.android.gms.internal.lp;
+import com.viewpagerindicator.CirclePageIndicator;
 
 @SuppressLint("NewApi")
 public class MainFragement extends Fragment {
@@ -57,6 +76,8 @@ public class MainFragement extends Fragment {
 	public static final String PROPERTY_REG_ID = "registration_id";
 	private static final String PROPERTY_APP_VERSION = "appVersion";
 	private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+	String userID;
+
 	/**
 	 * Substitute you own sender ID here. This is the project number you got
 	 * from the API Console, as described in "Getting Started."
@@ -70,14 +91,17 @@ public class MainFragement extends Fragment {
 	AtomicInteger msgId = new AtomicInteger();
 	SharedPreferences prefs;
 	Context context;
-
 	String regid;
+	ViewPager viewPager;
+	PagerAdapter adapter;
+	String[] text, textAnswer;
+	CirclePageIndicator mIndicator;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		System.out.println("1");
 		context = getActivity().getApplicationContext();
+
 		if (checkPlayServices()) {
 			gcm = GoogleCloudMessaging.getInstance(getActivity());
 			regid = getRegistrationId(context);
@@ -262,12 +286,30 @@ public class MainFragement extends Fragment {
 		View view = inflater.inflate(R.layout.activity_main, container, false);
 		LoginButton authButton = (LoginButton) view
 				.findViewById(R.id.authButton);
+		text = new String[] { "Looking for Mate to Date ",
+				"Get a new date request everyday",
+				"Suggest Where you should meet up" };
+		textAnswer = new String[] { "Find out special one in your life",
+				"Thumbs up the people you like, Forget Others",
+				"Coffee house or your favourite pub" };
+		// Locate the ViewPager in viewpager_main.xml
+		viewPager = (ViewPager) view.findViewById(R.id.pager);
+		// Pass results to ViewPagerAdapter Class
+		adapter = new ViewPagerAdapter(context, text, textAnswer);
+		// Binds the Adapter to the ViewPager
+		viewPager.setAdapter(adapter);
+
+		// ViewPager Indicator
+		mIndicator = (CirclePageIndicator) view.findViewById(R.id.indicator);
+		mIndicator.setViewPager(viewPager);
+		((CirclePageIndicator) mIndicator).setSnap(true);
 		authButton.setFragment(this);
 		Log.i(TAG, authButton.getText().toString());
-		if (Session.getActiveSession().getAccessToken() != null) {
-			authButton.setVisibility(View.INVISIBLE);
-		}
-		authButton.setReadPermissions(Arrays.asList("public_profile", "email"));
+		// if (Session.getActiveSession().getAccessToken() != null) {
+		// authButton.setVisibility(View.INVISIBLE);
+		// }
+		authButton.setReadPermissions(Arrays.asList("public_profile", "email",
+				"user_location", "user_birthday", "user_likes"));
 
 		return view;
 	}
@@ -275,83 +317,228 @@ public class MainFragement extends Fragment {
 	private void onSessionStateChange(Session session, SessionState state,
 			Exception exception) {
 		if (state.isOpened()) {
-
 			Log.i(TAG, "Logged in...");
 
 			System.out.println("Session " + session);
 			if (logIn == 0) {
+				logIn = 1;
 				new Request(session, "/me", null, HttpMethod.GET,
 						new Request.Callback() {
 							public void onCompleted(Response response) {
 								/* handle the result */
+								System.out.println("Response " + response);
+								if (response != null) {
+									GraphObject resp = response
+											.getGraphObject();
 
-								GraphObject resp = response.getGraphObject();
+									user = resp.getInnerJSONObject();
+									Log.d(TAG, " " + user);
+									if (user != null) {
 
-								user = resp.getInnerJSONObject();
-								System.out.println(user);
-								if (user != null) {
+										try {
+											userID = user.getString("id");
+											String age = "";
+											if (user.has("birthday")) {
+												String birthday = user
+														.getString("birthday");
 
-									try {
-										vm = new JSONStringer()
-												.object()
-												.key("name")
-												.value(user.getString("name"))
-												.key("email")
-												.value(user.getString("email"))
-												.key("fbUserId")
-												.value(user.getString("id"))
-												.key("gender")
-												.value(user.getString("gender"))
-												.key("location").object()
-												.key("x").value(longitude)
-												.key("y").value(latitude)
-												.endObject().endObject();
-										/*
-										 * nameValuePairs = new
-										 * ArrayList<NameValuePair>();
-										 * nameValuePairs.add(new
-										 * BasicNameValuePair( "name",
-										 * user.getString("name")));
-										 * nameValuePairs.add(new
-										 * BasicNameValuePair( "email", user
-										 * .getString("email"))); nameValuePairs
-										 * .add(new BasicNameValuePair(
-										 * "fbUserId", user.getString("id")));
-										 * nameValuePairs.add(new
-										 * BasicNameValuePair( "gender", user
-										 * .getString("gender")));
-										 * List<NameValuePair> local = new
-										 * ArrayList<NameValuePair>();
-										 * local.add(new BasicNameValuePair("x",
-										 * "12.966")); local.add(new
-										 * BasicNameValuePair("y", "77.566"));
-										 * System.out.println(local.toString());
-										 * nameValuePairs.add(new
-										 * BasicNameValuePair("location",
-										 * local.toString()));
-										 */
-										Log.d("MainFragement",
-												"Sending String "
-														+ vm.toString());
-										GetUserLogin login = new GetUserLogin(
-												getActivity(), proDialog, vm);
-										login.setListener(new OnTaskCompleted() {
-											
-											@Override
-											public void onTaskCompleted() {
-												// TODO Auto-generated method stub
-												
+												if (birthday != null) {
+													Calendar dateOfBirth = Calendar
+															.getInstance();
+													String[] dob = birthday
+															.split("/");
+													dateOfBirth.set(
+															Integer.parseInt(dob[2]),
+															Integer.parseInt(dob[0]),
+															Integer.parseInt(dob[1]));
+													Calendar today = Calendar
+															.getInstance();
+													int year = today
+															.get(Calendar.YEAR)
+															- dateOfBirth
+																	.get(Calendar.YEAR);
+
+													if (today
+															.get(Calendar.DAY_OF_YEAR) < dateOfBirth
+															.get(Calendar.DAY_OF_YEAR)) {
+														year--;
+													}
+													Integer ageInt = new Integer(
+															year);
+													age = ageInt.toString();
+
+												}
 											}
-										});
-										login.execute();
-									} catch (JSONException e) {
-										// TODO Auto-generated catch block
-										e.printStackTrace();
+											User.tom = new User(user
+													.getString("name"), user
+													.getString("email"), user
+													.getString("id"), user
+													.getString("gender"),
+													latitude, longitude, "",
+													getRegistrationId(context),
+													"android", age,
+													new ArrayList<String>());
+
+											vm = new JSONStringer()
+													.object()
+													.key("name")
+													.value(User.tom.getName())
+													.key("email")
+													.value(User.tom.getEmail())
+													.key("fbUserId")
+													.value(User.tom
+															.getFbUserId())
+													.key("gender")
+													.value(User.tom.getGender())
+													.key("location")
+													.object()
+													.key("x")
+													.value(User.tom
+															.getLocationX())
+													.key("y")
+													.value(User.tom
+															.getLocationY())
+													.endObject()
+													.key("device_token")
+													.value(User.tom
+															.getDeviceToken())
+													.key("os")
+													.value(User.tom.getOs())
+													.endObject();
+
+											Log.d("MainFragement",
+													"Sending String "
+															+ vm.toString());
+											GetUserLogin login = new GetUserLogin(
+													getActivity(), proDialog,
+													vm);
+											login.setListener(new OnTaskCompleted() {
+
+												@Override
+												public void onTaskCompleted() {
+													// TODO Auto-generated
+													// method
+													// stub
+													new AsyncTask<Void, Void, Void>() {
+
+														@Override
+														protected Void doInBackground(
+																Void... params) {
+															// TODO
+															// Auto-generated
+															// method stub
+															Bitmap userIcon = getFacebookProfilePicture(userID);
+															ByteArrayOutputStream baos = new ByteArrayOutputStream();
+															userIcon.compress(
+																	Bitmap.CompressFormat.JPEG,
+																	100, baos);
+															byte[] b = baos
+																	.toByteArray();
+															String imageEncoded = Base64
+																	.encodeToString(
+																			b,
+																			Base64.DEFAULT);
+
+															JSONStringer data = null;
+															try {
+																data = new JSONStringer()
+																		.object()
+																		.key("data")
+																		.value(imageEncoded)
+																		.endObject();
+																ServiceHandler sh = new ServiceHandler();
+																String result = sh
+																		.makeServiceCall(
+																				GetUserLogin.url
+																						+ "image",
+																				ServiceHandler.POST,
+																				data);
+																System.out
+																		.println("Result "
+																				+ result);
+															} catch (JSONException e) {
+																// TODO
+																// Auto-generated
+																// catch block
+																e.printStackTrace();
+															}
+															return null;
+														}
+
+													}.execute();
+
+												}
+
+												@Override
+												public void OnResult(
+														String result) {
+
+													SharedPreferences pref = context
+															.getSharedPreferences(
+																	"pref", 0);
+													SharedPreferences.Editor editor = pref
+															.edit();
+													if (User.tom != null) {
+														editor.putString(
+																GetUserLogin.UserTom,
+																User.tom.toString());
+														editor.commit();
+														Log.d("Result in MainFrag oNResult",
+																pref.getString(
+																		GetUserLogin.UserTom,
+																		null));
+													} else {
+														Log.d(TAG,
+																"User is null");
+													}
+
+													Intent intent = new Intent(
+															getActivity(),
+															LoginActivity.class);
+													startActivity(intent);
+													getActivity().finish();
+												}
+
+												@Override
+												public void onResult(
+														String result,
+														String resultType) {
+													// TODO Auto-generated
+													// method stub
+
+												}
+											});
+											login.execute();
+										} catch (JSONException e) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
+										}
 									}
+								} else {
+									new AlertDialog.Builder(context)
+											.setTitle("Error in Connection")
+											.setMessage("Login after sometime")
+											.setPositiveButton(
+													android.R.string.yes,
+													new DialogInterface.OnClickListener() {
+														public void onClick(
+																DialogInterface dialog,
+																int which) {
+															// continue with
+															// delete
+															((Activity) context)
+																	.finish();
+														}
+													})
+											.setIcon(
+													android.R.drawable.ic_dialog_alert)
+											.show();
+
 								}
 							}
 
 						}).executeAsync();
+
 			}
 			/*
 			 * else{
@@ -378,6 +565,7 @@ public class MainFragement extends Fragment {
 		super.onResume();
 		Session session = Session.getActiveSession();
 		if (session != null && (session.isOpened() || session.isClosed())) {
+			logIn = 0;
 			onSessionStateChange(session, session.getState(), null);
 		}
 		if (gps.canGetLocation()) {
@@ -402,6 +590,7 @@ public class MainFragement extends Fragment {
 	public void onDestroy() {
 		super.onDestroy();
 		uiHelper.onDestroy();
+		logIn = 0;
 	}
 
 	@Override
@@ -410,4 +599,22 @@ public class MainFragement extends Fragment {
 		uiHelper.onSaveInstanceState(outState);
 	}
 
+	public static Bitmap getFacebookProfilePicture(String userID) {
+		URL imageURL;
+		Bitmap bitmap = null;
+		try {
+			imageURL = new URL("https://graph.facebook.com/" + userID
+					+ "/picture?type=large");
+			bitmap = BitmapFactory.decodeStream(imageURL.openConnection()
+					.getInputStream());
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return bitmap;
+
+	}
 }

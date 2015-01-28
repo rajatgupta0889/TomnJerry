@@ -2,7 +2,24 @@ package online.dating.onlinedating.model;
 
 public class BuddyListItem {
 	String userName;
-	int userIcon;
+	String userIcon;
+	String buddyId;
+	String buddyFbId;
+
+	public BuddyListItem(String userName, String userIcon, String buddyId) {
+		super();
+		this.userName = userName;
+		this.userIcon = userIcon;
+		this.buddyId = buddyId;
+	}
+
+	public String getBuddyId() {
+		return buddyId;
+	}
+
+	public void setBuddyId(String buddyId) {
+		this.buddyId = buddyId;
+	}
 
 	public String getUserName() {
 		return userName;
@@ -12,18 +29,20 @@ public class BuddyListItem {
 		this.userName = userName;
 	}
 
-	public int getUserIcon() {
+	public String getUserIcon() {
 		return userIcon;
 	}
 
-	public void setUserIcon(int userIcon) {
+	public void setUserIcon(String userIcon) {
 		this.userIcon = userIcon;
 	}
 
-	public BuddyListItem(String userName, int userIcon) {
-		super();
-		this.userName = userName;
-		this.userIcon = userIcon;
+	public String getBuddyFbId() {
+		return buddyFbId;
+	}
+
+	public void setBuddyFbId(String buddyFbId) {
+		this.buddyFbId = buddyFbId;
 	}
 
 }

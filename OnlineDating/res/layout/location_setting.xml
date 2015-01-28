@@ -30,27 +30,27 @@
     </LinearLayout>
 
     <MultiAutoCompleteTextView
-        android:id="@+id/multiAutoCompleteTextView1"
+        android:id="@+id/locationSearchEditTextView"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_alignLeft="@+id/setDateLayout"
         android:layout_below="@+id/setDateLayout"
-        android:layout_toLeftOf="@+id/button1"
+        android:layout_toLeftOf="@+id/searchLocationButton"
         android:ems="10"
-        android:text="MultiAutoCompleteTextView" />
+        android:text="" />
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/searchLocationButton"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_alignRight="@+id/setDateLayout"
-        android:layout_alignTop="@+id/multiAutoCompleteTextView1"
-        android:background="@drawable/custom_border_radius"
+        android:layout_alignTop="@+id/locationSearchEditTextView"
+        android:background="@drawable/button_selector"
         android:text="Button" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/setLocationButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -59,7 +59,7 @@
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/custom_border_radius"
+        android:background="@drawable/button_selector"
         android:text="SELECT" />
 
     <fragment
@@ -67,9 +67,9 @@
         android:name="com.google.android.gms.maps.MapFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/button2"
+        android:layout_above="@+id/setLocationButton"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/multiAutoCompleteTextView1"
+        android:layout_below="@+id/locationSearchEditTextView"
         android:layout_marginTop="15dp" />
 
 </RelativeLayout>

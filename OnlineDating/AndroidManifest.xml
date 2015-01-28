@@ -5,7 +5,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="17"
+        android:minSdkVersion="15"
         android:targetSdkVersion="21" />
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -20,6 +20,8 @@
      Google Maps Android API v2, but are recommended.
     -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <permission
         android:name="online.daing.olinedating.permission.C2D_MESSAGE"
@@ -35,7 +37,8 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme"
+         >
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
@@ -48,7 +51,7 @@
         </activity>
 
         <receiver
-            android:name=".GcmBroadcastReceiver"
+            android:name="online.daing.onlinedating.GcmBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
@@ -67,13 +70,14 @@
             android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyDkDRwSsrLX2GYl8PW-Kb2GDBhluP7Bs70" />
+            android:value="AIzaSyDJIL3bccWuQMwz7FuEkyO-X6omBQ0CFBg" />
 
         <uses-library android:name="com.google.android.maps" />
 
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait" >
         </activity>
         <activity
@@ -118,6 +122,18 @@
             android:name=".LocationSettingActivity"
             android:label="Location"
             android:parentActivityName=".CoffeeMeetUpActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ProfilePicActivity"
+            android:label="Profile"
+            android:parentActivityName=".LoginActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".CoffeeMeetUpRequestActivity"
+            android:label="Meet UP"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait" >
         </activity>
     </application>

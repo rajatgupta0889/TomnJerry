@@ -1,25 +1,33 @@
 package online.daing.onlinedating;
 
+import java.util.ArrayList;
+
 import online.dating.onlinedating.model.ServiceHandler;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONStringer;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.util.Log;
+import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 
-class GetUserLogin extends AsyncTask<Void, Void, Void> {
+public class GetUserLogin extends AsyncTask<Void, Void, String> {
 	Context context;
 	ProgressDialog proDialog;
-	private static String url = "http://54.88.90.102:1337/";
+	public static final String url = "http://54.88.90.102:1337/";
 	private JSONStringer vm;
 	private OnTaskCompleted listener;
+	public static final String UserTom = "Tom";
 
 	public GetUserLogin(Context context, ProgressDialog proDialog,
 			JSONStringer vm) {
@@ -44,67 +52,85 @@ class GetUserLogin extends AsyncTask<Void, Void, Void> {
 		super.onPreExecute();
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
-	protected void onPostExecute(Void result) {
+	protected void onPostExecute(String result) {
 		// TODO Auto-generated method stub
 
 		super.onPostExecute(result);
 		proDialog.dismiss();
 		proDialog.cancel();
-		listener.onTaskCompleted();
+		if (result != null) {
+			listener.onTaskCompleted();
+			listener.OnResult(result);
+		} else {
 
+			new AlertDialog.Builder(context)
+					.setTitle("Error in Connection")
+					.setMessage("Login after sometime")
+					.setPositiveButton(android.R.string.yes,
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,
+										int which) {
+									// continue with delete
+									((Activity) context).finish();
+								}
+							}).setIcon(android.R.drawable.ic_dialog_alert)
+					.show();
+
+		}
 	}
 
 	String result;
 
 	@Override
-	protected Void doInBackground(Void... params) {
+	protected String doInBackground(Void... params) {
 		// TODO Auto-generated method stub
 
 		ServiceHandler sh = new ServiceHandler();
 		result = sh.makeServiceCall(url + "login", ServiceHandler.POST, vm);
-		Log.d("AsynTAsk", result);
+		// Log.d("AsynTAsk", result);
 		// System.out.println(result);
-		try {
-			if (result != null) {
-				JSONObject res = new JSONObject(result);
-
-				if (res.getString("id") != null) {
-
-					Intent intent = new Intent(context, LoginActivity.class);
-
-					SharedPreferences pref = context.getSharedPreferences(
-							"pref", 0);
-					System.out.println("pref " + pref);
-					SharedPreferences.Editor editor = pref.edit();
-
-					editor.putString("Id", res.getString("id"));
-					editor.putString("fbUserId", res.getString("fbUserId"));
-					editor.putString("name", res.getString("name"));
-					editor.putString("email", res.getString("email"));
-					editor.commit();
-
-					intent.putExtra("name", res.getString("name"));
-					intent.putExtra("orientation", res.getString("orientation"));
-					intent.putExtra("fbUserId", res.getString("fbUserId"));
-					intent.putExtra("email", res.getString("email"));
-					intent.putExtra("id", res.getString("id"));
-					intent.putExtra("gender", res.getString("gender"));
-					Log.i("Splash", pref.getString("Id", ""));
-
-					context.startActivity(intent);
-					((Activity) context).finish();
-				}
-
-			} else {
-
-			}
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		// try {
+		// if (result != null) {
+		// JSONObject res = new JSONObject(result);
+		//
+		// if (res.getString("id") != null) {
+		//
+		// if (MainFragement.tom != null) {
+		// ArrayList<String> temp = new ArrayList<String>();
+		// System.out.println("Login Result" + res);
+		// JSONArray imageArray = res.getJSONArray("images");
+		// for (int i = 0; i < imageArray.length(); i++) {
+		// temp.add(imageArray.getString(0));
+		// }
+		// MainFragement.tom.setImageList(temp);
+		// Intent intent = new Intent(context, LoginActivity.class);
+		//
+		// MainFragement.tom.setUserToken(res.getString("id"));
+		//
+		// SharedPreferences pref = context.getSharedPreferences(
+		// "pref", 0);
+		// SharedPreferences.Editor editor = pref.edit();
+		// editor.putString(UserTom, MainFragement.tom.toString());
+		// editor.commit();
+		// context.startActivity(intent);
+		// ((Activity) context).finish();
+		// }
+		//
+		// }
+		//
+		// } else {
+		//
+		// }
+		// } catch (JSONException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		//
+		// }
 
 		// System.out.println(result);
-		return null;
+		return result;
 	}
+
 }

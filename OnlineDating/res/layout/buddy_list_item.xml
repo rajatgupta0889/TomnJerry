@@ -14,7 +14,7 @@
         android:layout_marginTop="10dp"
         android:background="@drawable/custom_border_radius"
         android:gravity="center|right"
-        android:paddingRight="5dp"
+        android:paddingRight="15dp"
         android:text="RAJAT GUPTA"
         android:textColor="@android:color/white" />
 
@@ -26,7 +26,7 @@
         android:layout_below="@+id/buddyName"
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="10dp"
-        android:src="@drawable/com_facebook_profile_picture_blank_square" />
+        android:src="@drawable/user_profile" />
 
     <ImageView
         android:id="@+id/coffeeImageView"
@@ -35,7 +35,7 @@
         android:layout_alignBottom="@+id/buddyImage"
         android:layout_toLeftOf="@+id/buddyImage"
         android:background="#e7e7e7"
-        android:src="@drawable/ic_coffee_pink" />
+        android:src="@drawable/ic_msg" />
 
     <ImageView
         android:id="@+id/calendarImageView"
@@ -44,18 +44,6 @@
         android:layout_alignTop="@+id/buddyImage"
         android:layout_toLeftOf="@+id/buddyImage"
         android:background="#e7e7e7"
-        android:src="@drawable/ic_cal_pink" />
-
-    <TextView
-        android:id="@+id/chatMessageUserName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/buddyName"
-        android:layout_alignBottom="@+id/buddyName"
-        android:layout_alignLeft="@+id/calendarImageView"
-        android:layout_alignRight="@+id/calendarImageView"
-        android:gravity="center"
-        android:text="online"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:src="@drawable/ic_coffee_pink" />
 
 </RelativeLayout>

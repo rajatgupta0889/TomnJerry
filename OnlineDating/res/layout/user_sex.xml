@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
     android:orientation="vertical" >
 
     <RadioGroup
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center_horizontal"
         android:orientation="horizontal" >
 
         <RadioButton
             android:id="@+id/male"
-            android:layout_weight="1"
-            android:button="@null"
-            android:drawableBottom="@drawable/radio_button_selected"
-            android:drawableTop="@drawable/custom_user_interest_male"
-            android:gravity="center" />
+            android:layout_marginRight="30dp"
+            android:button="@drawable/custom_user_interest_male"
+            android:gravity="center"
+            android:paddingLeft="5dp" />
 
         <RadioButton
             android:id="@+id/female"
-            android:layout_weight="1"
-            android:button="@null"
-            android:drawableBottom="@drawable/radio_button_selected"
-            android:drawableTop="@drawable/custom_user_interest_female"
-            android:gravity="center" />
+            android:button="@drawable/custom_user_interest_female"
+            android:gravity="center"
+            android:paddingLeft="5dp" />
     </RadioGroup>
-    
 
-</LinearLayout>
+</RelativeLayout>

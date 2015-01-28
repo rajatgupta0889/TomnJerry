@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bng"
+    android:gravity="center" >
+
+    <ImageView
+        android:id="@+id/ProfilePicImageView"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_alignTop="@+id/ProfilePicImageView1"
+        android:layout_toLeftOf="@+id/ProfilePicImageView1"
+        android:background="@drawable/edit_textbox_border"
+        android:src="@drawable/com_facebook_profile_picture_blank_portrait" />
+
+    <ImageView
+        android:id="@+id/ProfilePicImageView2"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignBottom="@+id/ProfilePicImageView"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/edit_textbox_border"
+        android:src="@drawable/com_facebook_profile_picture_blank_portrait" />
+
+    <ImageView
+        android:id="@+id/ProfilePicImageView1"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/ProfilePicImageView2"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/edit_textbox_border"
+        android:src="@drawable/com_facebook_profile_picture_blank_portrait" />
+
+    <ImageView
+        android:id="@+id/ProfilePicImageView4"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignRight="@+id/ProfilePicImageView"
+        android:layout_below="@+id/ProfilePicImageView"
+        android:background="@drawable/edit_textbox_border"
+        android:src="@drawable/com_facebook_profile_picture_blank_portrait" />
+
+    <ImageView
+        android:id="@+id/ProfilePicImageView3"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignTop="@+id/ProfilePicImageView4"
+        android:layout_toRightOf="@+id/ProfilePicImageView4"
+        android:background="@drawable/edit_textbox_border"
+        android:src="@drawable/com_facebook_profile_picture_blank_portrait" />
+
+    <ImageView
+        android:id="@+id/ProfilePicImageView5"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignLeft="@+id/ProfilePicImageView"
+        android:layout_alignTop="@+id/ProfilePicImageView4"
+        android:background="@drawable/edit_textbox_border"
+        android:src="@drawable/com_facebook_profile_picture_blank_portrait" />
+
+</RelativeLayout>

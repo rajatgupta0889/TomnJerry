@@ -1,38 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/heightRadioGroup"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="20dp"
+    android:background="@drawable/custom_border_radius"
+    android:gravity="center_horizontal"
     android:orientation="horizontal" >
 
-    <RadioGroup
-        android:id="@+id/heightRadioGroup"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal" >
+    <RadioButton
+        android:id="@+id/height_low"
+        android:layout_marginRight="20dp"
+        android:button="@drawable/custom_height_selector_small"
+        android:gravity="bottom" />
 
-        <RadioButton
-            android:id="@+id/height_low"
-            android:layout_weight="1"
-            android:button="@android:color/transparent"
-            android:drawableBottom="@drawable/radio_button_selected"
-            android:drawableTop="@drawable/custom_height_selector_small"
-            android:gravity="center" />
+    <RadioButton
+        android:id="@+id/height_med"
+        android:layout_marginRight="20dp"
+        android:button="@drawable/custom_height_selector_med"
+        android:gravity="bottom" />
 
-        <RadioButton
-            android:id="@+id/height_med"
-            android:layout_weight="1"
-            android:button="@null"
-            android:drawableBottom="@drawable/radio_button_selected"
-            android:drawableTop="@drawable/custom_height_selector_med"
-            android:gravity="center" />
+    <RadioButton
+        android:id="@+id/height_long"
+        android:button="@drawable/custom_height_selector_large"
+        android:gravity="bottom" />
 
-        <RadioButton
-            android:id="@+id/height_long"
-            android:layout_weight="1"
-            android:button="@null"
-            android:drawableBottom="@drawable/radio_button_selected"
-            android:drawableTop="@drawable/custom_height_selector_large"
-            android:gravity="center" />
-    </RadioGroup>
-
-</LinearLayout>
+</RadioGroup>

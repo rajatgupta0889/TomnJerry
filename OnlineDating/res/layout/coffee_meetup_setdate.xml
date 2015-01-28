@@ -25,15 +25,17 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="10dp"
-            android:text="RAJAT GUPTA"
+            android:text=""
             android:textAppearance="?android:attr/textAppearanceLarge" />
     </LinearLayout>
 
     <LinearLayout
-        android:layout_below="@+id/setDateLayout"
         android:id="@+id/calendar1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/setDateLayout"
+        android:layout_marginTop="19dp"
         android:orientation="vertical" >
     </LinearLayout>
 

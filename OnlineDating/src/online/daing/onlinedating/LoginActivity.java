@@ -5,12 +5,15 @@ import java.util.List;
 
 import online.dating.onlinedating.adapter.NavDrawerListAdapter;
 import online.dating.onlinedating.model.NavDrawerItem;
+import online.dating.onlinedating.model.User;
 
 import org.apache.http.NameValuePair;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
@@ -21,9 +24,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -35,12 +40,11 @@ public class LoginActivity extends ActionBarActivity implements
 	Button btnFindMatch, logout;
 	Spinner orientation;
 	List<NameValuePair> nameValuePairs;
-	private static String url = "http://54.88.90.102:1337/";
+	// private static String url = "http://54.88.90.102:1337/";
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
 	private ActionBarDrawerToggle mDrawerToggle;
 
-	
 	// nav drawer title
 	private CharSequence mDrawerTitle;
 
@@ -49,7 +53,7 @@ public class LoginActivity extends ActionBarActivity implements
 
 	// slide menu items
 	private String[] navMenuTitles;
-	private TypedArray navMenuIcons;
+	private TypedArray navMenuIcons, navMenuIconSelected;
 
 	private ArrayList<NavDrawerItem> navDrawerItems;
 	private NavDrawerListAdapter adapter;
@@ -59,53 +63,28 @@ public class LoginActivity extends ActionBarActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 		getActionBar().setDisplayShowHomeEnabled(false);
-		
+		if (User.tom == null) {
+			SharedPreferences pref = getSharedPreferences("pref", 0);
+			String user = pref.getString(GetUserLogin.UserTom, null);
+			if (user != null) {
+				User.tom = User.getUser(user);
+			}
+		}
 		// tv_sex = (TextView) findViewById(R.id.tv_sex_disp);
 		// tv_email = (TextView) findViewById(R.id.tv_email_disp);
 		// tv_name = ( TextView) findViewById(R.id.tv_name_disp);
 
 		// orientation = (Spinner) findViewById(R.id.spinner_orientation);
-		Intent intent = getIntent();
-		Bundle bundle = intent.getExtras();
-		if (bundle != null) {
-			/*
-			 * String name = bundle.getString("name"); String email =
-			 * bundle.getString("email"); String id = bundle.getString("id"); //
-			 * String orientation = bundle.getString("orientation"); String sex
-			 * = bundle.getString("gender"); ArrayAdapter<CharSequence> adapter
-			 * = ArrayAdapter .createFromResource(this,
-			 * R.array.orientation_array, android.R.layout.simple_spinner_item);
-			 * // Specify the layout to use when the list of choices appears
-			 * adapter.setDropDownViewResource(android.R.layout.
-			 * simple_spinner_dropdown_item); // Apply the adapter to the
-			 * spinner orientation.setAdapter(adapter);
-			 * orientation.setOnItemSelectedListener(this);
-			 * tv_name.setText("Hello " + name); tv_email.setText(email);
-			 * tv_sex.setText(sex); System.out.println(id); //btnFindMatch =
-			 * (Button) findViewById(R.id.findMatch);
-			 * btnFindMatch.setOnClickListener(new OnClickListener() {
-			 * 
-			 * @Override public void onClick(View v) { // TODO Auto-generated
-			 * method stub new GetUserMatch().execute(); } }); //logout =
-			 * (Button) findViewById(R.id.logout); logout.setOnClickListener(new
-			 * OnClickListener() {
-			 * 
-			 * @Override public void onClick(View v) { // TODO Auto-generated
-			 * method stub Session session = Session.getActiveSession();
-			 * session.closeAndClearTokenInformation();
-			 * 
-			 * startActivity(new Intent(getApplicationContext(),
-			 * MainActivity.class)); finish(); } });
-			 */}
-		// tv_sex.setText(sex);
+
 		mTitle = mDrawerTitle = getTitle();
 
 		// load slide menu items
-		navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);	
+		navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
 		// nav drawer icons from resources
 		navMenuIcons = getResources()
 				.obtainTypedArray(R.array.nav_drawer_icons);
-
+		navMenuIconSelected = getResources().obtainTypedArray(
+				R.array.nav_drawer_icons_selected);
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mDrawerList = (ListView) findViewById(R.id.list_slidermenu);
 
@@ -113,20 +92,20 @@ public class LoginActivity extends ActionBarActivity implements
 
 		// adding nav drawer items to array
 		// Home
-		navDrawerItems
-				.add(new NavDrawerItem(navMenuIcons.getResourceId(0, -1)));
+		navDrawerItems.add(new NavDrawerItem(navMenuIcons.getResourceId(0, -1),
+				navMenuIconSelected.getResourceId(0, -1)));
 		// Find People
-		navDrawerItems
-				.add(new NavDrawerItem(navMenuIcons.getResourceId(1, -1)));
+		navDrawerItems.add(new NavDrawerItem(navMenuIcons.getResourceId(1, -1),
+				navMenuIconSelected.getResourceId(1, -1)));
 		// Photos
-		navDrawerItems
-				.add(new NavDrawerItem(navMenuIcons.getResourceId(2, -1)));
+		navDrawerItems.add(new NavDrawerItem(navMenuIcons.getResourceId(2, -1),
+				navMenuIconSelected.getResourceId(2, -1)));
 		// Communities, Will add a counter here
 		navDrawerItems.add(new NavDrawerItem(navMenuIcons.getResourceId(3, -1),
-				true, "22"));
+				navMenuIconSelected.getResourceId(3, -1)));
 		// Pages
-		navDrawerItems
-				.add(new NavDrawerItem(navMenuIcons.getResourceId(4, -1)));
+		navDrawerItems.add(new NavDrawerItem(navMenuIcons.getResourceId(4, -1),
+				navMenuIconSelected.getResourceId(4, -1)));
 		// What's hot, We will add a counter here
 
 		// Recycle the typed array
@@ -136,7 +115,7 @@ public class LoginActivity extends ActionBarActivity implements
 
 		// setting the nav drawer list adapter
 		adapter = new NavDrawerListAdapter(getApplicationContext(),
-				navDrawerItems);
+				navDrawerItems, mDrawerList);
 		mDrawerList.setAdapter(adapter);
 
 		// enabling action bar app icon and behaving it as toggle button
@@ -163,11 +142,24 @@ public class LoginActivity extends ActionBarActivity implements
 			}
 		};
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
-
-		if (savedInstanceState == null) {
-			// on first time display view for first nav item
-			displayView(0);
+		Intent intent = getIntent();
+		if (intent != null) {
+			Bundle extras = intent.getExtras();
+			if (extras != null) {
+				String match = extras.getString("resultType");
+				if (match.isEmpty() || match.contains("coffee")) {
+					notificationSelected();
+				} else {
+					displayView(0);
+				}
+			} else {
+				if (savedInstanceState == null) {
+					// on first time display view for first nav item
+					displayView(0);
+				}
+			}
 		}
+
 	}
 
 	/**
@@ -215,10 +207,11 @@ public class LoginActivity extends ActionBarActivity implements
 
 	private void notificationSelected() {
 		// TODO Auto-generated method stub
-		Fragment frag = new PagesFragment();
+		Fragment frag = new NotificationFragment();
+
 		FragmentManager fragmentManager = getSupportFragmentManager();
-		fragmentManager.beginTransaction()
-				.replace(R.id.frame_container, frag).commit();
+		fragmentManager.beginTransaction().replace(R.id.frame_container, frag)
+				.commit();
 
 		// update selected item and title, then close the drawer
 
@@ -239,50 +232,6 @@ public class LoginActivity extends ActionBarActivity implements
 		// TODO Auto-generated method stub
 
 	}
-
-	//
-	// private class GetUserMatch extends AsyncTask<Void, Void, String> {
-	// @Override
-	// protected void onPreExecute() {
-	// // TODO Auto-generated method stub
-	//
-	// super.onPreExecute();
-	// }
-	//
-	// @Override
-	// protected void onPostExecute(String result) {
-	// // TODO Auto-generated method stub
-	// /* proDialog.dismiss(); */
-	// Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT)
-	// .show();
-	// super.onPostExecute(result);
-	// }
-	//
-	// String result;
-	//
-	// @Override
-	// protected String doInBackground(Void... params) {
-	// // TODO Auto-generated method stub
-	//
-	// ServiceHandler sh = new ServiceHandler();
-	// result = sh.makeServiceCall(url + "getAMatch", ServiceHandler.GET
-	//
-	// );
-	//
-	// System.out.println(result);
-	// return result;
-	// /*
-	// * try { JSONObject res = new JSONObject(result);
-	// *
-	// * } catch (JSONException e) { // TODO Auto-generated catch block
-	// * e.printStackTrace(); }
-	// */
-	//
-	// // System.out.println(result);
-	// // return null;
-	// }
-	//
-	// }
 
 	/***
 	 * Called when invalidateOptionsMenu() is triggered
