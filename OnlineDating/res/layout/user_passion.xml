@@ -58,7 +58,7 @@
             android:layout_marginRight="5dp"
             android:layout_weight="1"
             android:button="@drawable/checkbox_selector"
-            android:text="Traveling"
+            android:text="Sports"
             android:textColor="@color/white" />
 
         <CheckBox

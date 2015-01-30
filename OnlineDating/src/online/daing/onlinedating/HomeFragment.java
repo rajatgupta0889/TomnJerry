@@ -20,7 +20,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Geocoder;
-import android.opengl.Visibility;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -29,6 +28,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnGroupExpandListener;
@@ -52,6 +54,7 @@ public class HomeFragment extends Fragment implements OnClickListener {
 	private int lastExpandedPosition = -1;
 	// private int mProgressStatus = 0;
 	String UserId;
+
 	public final static int PAGES = 5;
 	// You can choose a bigger number for LOOPS, but you know, nobody will fling
 	// more than 1000 times just in order to test your "infinite" ViewPager :D
@@ -67,8 +70,7 @@ public class HomeFragment extends Fragment implements OnClickListener {
 	public ImageView profileImageView;
 	TextView matchName;
 	TextView matchLocation;
-	RelativeLayout topLayout;
-	RelativeLayout pullLayout;
+
 	public final static String intentNameTag = "Name";
 	public final static String intentLocationTag = "Location";
 	int i = 0;
@@ -81,257 +83,100 @@ public class HomeFragment extends Fragment implements OnClickListener {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View rootView = null;
-		SharedPreferences settings = getActivity().getSharedPreferences(
-				PREFS_NAME, 0);
-		if (settings.getBoolean("my_first_time", true)) {
-			// the app is being launched for first time)
-			rootView = inflater.inflate(R.layout.fragment_home, container,
-					false);
-			final ExpandableListView userList = (ExpandableListView) rootView
-					.findViewById(R.id.expandableUserInfoListView);
-			int loader = R.drawable.com_facebook_profile_picture_blank_square;
+		rootView = inflater.inflate(R.layout.profile_match, container, false);
+		matchName = (TextView) rootView.findViewById(R.id.profileMatchNameAge);
+		matchLocation = (TextView) rootView
+				.findViewById(R.id.profileMatchLocation);
 
-			// ImageLoader class instance
-			ImageLoader imgLoader = new ImageLoader(getActivity());
+		profileImageView = (ImageView) rootView
+				.findViewById(R.id.profileMatchImageView);
+		LinearLayout imageLayout = (LinearLayout) rootView
+				.findViewById(R.id.setDateLayout);
+		Intent intent = getActivity().getIntent();
+		if (intent != null) {
 
-			// whenever you want to load an image from url
-			// call DisplayImage function
-			// url - image url to load
-			// loader - loader image, will be displayed before getting image
-			// image - ImageView
+			SharedPreferences matchPref = getActivity().getSharedPreferences(
+					"matchPref", 0);
+			final String match = matchPref.getString("MatchInfo", null);
 
-			ArrayList<UserInfoItem> userInfoItems = new ArrayList<UserInfoItem>();
-			userInfoItems.add(new UserInfoItem("How tall are you",
-					R.drawable.ic_user_height));
-			userInfoItems.add(new UserInfoItem("Your Passion",
-					R.drawable.ic_user_passion));
-			userInfoItems.add(new UserInfoItem("Interested in",
-					R.drawable.ic_user_interest));
-			userInfoItems.add(new UserInfoItem("Profession",
-					R.drawable.ic_user_passion));
-			topLayout = (RelativeLayout) rootView
-					.findViewById(R.id.topRelativeLayout);
-			pullLayout = (RelativeLayout) rootView
-					.findViewById(R.id.pullLayout);
-			Boolean[] passion = { false, false, false, false, false, false };
-			Boolean[] profession = { false, false, false, false, false, false };
-			UserDetailItem item = new UserDetailItem(true, 1, passion,
-					profession);
-			/* Setting imageVIew and create on click Listener */
-			profileImageView = (ImageView) rootView
-					.findViewById(R.id.profilePicImageView);
-
-			profileImageView.setOnClickListener(new OnClickListener() {
-
-				@Override
-				public void onClick(View v) {
-					// TODO Auto-generated method stub
-					Intent intent = new Intent(getActivity(),
-							ProfilePicActivity.class);
-					intent.putExtra("user", User.tom.toString());
-					startActivity(intent);
-				}
-			});
-			UserInfoExpandListAdapter adapter = new UserInfoExpandListAdapter(
-					getActivity(), userInfoItems, item);
-			userList.setOnGroupExpandListener(new OnGroupExpandListener() {
-
-				@Override
-				public void onGroupExpand(int groupPosition) {
-
-					topLayout.setVisibility(View.GONE);
-					topLayout.animate();
-					pullLayout.setVisibility(View.VISIBLE);
-					if (lastExpandedPosition != -1
-							&& groupPosition != lastExpandedPosition) {
-						userList.collapseGroup(lastExpandedPosition);
-
-					}
-					lastExpandedPosition = groupPosition;
-				}
-			});
-			pullLayout.setOnClickListener(new OnClickListener() {
-
-				@Override
-				public void onClick(View v) {
-					// TODO Auto-generated method stub
-					topLayout.setVisibility(View.VISIBLE);
-					pullLayout.setVisibility(View.GONE);
-					userList.collapseGroup(lastExpandedPosition);
-				}
-			});
-			userList.setAdapter(adapter);
-			SharedPreferences pref = getActivity().getSharedPreferences("pref",
-					0);
-			if (pref.getString(GetUserLogin.UserTom, null) != null) {
-
-				String user = pref.getString(GetUserLogin.UserTom, null);
-				if (user != null) {
-					String[] token = user.split(";");
-					String Location = "";
+			if (match != null) {
+				Log.d("Match", match);
+				JSONObject matchObj;
+				try {
+					matchObj = new JSONObject(match);
+					matchName.setText(matchObj.getString("name"));
 					Geocoder geoCoder = new Geocoder(getActivity(),
 							Locale.getDefault());
-					try {
-						List<Address> addresses = geoCoder.getFromLocation(
-								Double.parseDouble(token[6]),
-								Double.parseDouble(token[7]), 1);
+					JSONObject loc = matchObj.getJSONObject("location");
+					List<Address> addresses = geoCoder.getFromLocation(
+							Double.parseDouble(loc.getString("x")),
+							Double.parseDouble(loc.getString("y")), 1);
 
-						if (addresses.size() > 0) {
-							Location = addresses.get(0).getLocality();
-
-						}
-
-					} catch (IOException e1) {
-						e1.printStackTrace();
+					if (addresses.size() > 0) {
+						String Location = addresses.get(0).getLocality();
+						matchLocation.setText(Location);
 					}
-					String image_url = "https://graph.facebook.com/" + token[2]
-							+ "/picture?type=large";
-					imgLoader.DisplayImage(image_url, loader, profileImageView);
-					TextView nameTv = (TextView) rootView
-							.findViewById(R.id.userName);
-					nameTv.setText(nameTv.getText() + token[0]);
-					TextView ageTv = (TextView) rootView
-							.findViewById(R.id.userAge);
-					ageTv.setText(token[4]);
-					TextView locTv = (TextView) rootView
-							.findViewById(R.id.userLoc);
-					locTv.setText(Location);
-					TextView userDesigTv = (TextView) rootView
-							.findViewById(R.id.userDesignation);
+					ImageLoader imageLoader = new ImageLoader(getActivity());
+					imageLoader
+							.DisplayImage(
+									matchObj.getJSONArray("images")
+											.getString(0),
+									R.drawable.com_facebook_profile_picture_blank_square,
+									profileImageView);
 
-				}
-			}
-		} else {
-			rootView = inflater.inflate(R.layout.profile_match, container,
-					false);
-			// pager = (ViewPager) rootView.findViewById(R.id.myviewpager);
-			//
-			// adapter = new MyPagerAdapter(this, getChildFragmentManager());
-			// pager.setAdapter(adapter);
-			// pager.setOnPageChangeListener(adapter);
-			//
-			// // Set current item to the middle page so we can fling to both
-			// // directions left and right
-			// pager.setCurrentItem(FIRST_PAGE);
-			//
-			// // Necessary or the pager will only have one extra page to show
-			// // make this at least however many pages you can see
-			// pager.setOffscreenPageLimit(3);
-			//
-			// // Set margin for pages as a negative number, so a part of next
-			// and
-			// // previous pages will be showed
-			// pager.setPageMargin(-350);
-			matchName = (TextView) rootView
-					.findViewById(R.id.profileMatchNameAge);
-			matchLocation = (TextView) rootView
-					.findViewById(R.id.profileMatchLocation);
-
-			profileImageView = (ImageView) rootView
-					.findViewById(R.id.profileMatchImageView);
-			LinearLayout imageLayout = (LinearLayout) rootView
-					.findViewById(R.id.setDateLayout);
-
-			Intent intent = getActivity().getIntent();
-			if (intent != null) {
-
-				SharedPreferences matchPref = getActivity()
-						.getSharedPreferences("matchPref", 0);
-				final String match = matchPref.getString("MatchInfo", null);
-
-				if (match != null) {
-					Log.d("Match", match);
-					JSONObject matchObj;
-					try {
-						matchObj = new JSONObject(match);
-						matchName.setText(matchObj.getString("name"));
-						Geocoder geoCoder = new Geocoder(getActivity(),
-								Locale.getDefault());
-						JSONObject loc = matchObj.getJSONObject("location");
-						List<Address> addresses = geoCoder.getFromLocation(
-								Double.parseDouble(loc.getString("x")),
-								Double.parseDouble(loc.getString("y")), 1);
-
-						if (addresses.size() > 0) {
-							String Location = addresses.get(0).getLocality();
-							matchLocation.setText(Location);
-						}
-						ImageLoader imageLoader = new ImageLoader(getActivity());
-						imageLoader
-								.DisplayImage(
-										matchObj.getJSONArray("images")
-												.getString(0),
-										R.drawable.com_facebook_profile_picture_blank_square,
-										profileImageView);
-
-					} catch (JSONException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (NumberFormatException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-
-					profileImageView.setOnClickListener(new OnClickListener() {
-
-						@Override
-						public void onClick(View v) {
-							// TODO Auto-generated method stub
-							Intent intent = new Intent(getActivity(),
-									MatchViewActivity.class);
-							intent.putExtra(intentNameTag, matchName.getText()
-									.toString());
-							intent.putExtra(intentLocationTag, matchLocation
-									.getText().toString());
-							intent.putExtra("Match", match);
-							startActivity(intent);
-						}
-					});
-				} else {
-					imageLayout.setVisibility(View.GONE);
-
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (NumberFormatException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 
+				profileImageView.setOnClickListener(new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+						Intent intent = new Intent(getActivity(),
+								MatchViewActivity.class);
+						intent.putExtra(intentNameTag, matchName.getText()
+								.toString());
+						intent.putExtra(intentLocationTag, matchLocation
+								.getText().toString());
+						intent.putExtra("Match", match);
+						startActivity(intent);
+					}
+				});
 			} else {
 				imageLayout.setVisibility(View.GONE);
+
 			}
 
-			timeProgress = (ProgressBar) rootView.findViewById(R.id.myProgress);
-			// Get the Drawable custom_progressbar
-
-			myProgress = (TextView) rootView.findViewById(R.id.myProgressText);
-
-			Calendar cal = Calendar.getInstance();
-			Long mil1 = cal.getTimeInMillis();
-			cal.add(Calendar.DATE, 1);
-			cal.set(Calendar.HOUR_OF_DAY, 10);
-			cal.set(Calendar.MINUTE, 00);
-			cal.set(Calendar.SECOND, 00);
-			System.out.println(cal.getTime());
-			Long mil2 = cal.getTimeInMillis();
-			Long diff = mil2 - mil1;
-			Long hours = diff / (60000 * 60);
-			myProgress.setText("" + hours);
-			timeProgress.setMax(24);
-			timeProgress.setProgress((int) (hours + 1));
-
-		}
-
-		if (settings.getBoolean("my_first_time", true)) {
-			// the app is being launched for first time, do something
-			Log.d("Comments", "First time");
-
-			// first time task
-
-			// record the fact that the app has been started at least once
-			settings.edit().putBoolean("my_first_time", false).commit();
 		} else {
-			settings.edit().putBoolean("my_first_time", true).commit();
-
+			imageLayout.setVisibility(View.GONE);
 		}
+
+		timeProgress = (ProgressBar) rootView.findViewById(R.id.myProgress);
+		// Get the Drawable custom_progressbar
+
+		myProgress = (TextView) rootView.findViewById(R.id.myProgressText);
+
+		Calendar cal = Calendar.getInstance();
+		Long mil1 = cal.getTimeInMillis();
+		cal.add(Calendar.DATE, 1);
+		cal.set(Calendar.HOUR_OF_DAY, 10);
+		cal.set(Calendar.MINUTE, 00);
+		cal.set(Calendar.SECOND, 00);
+		System.out.println(cal.getTime());
+		Long mil2 = cal.getTimeInMillis();
+		Long diff = mil2 - mil1;
+		Long hours = diff / (60000 * 60);
+		myProgress.setText("" + hours);
+		timeProgress.setMax(24);
+		timeProgress.setProgress((int) (hours + 1));
 
 		return rootView;
 	}

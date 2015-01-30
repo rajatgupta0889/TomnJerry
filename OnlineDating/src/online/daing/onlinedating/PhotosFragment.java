@@ -17,6 +17,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 public class PhotosFragment extends Fragment implements OnTaskCompleted {
 
@@ -26,6 +28,9 @@ public class PhotosFragment extends Fragment implements OnTaskCompleted {
 	ArrayList<ChatListItem> userMessageItems;
 	ChatListAdapter adapter;
 	ListView userMessageList;
+	private TextView messageTextView;
+	private TextView fetchingTextView;
+	private ProgressBar progBar;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -33,8 +38,8 @@ public class PhotosFragment extends Fragment implements OnTaskCompleted {
 
 		View rootView = inflater.inflate(R.layout.fragment_user_messages,
 				container, false);
-		userMessageList = (ListView) rootView
-				.findViewById(R.id.userMessageList);
+
+		init(rootView);
 		userMessageItems = new ArrayList<ChatListItem>();
 		GetBudddyList buddyListClass = new GetBudddyList();
 		buddyListClass.setListener(this);
@@ -78,6 +83,16 @@ public class PhotosFragment extends Fragment implements OnTaskCompleted {
 
 	}
 
+	private void init(View rootView) {
+		messageTextView = (TextView) rootView.findViewById(R.id.buddyTextView);
+		fetchingTextView = (TextView) rootView
+				.findViewById(R.id.fetchingTextView);
+		progBar = (ProgressBar) rootView
+				.findViewById(R.id.buddyFetchingProgressBar);
+		userMessageList = (ListView) rootView
+				.findViewById(R.id.userMessageList);
+	}
+
 	@Override
 	public void OnResult(String result) {
 		// TODO Auto-generated method stub
@@ -92,7 +107,6 @@ public class PhotosFragment extends Fragment implements OnTaskCompleted {
 				for (int i = 0; i < res.length() && i < matchId.length(); i++) {
 					JSONObject buddy = res.getJSONObject(i);
 					JSONObject match = matchId.getJSONObject(i);
-					
 
 					ChatListItem item = new ChatListItem(
 							buddy.getString("name"),
@@ -107,7 +121,12 @@ public class PhotosFragment extends Fragment implements OnTaskCompleted {
 				e.printStackTrace();
 			}
 		}
+		if (userMessageItems.size() < 1) {
+			messageTextView.setVisibility(View.VISIBLE);
+		}
 		userMessageList.setAdapter(adapter);
+		progBar.setVisibility(View.INVISIBLE);
+		fetchingTextView.setVisibility(View.INVISIBLE);
 	}
 
 	@Override

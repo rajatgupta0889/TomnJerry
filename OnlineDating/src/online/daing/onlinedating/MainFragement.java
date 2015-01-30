@@ -286,12 +286,15 @@ public class MainFragement extends Fragment {
 		View view = inflater.inflate(R.layout.activity_main, container, false);
 		LoginButton authButton = (LoginButton) view
 				.findViewById(R.id.authButton);
-		text = new String[] { "Looking for Mate to Date ",
-				"Get a new date request everyday",
-				"Suggest Where you should meet up" };
-		textAnswer = new String[] { "Find out special one in your life",
-				"Thumbs up the people you like, Forget Others",
-				"Coffee house or your favourite pub" };
+		text = new String[] { "Looking for a Mate? ",
+				"Get New Friend Suggestions Everyday",
+				"Got a Favourite Hangout Place? Pin it!",
+				"Say it All! Show it All!" };
+		textAnswer = new String[] {
+				"Find out the special one in your life",
+				"Upvote profiles you like and upon affirmation, get going! As simple as that!",
+				"DateApp’s unique features lets you choose your favourite coffee house or discotheque. Pin it on the map, mark it on the calendar!",
+				"DateApp’s cool messaging interface lets you stay in touch and share your moments! Share exciting memories and pictures with just a tap!" };
 		// Locate the ViewPager in viewpager_main.xml
 		viewPager = (ViewPager) view.findViewById(R.id.pager);
 		// Pass results to ViewPagerAdapter Class
@@ -494,7 +497,7 @@ public class MainFragement extends Fragment {
 
 													Intent intent = new Intent(
 															getActivity(),
-															LoginActivity.class);
+															ProfileUpdateActivity.class);
 													startActivity(intent);
 													getActivity().finish();
 												}
@@ -599,12 +602,17 @@ public class MainFragement extends Fragment {
 		uiHelper.onSaveInstanceState(outState);
 	}
 
-	public static Bitmap getFacebookProfilePicture(String userID) {
+	public Bitmap getFacebookProfilePicture(String userID) {
 		URL imageURL;
 		Bitmap bitmap = null;
 		try {
 			imageURL = new URL("https://graph.facebook.com/" + userID
 					+ "/picture?type=large");
+			SharedPreferences pref = context.getSharedPreferences(
+					"profilePref", 0);
+			SharedPreferences.Editor editor = pref.edit();
+			editor.putString("profilePic", imageURL.toString());
+			editor.commit();
 			bitmap = BitmapFactory.decodeStream(imageURL.openConnection()
 					.getInputStream());
 		} catch (MalformedURLException e) {

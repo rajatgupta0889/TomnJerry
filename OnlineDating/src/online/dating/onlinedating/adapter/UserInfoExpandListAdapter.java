@@ -23,12 +23,17 @@ public class UserInfoExpandListAdapter extends BaseExpandableListAdapter {
 	private Context _context;
 	private ArrayList<UserInfoItem> _userInfoItems; // header titles
 	private UserDetailItem _userDetailItems;
+	private Boolean[] passion;
+	ArrayList<String> passionArrayList;
+	private Boolean[] proffession;
+	String UserProfession;
 	CheckBox softwareCB;
 	CheckBox graphicsCB;
 	CheckBox managerCB;
 	CheckBox accountantCB;
 	CheckBox analystCb;
 	CheckBox researcherCb;
+	UserDetailItem item;
 
 	// child data in format of header title, child title
 	public UserInfoExpandListAdapter(Context context,
@@ -89,7 +94,7 @@ public class UserInfoExpandListAdapter extends BaseExpandableListAdapter {
 		LayoutInflater infalInflater = (LayoutInflater) this._context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		convertView = infalInflater.inflate(R.layout.user_info_item, null);
-
+		passionArrayList = new ArrayList<String>();
 		ImageView imageIcon = (ImageView) convertView
 				.findViewById(R.id.user_info_image);
 		TextView textItem = (TextView) convertView
@@ -108,8 +113,9 @@ public class UserInfoExpandListAdapter extends BaseExpandableListAdapter {
 			boolean isLastChild, View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
 
-		UserDetailItem item = (UserDetailItem) getChild(groupPosition,
-				childPosition);
+		item = (UserDetailItem) getChild(groupPosition, childPosition);
+		passion = item.getIsPassionate();
+		proffession = item.getIsProfession();
 		LayoutInflater infalInflater = (LayoutInflater) this._context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		if (groupPosition == 0) {
@@ -174,6 +180,98 @@ public class UserInfoExpandListAdapter extends BaseExpandableListAdapter {
 			setPadding(hikingCheckBox);
 			setPadding(cyclingCheckBox);
 			setPadding(paintingCheckBox);
+			if (passion[0]) {
+				travelingCheckBox.setChecked(true);
+			}
+			if (passion[1]) {
+				partyingCheckBox.setChecked(true);
+			}
+			if (passion[2]) {
+				sportCheckBox.setChecked(true);
+			}
+			if (passion[3]) {
+				hikingCheckBox.setChecked(true);
+			}
+			if (passion[4]) {
+				cyclingCheckBox.setChecked(true);
+			}
+			if (passion[5]) {
+				paintingCheckBox.setChecked(true);
+			}
+
+			OnClickListener listener = new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					CheckBox rb = (CheckBox) v;
+					switch (rb.getId()) {
+					case R.id.travelingCB:
+						if (passionArrayList.contains(rb.getText().toString())) {
+							passionArrayList.remove(rb.getText().toString());
+
+						} else {
+							passionArrayList.add(rb.getText().toString());
+						}
+						passion[0] = !passion[0];
+						break;
+					case R.id.partyingCB:
+						if (passionArrayList.contains(rb.getText().toString())) {
+							passionArrayList.remove(rb.getText().toString());
+						} else {
+							passionArrayList.add(rb.getText().toString());
+						}
+						passion[1] = !passion[1];
+						break;
+					case R.id.sportCB:
+						if (passionArrayList.contains(rb.getText().toString())) {
+							passionArrayList.remove(rb.getText().toString());
+						} else {
+							passionArrayList.add(rb.getText().toString());
+						}
+						passion[2] = !passion[2];
+						break;
+					case R.id.hikingCB:
+						if (passionArrayList.contains(rb.getText().toString())) {
+							passionArrayList.remove(rb.getText().toString());
+						} else {
+							passionArrayList.add(rb.getText().toString());
+						}
+						passion[3] = !passion[3];
+						break;
+					case R.id.cyclingCB:
+						if (passionArrayList.contains(rb.getText().toString())) {
+							passionArrayList.remove(rb.getText().toString());
+						} else {
+							passionArrayList.add(rb.getText().toString());
+						}
+						passion[4] = !passion[4];
+						break;
+					case R.id.paintingCB:
+						if (passionArrayList.contains(rb.getText().toString())) {
+							passionArrayList.remove(rb.getText().toString());
+						} else {
+							passionArrayList.add(rb.getText().toString());
+						}
+						passion[5] = !passion[5];
+						break;
+					default:
+						if (passionArrayList.contains(rb.getText().toString())) {
+							passionArrayList.remove(rb.getText().toString());
+						} else {
+							passionArrayList.add(rb.getText().toString());
+						}
+						passion[5] = !passion[5];
+						break;
+					}
+					item.setPassionArrayList(passionArrayList);
+					item.setIsPassionate(passion);
+				}
+			};
+			travelingCheckBox.setOnClickListener(listener);
+			sportCheckBox.setOnClickListener(listener);
+			paintingCheckBox.setOnClickListener(listener);
+			partyingCheckBox.setOnClickListener(listener);
+			hikingCheckBox.setOnClickListener(listener);
+			cyclingCheckBox.setOnClickListener(listener);
 
 		} else if (groupPosition == 2) {
 			convertView = infalInflater.inflate(R.layout.user_sex, null);
@@ -202,6 +300,24 @@ public class UserInfoExpandListAdapter extends BaseExpandableListAdapter {
 			setPadding(accountantCB);
 			setPadding(analystCb);
 			setPadding(researcherCb);
+			if (proffession[0]) {
+				softwareCB.setChecked(true);
+			}
+			if (proffession[1]) {
+				graphicsCB.setChecked(true);
+			}
+			if (proffession[2]) {
+				managerCB.setChecked(true);
+			}
+			if (proffession[3]) {
+				accountantCB.setChecked(true);
+			}
+			if (proffession[4]) {
+				analystCb.setChecked(true);
+			}
+			if (proffession[5]) {
+				researcherCb.setChecked(true);
+			}
 
 			OnClickListener listener = new OnClickListener() {
 				@Override
@@ -211,27 +327,36 @@ public class UserInfoExpandListAdapter extends BaseExpandableListAdapter {
 					switch (rb.getId()) {
 					case R.id.SoftwareCB:
 						softwareCB.setChecked(true);
+						proffession[0] = !proffession[0];
 						break;
 					case R.id.graphicsCB:
 						graphicsCB.setChecked(true);
+						proffession[1] = !proffession[1];
 						break;
 					case R.id.managerCB:
 						managerCB.setChecked(true);
+						proffession[2] = !proffession[2];
 						break;
 					case R.id.accountantCB:
 						accountantCB.setChecked(true);
+						proffession[3] = !proffession[3];
 						break;
 					case R.id.analystCB:
 						analystCb.setChecked(true);
+						proffession[4] = !proffession[4];
 						break;
 					case R.id.researchCB:
 						researcherCb.setChecked(true);
+						proffession[5] = !proffession[5];
 						break;
 					default:
 						break;
 					}
-
+					UserProfession = rb.getText().toString();
+					item.setUserProfession(UserProfession);
+					item.setIsProfession(proffession);
 				}
+
 			};
 
 			softwareCB.setOnClickListener(listener);

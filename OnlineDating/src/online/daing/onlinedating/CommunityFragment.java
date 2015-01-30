@@ -20,6 +20,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
@@ -37,6 +39,9 @@ public class CommunityFragment extends Fragment implements OnTaskCompleted,
 	String dateTime;
 	String coffeeId;
 	ImageLoader imgLoader;
+	private TextView coffeeTextView;
+	private TextView fetchingTextView;
+	private ProgressBar progBar;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,6 +57,7 @@ public class CommunityFragment extends Fragment implements OnTaskCompleted,
 				User.tom = User.getUser(user);
 			}
 		}
+		init(rootView);
 
 		fbUserId = User.tom.getFbUserId();
 		GetCoffeList coffeList = new GetCoffeList();
@@ -65,6 +71,14 @@ public class CommunityFragment extends Fragment implements OnTaskCompleted,
 		userCoffeList.setOnItemClickListener(this);
 
 		return rootView;
+	}
+
+	private void init(View rootView) {
+		coffeeTextView = (TextView) rootView.findViewById(R.id.buddyTextView);
+		fetchingTextView = (TextView) rootView
+				.findViewById(R.id.fetchingTextView);
+		progBar = (ProgressBar) rootView
+				.findViewById(R.id.buddyFetchingProgressBar);
 	}
 
 	@Override
@@ -110,7 +124,12 @@ public class CommunityFragment extends Fragment implements OnTaskCompleted,
 			e.printStackTrace();
 
 		}
+		if (userCoffeeItems.size() < 1) {
+			coffeeTextView.setVisibility(View.VISIBLE);
+		}
 		userCoffeList.setAdapter(adapter);
+		progBar.setVisibility(View.INVISIBLE);
+		fetchingTextView.setVisibility(View.INVISIBLE);
 		Log.d("Frag", result);
 	}
 

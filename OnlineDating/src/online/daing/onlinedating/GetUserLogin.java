@@ -1,25 +1,16 @@
 package online.daing.onlinedating;
 
-import java.util.ArrayList;
-
 import online.dating.onlinedating.model.ServiceHandler;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.json.JSONStringer;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
+import android.widget.ProgressBar;
 
 public class GetUserLogin extends AsyncTask<Void, Void, String> {
 	Context context;
@@ -37,6 +28,12 @@ public class GetUserLogin extends AsyncTask<Void, Void, String> {
 		this.vm = vm;
 	}
 
+	public GetUserLogin(Context context, JSONStringer vm) {
+		super();
+		this.context = context;
+		this.vm = vm;
+	}
+
 	public void setListener(OnTaskCompleted listener) {
 		this.listener = listener;
 	}
@@ -44,11 +41,12 @@ public class GetUserLogin extends AsyncTask<Void, Void, String> {
 	@Override
 	protected void onPreExecute() {
 		// TODO Auto-generated method stub
-		proDialog = new ProgressDialog(context);
-		proDialog.setMessage("Logging In");
-		proDialog.setCanceledOnTouchOutside(false);
-		proDialog.show();
-
+		if (proDialog != null) {
+			proDialog = new ProgressDialog(context);
+			proDialog.setMessage("Logging In");
+			proDialog.setCanceledOnTouchOutside(false);
+			proDialog.show();
+		}
 		super.onPreExecute();
 	}
 
@@ -58,8 +56,11 @@ public class GetUserLogin extends AsyncTask<Void, Void, String> {
 		// TODO Auto-generated method stub
 
 		super.onPostExecute(result);
-		proDialog.dismiss();
-		proDialog.cancel();
+		if (proDialog != null) {
+			proDialog.dismiss();
+
+			proDialog.cancel();
+		}
 		if (result != null) {
 			listener.onTaskCompleted();
 			listener.OnResult(result);

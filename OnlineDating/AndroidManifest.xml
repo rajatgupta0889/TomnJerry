@@ -37,8 +37,7 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme"
-         >
+        android:theme="@style/AppTheme" >
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
@@ -94,12 +93,15 @@
         <activity
             android:name=".UserMessageActivity"
             android:label="Message"
-            android:screenOrientation="portrait" >
+            android:parentActivityName=".LoginActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" >
         </activity>
         <activity
             android:name=".CoffeeMeetUpActivity"
             android:label="Meet UP"
             android:launchMode="singleTop"
+            android:parentActivityName=".LoginActivity"
             android:screenOrientation="portrait" >
         </activity>
         <activity
@@ -111,6 +113,7 @@
         <activity
             android:name=".MatchViewActivity"
             android:label="Match"
+            android:parentActivityName=".LoginActivity"
             android:screenOrientation="portrait" >
         </activity>
         <activity
@@ -127,8 +130,16 @@
         <activity
             android:name=".ProfilePicActivity"
             android:label="Profile"
-            android:parentActivityName=".LoginActivity"
+            android:parentActivityName=".ProfileUpdateActivity"
             android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ProfileUpdateActivity"
+            android:label="Update"
+            android:parentActivityName=".LoginActivity"
+            android:screenOrientation="portrait"
+             >
+            
         </activity>
         <activity
             android:name=".CoffeeMeetUpRequestActivity"

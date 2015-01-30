@@ -53,6 +53,7 @@ public class LocationSettingActivity extends Activity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.location_setting);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setDisplayUseLogoEnabled(false);
 		locationTV = (MultiAutoCompleteTextView) findViewById(R.id.locationSearchEditTextView);
 		PlacesAutoCompleteAdapter adapter = new PlacesAutoCompleteAdapter(
 				getApplicationContext(), R.layout.locatio_list_item);
@@ -92,7 +93,7 @@ public class LocationSettingActivity extends Activity implements
 				LatLng latlng = getLocationFromAddress(location);
 				if (!location.isEmpty() && latlng != null) {
 					LatLng locLatLng = (LatLng) locationTV.getTag();
-					
+
 					Intent intent = new Intent();
 					intent.putExtra("Address", location);
 					intent.putExtra("locaLat", locLatLng.latitude);
@@ -271,7 +272,7 @@ public class LocationSettingActivity extends Activity implements
 			location.getLatitude();
 			location.getLongitude();
 
-			p1 = new LatLng(latitude, longitude);	
+			p1 = new LatLng(latitude, longitude);
 			System.out.println(p1);
 
 			return p1;

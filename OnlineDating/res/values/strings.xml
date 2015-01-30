@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">HUM TUM</string>
+    <string name="app_name">Date App</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="facebook_app_id">975277205832656</string>
@@ -47,15 +47,15 @@
         <item>@drawable/ic_home_grey</item>
         <item>@drawable/ic_my_buddies__grey</item>
         <item>@drawable/ic_message_grey</item>
-        <item>@drawable/ic_home_grey</item>
-        <item>@drawable/ic_home_grey</item>
+        <item>@drawable/ic_coffee_grey</item>
+        <item>@drawable/ic_setting_grey</item>
     </array>
     <array name="nav_drawer_icons_selected">
         <item>@drawable/ic_home_white</item>
         <item>@drawable/ic_my_buddies__white</item>
         <item>@drawable/ic_message_white</item>
-        <item>@drawable/ic_home_white</item>
-        <item>@drawable/ic_home_white</item>
+        <item>@drawable/ic_coffee_white</item>
+        <item>@drawable/ic_setting_white</item>
     </array>
 
     <string name="user_gender_image">user gender image</string>

@@ -1,5 +1,7 @@
 package online.dating.onlinedating.model;
 
+import java.util.ArrayList;
+
 public class UserDetailItem {
 	Boolean isMale;
 	int height; /*
@@ -8,6 +10,8 @@ public class UserDetailItem {
 				 */
 	Boolean[] isPassionate;
 	Boolean[] isProfession;
+	ArrayList<String> passionArrayList;
+	String UserProfession;
 
 	public UserDetailItem(Boolean[] isProfession) {
 		super();
@@ -24,6 +28,22 @@ public class UserDetailItem {
 		this.isMale = isMale;
 	}
 
+	public ArrayList<String> getPassionArrayList() {
+		return passionArrayList;
+	}
+
+	public void setPassionArrayList(ArrayList<String> passionArrayList) {
+		this.passionArrayList = passionArrayList;
+	}
+
+	public String getUserProfession() {
+		return UserProfession;
+	}
+
+	public void setUserProfession(String userProfession) {
+		UserProfession = userProfession;
+	}
+
 	public UserDetailItem(Boolean isMale, int height, Boolean[] isPassionate,
 			Boolean[] isProfession) {
 		super();
@@ -31,6 +51,7 @@ public class UserDetailItem {
 		this.height = height;
 		this.isPassionate = isPassionate;
 		this.isProfession = isProfession;
+		passionArrayList = new ArrayList<String>();
 	}
 
 	public Boolean getIsMale() {

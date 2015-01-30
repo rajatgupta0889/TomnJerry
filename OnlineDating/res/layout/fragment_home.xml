@@ -11,15 +11,29 @@
         android:layout_alignParentTop="true"
         android:layout_marginBottom="10dp" >
 
-        <ImageView
-            android:id="@+id/profilePicImageView"
-            android:layout_width="100dp"
-            android:layout_height="120dp"
+        <RelativeLayout
+            android:id="@+id/profileImageRelativeLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginLeft="15dp"
-            android:layout_marginTop="10dp"
-            android:contentDescription="@string/user_profile_pic"
-            android:src="@drawable/com_facebook_profile_picture_blank_square" />
+            android:layout_marginTop="10dp" >
+
+            <ImageView
+                android:id="@+id/profilePicImageView"
+                android:layout_width="100dp"
+                android:layout_height="120dp"
+                android:contentDescription="@string/user_profile_pic"
+                android:src="@drawable/com_facebook_profile_picture_blank_square" />
+
+            <ImageView
+                android:id="@+id/editImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignRight="@+id/profilePicImageView"
+                android:src="@android:drawable/ic_menu_edit" />
+        </RelativeLayout>
 
         <ImageView
             android:id="@+id/calendarImageView"
@@ -44,7 +58,7 @@
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_alignLeft="@+id/view1"
-            android:layout_alignTop="@+id/profilePicImageView"
+            android:layout_alignTop="@+id/profileImageRelativeLayout"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
             android:text="" />
@@ -102,9 +116,11 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/listLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/topRelativeLayout"
+        android:animateLayoutChanges="true"
         android:background="@drawable/bng"
         android:paddingTop="10dp" >
 

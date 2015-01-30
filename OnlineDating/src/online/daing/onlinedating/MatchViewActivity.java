@@ -54,7 +54,9 @@ public class MatchViewActivity extends Activity implements OnClickListener {
 		getActionBar().setBackgroundDrawable(
 				new ColorDrawable(Color.parseColor("#fb4e6a")));
 		init();
-
+		getActionBar().setIcon(
+				new ColorDrawable(getResources().getColor(
+						android.R.color.transparent)));
 		Intent intent = getIntent();
 		Bundle profileBundle = intent.getExtras();
 		if (profileBundle != null && !profileBundle.isEmpty()) {

@@ -1,5 +1,6 @@
 package online.daing.onlinedating;
 
+import online.dating.onlinedating.Service.ImageLoader;
 import online.dating.onlinedating.adapter.UserMessageAdapter;
 import online.dating.onlinedating.model.User;
 import online.dating.onlinedating.model.UserMessageItem;
@@ -7,11 +8,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.DataSetObserver;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +29,7 @@ public class UserMessageActivity extends Activity {
 	private Firebase mFirebaseRef;
 	private ValueEventListener mConnectedListener;
 	private UserMessageAdapter mUserMessageAdapter;
+	ImageView userImageView;
 	String author;
 	Firebase con;
 	Firebase myConnectionsRef;
@@ -34,7 +38,7 @@ public class UserMessageActivity extends Activity {
 	Firebase lastOnlineRef;
 	String id;
 	String name;
-	int icon;
+	String icon;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,15 +47,17 @@ public class UserMessageActivity extends Activity {
 		Firebase.setAndroidContext(getApplicationContext());
 		setContentView(R.layout.user_chat_interface);
 		Intent intent = getIntent();
-
+		getActionBar().setIcon(
+				new ColorDrawable(getResources().getColor(
+						android.R.color.transparent)));
 		Bundle messageData = intent.getExtras();
 		if (messageData != null) {
 			id = messageData.getString("id");
 			name = messageData.getString(HomeFragment.intentNameTag);
-			icon = messageData.getInt("ImageIcon");
+			icon = messageData.getString("ImageIcon");
+			System.out.println("Icon " + icon);
 		}
 		getActionBar().setTitle(name);
-		getActionBar().setIcon(R.drawable.com_facebook_button_blue);
 		mFirebaseRef = new Firebase(FIREBASE_URL).child(id);
 		con = mFirebaseRef.push();
 		if (User.tom != null) {
@@ -64,6 +70,10 @@ public class UserMessageActivity extends Activity {
 				author = User.tom.getName();
 			}
 		}
+		userImageView = (ImageView) findViewById(R.id.coffeeImageView);
+		ImageLoader imageLoader = new ImageLoader(this);
+		imageLoader.DisplayImage(icon,
+				R.drawable.com_facebook_profile_default_icon, userImageView);
 		EditText inputText = (EditText) findViewById(R.id.locationSearchEditTextView);
 		inputText
 				.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -87,7 +97,6 @@ public class UserMessageActivity extends Activity {
 				});
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void onStart() {
 		super.onStart();
@@ -97,10 +106,13 @@ public class UserMessageActivity extends Activity {
 		// Tell our list adapter that we only want 50 messages at a time
 		mUserMessageAdapter = new UserMessageAdapter(mFirebaseRef,
 				R.layout.user_message_list_item_left,
-				R.layout.user_message_list_item_right, this, author);
+				R.layout.user_message_list_item_right, this, author, this);
 		userMessageListView.setAdapter(mUserMessageAdapter);
 		userMessageListView.smoothScrollToPosition(userMessageListView
 				.getCount() - 1);
+		userMessageListView
+				.setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
+		userMessageListView.setStackFromBottom(true);
 		mUserMessageAdapter.registerDataSetObserver(new DataSetObserver() {
 			@Override
 			public void onChanged() {
@@ -155,8 +167,7 @@ public class UserMessageActivity extends Activity {
 		String input = inputText.getText().toString();
 		if (!input.equals("")) {
 			// Create our 'model', a Chat object
-			UserMessageItem chat = new UserMessageItem(
-					R.drawable.com_facebook_profile_default_icon, input, true,
+			UserMessageItem chat = new UserMessageItem(icon, input, true,
 					author);
 			// Create a new, auto-generated child of that chat location, and
 			// save our chat data there

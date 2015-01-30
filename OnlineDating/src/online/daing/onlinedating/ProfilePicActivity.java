@@ -2,10 +2,7 @@ package online.daing.onlinedating;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -21,9 +18,11 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -34,6 +33,7 @@ import android.util.Base64;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 public class ProfilePicActivity extends Activity implements OnClickListener {
 	ImageView profilePicImageView, profilePicImageView1, profilePicImageView2,
@@ -41,6 +41,7 @@ public class ProfilePicActivity extends Activity implements OnClickListener {
 	ImageView selectedView;
 	private static final int SELECT_FILE = 1;
 	Bitmap bm;
+	String mCurrentPhotoPath;
 
 	private int REQUEST_CAMERA = 10;
 
@@ -49,40 +50,78 @@ public class ProfilePicActivity extends Activity implements OnClickListener {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.user_images);
-
+		getActionBar().setIcon(new ColorDrawable(getResources().getColor(android.R.color.transparent))); 
 		init();
 		Intent intent = getIntent();
 		if (intent != null) {
 			Bundle bundle = intent.getExtras();
-			String user = bundle.getString("user");
-			if (User.tom == null) {
-				try {
-					User.tom = User.getUser(new JSONObject(user));
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+			if (bundle != null) {
+				String user = bundle.getString("user");
+				if (User.tom == null) {
+					try {
+						User.tom = User.getUser(new JSONObject(user));
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			} else {
+				if (User.tom == null) {
+					SharedPreferences pref = getSharedPreferences("pref", 0);
+					String user = pref.getString(GetUserLogin.UserTom, null);
+					if (user != null) {
+						User.tom = User.getUser(user);
+					}
 				}
 			}
+			SharedPreferences profilePref = getSharedPreferences("profilePref",
+					0);
+			String image_url = profilePref.getString("profilePic", "");
 			ImageLoader imageLoader = new ImageLoader(this);
-			imageLoader.DisplayImage(User.tom.getImageList().get(0),
+			imageLoader.DisplayImage(image_url,
 					R.drawable.com_facebook_profile_default_icon,
 					profilePicImageView);
-			imageLoader.DisplayImage(User.tom.getImageList().get(1),
-					R.drawable.com_facebook_profile_default_icon,
-					profilePicImageView1);
-			imageLoader.DisplayImage(User.tom.getImageList().get(2),
-					R.drawable.com_facebook_profile_default_icon,
-					profilePicImageView2);
-			imageLoader.DisplayImage(User.tom.getImageList().get(3),
-					R.drawable.com_facebook_profile_default_icon,
-					profilePicImageView3);
-			imageLoader.DisplayImage(User.tom.getImageList().get(4),
-					R.drawable.com_facebook_profile_default_icon,
-					profilePicImageView4);
-			imageLoader.DisplayImage(User.tom.getImageList().get(5),
-					R.drawable.com_facebook_profile_default_icon,
-					profilePicImageView5);
+			System.out.println();
+			if (User.tom.getImageList().size() > 1) {
+				imageLoader.DisplayImage(User.tom.getImageList().get(1),
+						R.drawable.com_facebook_profile_default_icon,
+						profilePicImageView2);
+				profilePicImageView5.setTag(R.id.acceptButton, User.tom
+						.getImageList().get(1));
 
+			}
+
+			if (User.tom.getImageList().size() > 2) {
+				imageLoader.DisplayImage(User.tom.getImageList().get(2),
+						R.drawable.com_facebook_profile_default_icon,
+						profilePicImageView2);
+				profilePicImageView5.setTag(R.id.acceptButton, User.tom
+						.getImageList().get(2));
+
+			}
+			if (User.tom.getImageList().size() > 3) {
+				imageLoader.DisplayImage(User.tom.getImageList().get(3),
+						R.drawable.com_facebook_profile_default_icon,
+						profilePicImageView3);
+				profilePicImageView5.setTag(R.id.acceptButton, User.tom
+						.getImageList().get(3));
+
+			}
+			if (User.tom.getImageList().size() > 4) {
+				imageLoader.DisplayImage(User.tom.getImageList().get(4),
+						R.drawable.com_facebook_profile_default_icon,
+						profilePicImageView4);
+				profilePicImageView5.setTag(R.id.acceptButton, User.tom
+						.getImageList().get(4));
+
+			}
+			if (User.tom.getImageList().size() > 5) {
+				imageLoader.DisplayImage(User.tom.getImageList().get(5),
+						R.drawable.com_facebook_profile_default_icon,
+						profilePicImageView5);
+				profilePicImageView5.setTag(R.id.acceptButton, User.tom
+						.getImageList().get(5));
+			}
 		}
 		/* Setting on click Listener */
 		profilePicImageView.setOnClickListener(this);
@@ -118,23 +157,90 @@ public class ProfilePicActivity extends Activity implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
+		selectedView = (ImageView) v;
+		selectedView.setBackgroundColor(R.drawable.image_border);
 		switch (v.getId()) {
-		case R.id.profileMatchImageView:
-
+		case R.id.ProfilePicImageView:
+			System.out.println("Profile Pic View Clicked");
 			break;
-
-		default:
-			selectedView = (ImageView) v;
-			if (selectedView.getDrawable().equals(
-					R.drawable.com_facebook_profile_default_icon)) {
+		case R.id.ProfilePicImageView1:
+			if (selectedView.getTag(R.id.acceptButton) == null) {
 				selectImage();
 			} else {
 				profilePicImageView
 						.setImageDrawable(selectedView.getDrawable());
+				setAsProfile();
 			}
+			break;
+		case R.id.ProfilePicImageView2:
+			if (selectedView.getTag(R.id.acceptButton) == null) {
+				selectImage();
+			} else {
+				profilePicImageView
+						.setImageDrawable(selectedView.getDrawable());
+				setAsProfile();
+			}
+			break;
+		case R.id.ProfilePicImageView3:
+			if (selectedView.getTag(R.id.acceptButton) == null) {
+				selectImage();
+			} else {
+				profilePicImageView
+						.setImageDrawable(selectedView.getDrawable());
+				setAsProfile();
+			}
+			break;
+
+		case R.id.ProfilePicImageView4:
+			if (selectedView.getTag(R.id.acceptButton) == null) {
+				selectImage();
+			} else {
+				profilePicImageView
+						.setImageDrawable(selectedView.getDrawable());
+				setAsProfile();
+			}
+			break;
+		case R.id.ProfilePicImageView5:
+			if (selectedView.getTag(R.id.acceptButton) == null) {
+				selectImage();
+			} else {
+				profilePicImageView
+						.setImageDrawable(selectedView.getDrawable());
+				setAsProfile();
+			}
+			break;
+		default:
+			Toast.makeText(this, "Error", Toast.LENGTH_LONG).show();
 			break;
 		}
 
+	}
+
+	private void setAsProfile() {
+		// TODO Auto-generated method stub
+		final CharSequence[] items = { "Set As Profile Picture",
+				"Change Picture", "Cancel" };
+
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle("Choose");
+		builder.setItems(items, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int item) {
+				if (items[item].equals("Set As Profile Picture")) {
+					SharedPreferences profilePref = getSharedPreferences(
+							"profilePref", 0);
+					SharedPreferences.Editor edit = profilePref.edit();
+					edit.putString("profilePic",
+							selectedView.getTag(R.id.acceptButton).toString());
+					edit.commit();
+				} else if (items[item].equals("Change Picture")) {
+					selectImage();
+				} else if (items[item].equals("Cancel")) {
+					dialog.dismiss();
+				}
+			}
+		});
+		builder.show();
 	}
 
 	/**
@@ -193,14 +299,18 @@ public class ProfilePicActivity extends Activity implements OnClickListener {
 						image = File.createTempFile(imageFileName, /* prefix */
 								".jpg", /* suffix */
 								storageDir /* directory */
+
 						);
+						mCurrentPhotoPath = "file:" + image.getAbsolutePath();
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					intent.putExtra(MediaStore.EXTRA_OUTPUT,
-							Uri.fromFile(image));
-					startActivityForResult(intent, REQUEST_CAMERA);
+					if (image != null) {
+						intent.putExtra(MediaStore.EXTRA_OUTPUT,
+								Uri.fromFile(image));
+						startActivityForResult(intent, REQUEST_CAMERA);
+					}
 				} else if (items[item].equals("Choose from Library")) {
 					Intent intent = new Intent(
 							Intent.ACTION_PICK,
@@ -221,19 +331,21 @@ public class ProfilePicActivity extends Activity implements OnClickListener {
 		super.onActivityResult(requestCode, resultCode, data);
 		if (resultCode == RESULT_OK) {
 			if (requestCode == REQUEST_CAMERA) {
-				File f = new File(Environment.getExternalStorageDirectory()
-						.toString());
-				for (File temp : f.listFiles()) {
-					if (temp.getName().equals("temp.jpg")) {
-						f = temp;
-						break;
-					}
-				}
+
+				galleryAddPic();
 				try {
 					BitmapFactory.Options btmapOptions = new BitmapFactory.Options();
-
-					bm = BitmapFactory.decodeFile(f.getAbsolutePath(),
+					int targetW = selectedView.getWidth();
+					int targetH = selectedView.getHeight();
+					bm = BitmapFactory.decodeFile(mCurrentPhotoPath,
 							btmapOptions);
+					int photoW = btmapOptions.outWidth;
+					int photoH = btmapOptions.outHeight;
+
+					// Determine how much to scale down the image
+					int scaleFactor = Math.min(photoW / targetW, photoH
+							/ targetH);
+
 					new AsyncTask<Void, Void, Void>() {
 
 						@Override
@@ -245,29 +357,11 @@ public class ProfilePicActivity extends Activity implements OnClickListener {
 
 					};
 					// bm = Bitmap.createScaledBitmap(bm, 70, 70, true);
-					if (selectedView != null)
-						selectedView.setImageBitmap(bm);
+					btmapOptions.inJustDecodeBounds = false;
+					btmapOptions.inSampleSize = scaleFactor;
+					btmapOptions.inPurgeable = true;
 
-					String path = android.os.Environment
-							.getExternalStorageDirectory()
-							+ File.separator
-							+ "default";
-					f.delete();
-					OutputStream fOut = null;
-					File file = new File(path, String.valueOf(System
-							.currentTimeMillis()) + ".jpg");
-					try {
-						fOut = new FileOutputStream(file);
-						bm.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
-						fOut.flush();
-						fOut.close();
-					} catch (FileNotFoundException e) {
-						e.printStackTrace();
-					} catch (IOException e) {
-						e.printStackTrace();
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
+					selectedView.setImageBitmap(bm);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -292,6 +386,15 @@ public class ProfilePicActivity extends Activity implements OnClickListener {
 				}
 			}
 		}
+	}
+
+	private void galleryAddPic() {
+		Intent mediaScanIntent = new Intent(
+				Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+		File f = new File(mCurrentPhotoPath);
+		Uri contentUri = Uri.fromFile(f);
+		mediaScanIntent.setData(contentUri);
+		this.sendBroadcast(mediaScanIntent);
 	}
 
 	private void sendImageTOServer(Bitmap userIcon) {

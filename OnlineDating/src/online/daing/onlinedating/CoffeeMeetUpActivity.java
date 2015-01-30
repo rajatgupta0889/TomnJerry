@@ -44,6 +44,7 @@ public class CoffeeMeetUpActivity extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		Intent intent = getIntent();
 		Bundle bundle = intent.getExtras();
+		getActionBar().setDisplayUseLogoEnabled(false);
 		if (bundle != null && !bundle.isEmpty()) {
 			setContentView(R.layout.coffee_meet);
 			init();

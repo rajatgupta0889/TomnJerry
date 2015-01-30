@@ -42,6 +42,10 @@ public class User {
 		this.os = os;
 		this.age = age;
 		this.imageList = imageList;
+		passion = new ArrayList<String>();
+		this.orientation = "straight";
+		this.profession = "";
+		this.height = "medium";
 
 	}
 
@@ -205,11 +209,15 @@ public class User {
 				if (array[11].contains(",")) {
 					userObj.setPassion(new ArrayList<String>(Arrays
 							.asList(array[10].split(","))));
+				} else {
+					userObj.setPassion(new ArrayList<String>());
 				}
-				userObj.setProfession(array[12]);
-				userObj.setOrientation(array[13]);
-				userObj.setHeight(array[14]);
 			}
+
+			userObj.setProfession(array[12]);
+			userObj.setOrientation(array[13]);
+			userObj.setHeight(array[14]);
+
 		}
 		return userObj;
 
@@ -243,7 +251,7 @@ public class User {
 				if (array1.length() > 1) {
 					ArrayList<String> temp1 = new ArrayList<String>();
 					for (int i = 0; i < array.length(); i++) {
-						temp.add(array.getString(i));
+						temp1.add(array.getString(i));
 					}
 					userObj.setPassion(temp1);
 					userObj.setProfession(user.getString("profession"));

@@ -1,7 +1,7 @@
 package online.dating.onlinedating.model;
 
 public class UserMessageItem {
-	int imageIcon;
+	String imageIcon;
 	String Message;
 	Boolean isSelf;
 	String author;
@@ -10,7 +10,7 @@ public class UserMessageItem {
 		// TODO Auto-generated constructor stub
 	}
 
-	public UserMessageItem(int imageIcon, String message, Boolean isSelf,
+	public UserMessageItem(String imageIcon, String message, Boolean isSelf,
 			String author) {
 		super();
 		this.imageIcon = imageIcon;
@@ -27,11 +27,11 @@ public class UserMessageItem {
 		this.author = author;
 	}
 
-	public int getImageIcon() {
+	public String getImageIcon() {
 		return imageIcon;
 	}
 
-	public void setImageIcon(int imageIcon) {
+	public void setImageIcon(String imageIcon) {
 		this.imageIcon = imageIcon;
 	}
 

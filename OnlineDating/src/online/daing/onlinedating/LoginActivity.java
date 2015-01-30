@@ -123,7 +123,7 @@ public class LoginActivity extends ActionBarActivity implements
 		getActionBar().setHomeButtonEnabled(true);
 
 		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
-				R.drawable.ic_drawer, // nav menu toggle icon
+				R.drawable.ic_action_menu1, // nav menu toggle icon
 				R.string.app_name, // nav drawer open - description for
 									// accessibility
 				R.string.app_name // nav drawer close - description for

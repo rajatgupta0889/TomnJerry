@@ -10,7 +10,6 @@ import org.json.JSONObject;
 import org.json.JSONStringer;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,13 +18,19 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
+
+import com.facebook.Session;
 
 public class SplashScreen extends Activity implements OnTaskCompleted {
 	// Splash screen timer
 	private static int SPLASH_TIME_OUT = 3000;
 	public JSONStringer vm;
 	public Context context;
-	ProgressDialog proDialog;
+	ProgressBar progBar;
+	private int mProgressStatus = 0;
+	private Handler mHandler = new Handler();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,11 +39,32 @@ public class SplashScreen extends Activity implements OnTaskCompleted {
 		SharedPreferences pref = getApplicationContext().getSharedPreferences(
 				"pref", 0);
 		context = this;
-		proDialog = new ProgressDialog(context);
+		progBar = (ProgressBar) findViewById(R.id.splashProgress);
+		
 		// pref.edit().putString(GetUserLogin.UserTom, null);
 		// pref.edit().commit();
 		// System.out.println(pref.getString(GetUserLogin.UserTom, null));
-		if (pref.getString(GetUserLogin.UserTom, null) != null) {
+		new Thread(new Runnable() {
+			public void run() {
+				while (mProgressStatus < 100) {
+					mProgressStatus = doWork();
+
+					// Update the progress bar
+					mHandler.post(new Runnable() {
+						public void run() {
+							progBar.setProgress(mProgressStatus);
+						}
+					});
+				}
+			}
+
+			private int doWork() {
+				// TODO Auto-generated method stub
+				return mProgressStatus++;
+			}
+		}).start();
+		if (pref.getString(GetUserLogin.UserTom, null) != null
+				&& Session.getActiveSession() != null) {
 			try {
 				String user = pref.getString(GetUserLogin.UserTom, null);
 
@@ -51,8 +77,7 @@ public class SplashScreen extends Activity implements OnTaskCompleted {
 							.value(token[3]).key("location").object().key("x")
 							.value(token[4]).key("y").value(token[5])
 							.endObject().endObject();
-					GetUserLogin login = new GetUserLogin(context, proDialog,
-							vm);
+					GetUserLogin login = new GetUserLogin(context, vm);
 					login.setListener(this);
 					login.execute();
 				}
@@ -117,7 +142,7 @@ public class SplashScreen extends Activity implements OnTaskCompleted {
 				Log.d("Result in Splash", result);
 
 				JSONObject res = new JSONObject(result);
-
+				progBar.setVisibility(View.GONE);
 				if (res.getString("id") != null) {
 					SharedPreferences userPref = context.getSharedPreferences(
 							"pref", 0);
@@ -140,9 +165,7 @@ public class SplashScreen extends Activity implements OnTaskCompleted {
 						editor.commit();
 					} else {
 						User.tom = User.getUser(result);
-
 					}
-					proDialog.dismiss();
 					Intent i = new Intent(SplashScreen.this,
 							LoginActivity.class);
 					startActivity(i);

@@ -41,6 +41,7 @@ public class CoffeeMeetUpRequestActivity extends Activity implements
 		Intent intent = getIntent();
 		Bundle bundle = intent.getExtras();
 		setContentView(R.layout.coffee_meet_request);
+		getActionBar().setDisplayUseLogoEnabled(false);
 		if (bundle != null && !bundle.isEmpty()) {
 			init();
 
@@ -52,7 +53,7 @@ public class CoffeeMeetUpRequestActivity extends Activity implements
 				}
 			}
 			FbUserId = User.tom.getFbUserId();
-			
+
 			String coffeeData = bundle.getString("coffeeData");
 			if (coffeeData != null) {
 				// Log.d("Coffee Data ", coffeeData);
