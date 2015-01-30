@@ -5,9 +5,11 @@
     android:background="@drawable/bng" >
 
     <LinearLayout
-        android:id="@+id/matchDisplayLayout"
+        android:id="@+id/setDateLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/progressBarRV"
+        android:layout_below="@+id/chatMessageUserName"
         android:layout_centerInParent="true"
         android:background="@drawable/layout_border_radius_white_bg"
         android:gravity="center"
@@ -21,31 +23,41 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
+            android:layout_weight="2"
             android:src="@drawable/user_profile" />
 
         <LinearLayout
-            android:layout_width="300dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
             android:background="@drawable/custom_border_radius"
+            android:minHeight="80dp"
             android:orientation="vertical" >
 
             <TextView
                 android:id="@+id/profileMatchNameAge"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:paddingBottom="5dp"
+                android:gravity="center"
                 android:text="Marrianne, 29"
                 android:textColor="@android:color/white" />
 
             <TextView
                 android:id="@+id/profileMatchLocation"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:gravity="center"
                 android:text="Kormangala"
                 android:textColor="@android:color/white" />
         </LinearLayout>
@@ -55,9 +67,10 @@
         android:id="@+id/chatMessageUserName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/matchDisplayLayout"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="17dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
         android:gravity="center"
         android:text="Your buddy suggestion for today"
         android:textAppearance="?android:attr/textAppearanceMedium"

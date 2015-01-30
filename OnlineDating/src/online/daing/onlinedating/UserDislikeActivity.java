@@ -50,7 +50,7 @@ public class UserDislikeActivity extends Activity implements
 			fbUserId = extra.getString("fbUserId");
 
 		}
-		disLikeRequestButton = (Button) findViewById(R.id.setSettingButton);
+		disLikeRequestButton = (Button) findViewById(R.id.goButton);
 
 		disLikeRequestButton.setOnClickListener(new OnClickListener() {
 

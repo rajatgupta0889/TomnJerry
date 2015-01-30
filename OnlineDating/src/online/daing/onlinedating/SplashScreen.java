@@ -1,6 +1,12 @@
 package online.daing.onlinedating;
 
+import java.util.ArrayList;
+
+import online.dating.onlinedating.model.User;
+
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.json.JSONStringer;
 
 import android.app.Activity;
@@ -29,31 +35,33 @@ public class SplashScreen extends Activity implements OnTaskCompleted {
 				"pref", 0);
 		context = this;
 		proDialog = new ProgressDialog(context);
-		pref.edit().putString(GetUserLogin.UserTom, null);
-		pref.edit().commit();
-//		System.out.println(pref.getString(GetUserLogin.UserTom, null));
-//		if (pref.getString(GetUserLogin.UserTom, null) != null) {
-//			try {
-//				String user = pref.getString(GetUserLogin.UserTom, null);
-//				if (user != null) {
-//					String[] token = user.split(",");
-//					vm = new JSONStringer().object().key("name")
-//							.value(token[0]).key("email").value(token[1])
-//							.key("fbUserId").value(token[2]).key("gender")
-//							.value(token[3]).key("location").object().key("x")
-//							.value(token[4]).key("y").value(token[5])
-//							.endObject().endObject();
-//					GetUserLogin login = new GetUserLogin(context, proDialog,
-//							vm);
-//					login.setListener(this);
-//					login.execute();
-//				}
-//
-//			} catch (JSONException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//		} else {
+		// pref.edit().putString(GetUserLogin.UserTom, null);
+		// pref.edit().commit();
+		// System.out.println(pref.getString(GetUserLogin.UserTom, null));
+		if (pref.getString(GetUserLogin.UserTom, null) != null) {
+			try {
+				String user = pref.getString(GetUserLogin.UserTom, null);
+
+				Log.d("User in Splash", user);
+				if (user != null) {
+					String[] token = user.split(";");
+					vm = new JSONStringer().object().key("name")
+							.value(token[0]).key("email").value(token[1])
+							.key("fbUserId").value(token[2]).key("gender")
+							.value(token[3]).key("location").object().key("x")
+							.value(token[4]).key("y").value(token[5])
+							.endObject().endObject();
+					GetUserLogin login = new GetUserLogin(context, proDialog,
+							vm);
+					login.setListener(this);
+					login.execute();
+				}
+
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else {
 			new Handler().postDelayed(new Runnable() {
 
 				/*
@@ -74,7 +82,7 @@ public class SplashScreen extends Activity implements OnTaskCompleted {
 			}, SPLASH_TIME_OUT);
 		}
 
-	//}
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -98,14 +106,61 @@ public class SplashScreen extends Activity implements OnTaskCompleted {
 	@Override
 	public void onTaskCompleted() {
 		// TODO Auto-generated method stub
-		proDialog.dismiss();
-		Intent i = new Intent(SplashScreen.this, LoginActivity.class);
-		startActivity(i);
-		finish();
+
 	}
 
 	@Override
 	public void OnResult(String result) {
+		// TODO Auto-generated method stub
+		try {
+			if (result != null) {
+				Log.d("Result in Splash", result);
+
+				JSONObject res = new JSONObject(result);
+
+				if (res.getString("id") != null) {
+					SharedPreferences userPref = context.getSharedPreferences(
+							"pref", 0);
+
+					User.tom = User.getUser(userPref.getString(
+							GetUserLogin.UserTom, null));
+					if (User.tom != null) {
+						ArrayList<String> temp = new ArrayList<String>();
+						System.out.println("Login Result" + res);
+						JSONArray imageArray = res.getJSONArray("images");
+						for (int i = 0; i < imageArray.length(); i++) {
+							temp.add(imageArray.getString(0));
+						}
+						User.tom.setImageList(temp);
+						User.tom.setUserToken(res.getString("id"));
+
+						SharedPreferences.Editor editor = userPref.edit();
+						editor.putString(GetUserLogin.UserTom,
+								User.tom.toString());
+						editor.commit();
+					} else {
+						User.tom = User.getUser(result);
+
+					}
+					proDialog.dismiss();
+					Intent i = new Intent(SplashScreen.this,
+							LoginActivity.class);
+					startActivity(i);
+					finish();
+				}
+
+			}
+		} catch (JSONException e) {
+			// TODO Auto-generated
+			// catch block
+			e.printStackTrace();
+
+		}
+
+	}
+
+	@Override
+	public void onResult(String result, String resultType) {
 		// TODO Auto-generated method stub
 
 	}

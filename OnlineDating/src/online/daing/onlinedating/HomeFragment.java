@@ -6,8 +6,10 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
+import online.dating.onlinedating.Service.ImageLoader;
 import online.dating.onlinedating.adapter.MyPagerAdapter;
 import online.dating.onlinedating.adapter.UserInfoExpandListAdapter;
+import online.dating.onlinedating.model.User;
 import online.dating.onlinedating.model.UserDetailItem;
 import online.dating.onlinedating.model.UserInfoItem;
 
@@ -18,6 +20,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Geocoder;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -26,14 +29,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnGroupExpandListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements OnClickListener {
 
 	@Override
 	public void startActivityForResult(Intent intent, int requestCode) {
@@ -46,7 +51,7 @@ public class HomeFragment extends Fragment {
 
 	private int lastExpandedPosition = -1;
 	// private int mProgressStatus = 0;
-
+	String UserId;
 	public final static int PAGES = 5;
 	// You can choose a bigger number for LOOPS, but you know, nobody will fling
 	// more than 1000 times just in order to test your "infinite" ViewPager :D
@@ -62,10 +67,13 @@ public class HomeFragment extends Fragment {
 	public ImageView profileImageView;
 	TextView matchName;
 	TextView matchLocation;
+	RelativeLayout topLayout;
+	RelativeLayout pullLayout;
 	public final static String intentNameTag = "Name";
 	public final static String intentLocationTag = "Location";
 	int i = 0;
 	TextView myProgress;
+	Button okButton;
 
 	// private Handler mHandler = new Handler();
 
@@ -81,6 +89,16 @@ public class HomeFragment extends Fragment {
 					false);
 			final ExpandableListView userList = (ExpandableListView) rootView
 					.findViewById(R.id.expandableUserInfoListView);
+			int loader = R.drawable.com_facebook_profile_picture_blank_square;
+
+			// ImageLoader class instance
+			ImageLoader imgLoader = new ImageLoader(getActivity());
+
+			// whenever you want to load an image from url
+			// call DisplayImage function
+			// url - image url to load
+			// loader - loader image, will be displayed before getting image
+			// image - ImageView
 
 			ArrayList<UserInfoItem> userInfoItems = new ArrayList<UserInfoItem>();
 			userInfoItems.add(new UserInfoItem("How tall are you",
@@ -91,23 +109,55 @@ public class HomeFragment extends Fragment {
 					R.drawable.ic_user_interest));
 			userInfoItems.add(new UserInfoItem("Profession",
 					R.drawable.ic_user_passion));
-			Boolean[] passion = { false, false };
-			Boolean[] profession = { false, false };
+			topLayout = (RelativeLayout) rootView
+					.findViewById(R.id.topRelativeLayout);
+			pullLayout = (RelativeLayout) rootView
+					.findViewById(R.id.pullLayout);
+			Boolean[] passion = { false, false, false, false, false, false };
+			Boolean[] profession = { false, false, false, false, false, false };
 			UserDetailItem item = new UserDetailItem(true, 1, passion,
 					profession);
+			/* Setting imageVIew and create on click Listener */
+			profileImageView = (ImageView) rootView
+					.findViewById(R.id.profilePicImageView);
 
+			profileImageView.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					Intent intent = new Intent(getActivity(),
+							ProfilePicActivity.class);
+					intent.putExtra("user", User.tom.toString());
+					startActivity(intent);
+				}
+			});
 			UserInfoExpandListAdapter adapter = new UserInfoExpandListAdapter(
 					getActivity(), userInfoItems, item);
 			userList.setOnGroupExpandListener(new OnGroupExpandListener() {
 
 				@Override
 				public void onGroupExpand(int groupPosition) {
+
+					topLayout.setVisibility(View.GONE);
+					topLayout.animate();
+					pullLayout.setVisibility(View.VISIBLE);
 					if (lastExpandedPosition != -1
 							&& groupPosition != lastExpandedPosition) {
 						userList.collapseGroup(lastExpandedPosition);
 
 					}
 					lastExpandedPosition = groupPosition;
+				}
+			});
+			pullLayout.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					topLayout.setVisibility(View.VISIBLE);
+					pullLayout.setVisibility(View.GONE);
+					userList.collapseGroup(lastExpandedPosition);
 				}
 			});
 			userList.setAdapter(adapter);
@@ -117,7 +167,7 @@ public class HomeFragment extends Fragment {
 
 				String user = pref.getString(GetUserLogin.UserTom, null);
 				if (user != null) {
-					String[] token = user.split(",");
+					String[] token = user.split(";");
 					String Location = "";
 					Geocoder geoCoder = new Geocoder(getActivity(),
 							Locale.getDefault());
@@ -134,6 +184,9 @@ public class HomeFragment extends Fragment {
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}
+					String image_url = "https://graph.facebook.com/" + token[2]
+							+ "/picture?type=large";
+					imgLoader.DisplayImage(image_url, loader, profileImageView);
 					TextView nameTv = (TextView) rootView
 							.findViewById(R.id.userName);
 					nameTv.setText(nameTv.getText() + token[0]);
@@ -177,7 +230,7 @@ public class HomeFragment extends Fragment {
 			profileImageView = (ImageView) rootView
 					.findViewById(R.id.profileMatchImageView);
 			LinearLayout imageLayout = (LinearLayout) rootView
-					.findViewById(R.id.matchDisplayLayout);
+					.findViewById(R.id.setDateLayout);
 
 			Intent intent = getActivity().getIntent();
 			if (intent != null) {
@@ -203,6 +256,13 @@ public class HomeFragment extends Fragment {
 							String Location = addresses.get(0).getLocality();
 							matchLocation.setText(Location);
 						}
+						ImageLoader imageLoader = new ImageLoader(getActivity());
+						imageLoader
+								.DisplayImage(
+										matchObj.getJSONArray("images")
+												.getString(0),
+										R.drawable.com_facebook_profile_picture_blank_square,
+										profileImageView);
 
 					} catch (JSONException e) {
 						// TODO Auto-generated catch block
@@ -274,5 +334,18 @@ public class HomeFragment extends Fragment {
 		}
 
 		return rootView;
+	}
+
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		switch (v.getId()) {
+		case R.id.sendButton:
+
+			break;
+
+		default:
+			break;
+		}
 	}
 }

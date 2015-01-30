@@ -16,6 +16,7 @@ import online.dating.onlinedating.model.ServiceHandler;
 import online.dating.onlinedating.model.User;
 
 import org.apache.http.NameValuePair;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONStringer;
@@ -54,6 +55,7 @@ import com.facebook.widget.LoginButton;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.google.android.gms.internal.lp;
 import com.viewpagerindicator.CirclePageIndicator;
 
 @SuppressLint("NewApi")
@@ -74,7 +76,6 @@ public class MainFragement extends Fragment {
 	public static final String PROPERTY_REG_ID = "registration_id";
 	private static final String PROPERTY_APP_VERSION = "appVersion";
 	private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
-	static User tom;
 	String userID;
 
 	/**
@@ -93,10 +94,7 @@ public class MainFragement extends Fragment {
 	String regid;
 	ViewPager viewPager;
 	PagerAdapter adapter;
-	String[] rank;
-	String[] country;
-	String[] population;
-	int[] flag;
+	String[] text, textAnswer;
 	CirclePageIndicator mIndicator;
 
 	@Override
@@ -288,20 +286,16 @@ public class MainFragement extends Fragment {
 		View view = inflater.inflate(R.layout.activity_main, container, false);
 		LoginButton authButton = (LoginButton) view
 				.findViewById(R.id.authButton);
-		rank = new String[] { "1", "2", "3", "4" };
-
-		country = new String[] { "China", "India", "United States", "Indonesia" };
-
-		population = new String[] { "1,354,040,000", "1,210,193,422",
-				"315,761,000", "237,641,326" };
-
-		flag = new int[] { R.drawable.coffe_pink, R.drawable.coffe_pink,
-				R.drawable.coffe_pink, R.drawable.coffe_pink };
-
+		text = new String[] { "Looking for Mate to Date ",
+				"Get a new date request everyday",
+				"Suggest Where you should meet up" };
+		textAnswer = new String[] { "Find out special one in your life",
+				"Thumbs up the people you like, Forget Others",
+				"Coffee house or your favourite pub" };
 		// Locate the ViewPager in viewpager_main.xml
 		viewPager = (ViewPager) view.findViewById(R.id.pager);
 		// Pass results to ViewPagerAdapter Class
-		adapter = new ViewPagerAdapter(context, rank, country, population, flag);
+		adapter = new ViewPagerAdapter(context, text, textAnswer);
 		// Binds the Adapter to the ViewPager
 		viewPager.setAdapter(adapter);
 
@@ -375,7 +369,7 @@ public class MainFragement extends Fragment {
 
 												}
 											}
-											tom = new User(user
+											User.tom = new User(user
 													.getString("name"), user
 													.getString("email"), user
 													.getString("id"), user
@@ -388,24 +382,28 @@ public class MainFragement extends Fragment {
 											vm = new JSONStringer()
 													.object()
 													.key("name")
-													.value(tom.getName())
+													.value(User.tom.getName())
 													.key("email")
-													.value(tom.getEmail())
+													.value(User.tom.getEmail())
 													.key("fbUserId")
-													.value(tom.getFbUserId())
+													.value(User.tom
+															.getFbUserId())
 													.key("gender")
-													.value(tom.getGender())
+													.value(User.tom.getGender())
 													.key("location")
 													.object()
 													.key("x")
-													.value(tom.getLocationX())
+													.value(User.tom
+															.getLocationX())
 													.key("y")
-													.value(tom.getLocationY())
+													.value(User.tom
+															.getLocationY())
 													.endObject()
 													.key("device_token")
-													.value(tom.getDeviceToken())
+													.value(User.tom
+															.getDeviceToken())
 													.key("os")
-													.value(tom.getOs())
+													.value(User.tom.getOs())
 													.endObject();
 
 											Log.d("MainFragement",
@@ -474,9 +472,39 @@ public class MainFragement extends Fragment {
 												@Override
 												public void OnResult(
 														String result) {
+
+													SharedPreferences pref = context
+															.getSharedPreferences(
+																	"pref", 0);
+													SharedPreferences.Editor editor = pref
+															.edit();
+													if (User.tom != null) {
+														editor.putString(
+																GetUserLogin.UserTom,
+																User.tom.toString());
+														editor.commit();
+														Log.d("Result in MainFrag oNResult",
+																pref.getString(
+																		GetUserLogin.UserTom,
+																		null));
+													} else {
+														Log.d(TAG,
+																"User is null");
+													}
+
+													Intent intent = new Intent(
+															getActivity(),
+															LoginActivity.class);
+													startActivity(intent);
+													getActivity().finish();
+												}
+
+												@Override
+												public void onResult(
+														String result,
+														String resultType) {
 													// TODO Auto-generated
-													// method
-													// stub
+													// method stub
 
 												}
 											});

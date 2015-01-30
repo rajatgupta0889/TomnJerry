@@ -62,6 +62,7 @@ public class GetUserLogin extends AsyncTask<Void, Void, String> {
 		proDialog.cancel();
 		if (result != null) {
 			listener.onTaskCompleted();
+			listener.OnResult(result);
 		} else {
 
 			new AlertDialog.Builder(context)
@@ -90,43 +91,43 @@ public class GetUserLogin extends AsyncTask<Void, Void, String> {
 		result = sh.makeServiceCall(url + "login", ServiceHandler.POST, vm);
 		// Log.d("AsynTAsk", result);
 		// System.out.println(result);
-		try {
-			if (result != null) {
-				JSONObject res = new JSONObject(result);
-
-				if (res.getString("id") != null) {
-
-					if (MainFragement.tom != null) {
-						ArrayList<String> temp = new ArrayList<String>();
-						System.out.println("Login Result" + res);
-						JSONArray imageArray = res.getJSONArray("images");
-						for (int i = 0; i < imageArray.length(); i++) {
-							temp.add(imageArray.getString(0));
-						}
-						MainFragement.tom.setImageList(temp);
-						Intent intent = new Intent(context, LoginActivity.class);
-
-						MainFragement.tom.setUserToken(res.getString("id"));
-
-						SharedPreferences pref = context.getSharedPreferences(
-								"pref", 0);
-						SharedPreferences.Editor editor = pref.edit();
-						editor.putString(UserTom, MainFragement.tom.toString());
-						editor.commit();
-						context.startActivity(intent);
-						((Activity) context).finish();
-					}
-
-				}
-
-			} else {
-
-			}
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-
-		}
+		// try {
+		// if (result != null) {
+		// JSONObject res = new JSONObject(result);
+		//
+		// if (res.getString("id") != null) {
+		//
+		// if (MainFragement.tom != null) {
+		// ArrayList<String> temp = new ArrayList<String>();
+		// System.out.println("Login Result" + res);
+		// JSONArray imageArray = res.getJSONArray("images");
+		// for (int i = 0; i < imageArray.length(); i++) {
+		// temp.add(imageArray.getString(0));
+		// }
+		// MainFragement.tom.setImageList(temp);
+		// Intent intent = new Intent(context, LoginActivity.class);
+		//
+		// MainFragement.tom.setUserToken(res.getString("id"));
+		//
+		// SharedPreferences pref = context.getSharedPreferences(
+		// "pref", 0);
+		// SharedPreferences.Editor editor = pref.edit();
+		// editor.putString(UserTom, MainFragement.tom.toString());
+		// editor.commit();
+		// context.startActivity(intent);
+		// ((Activity) context).finish();
+		// }
+		//
+		// }
+		//
+		// } else {
+		//
+		// }
+		// } catch (JSONException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		//
+		// }
 
 		// System.out.println(result);
 		return result;

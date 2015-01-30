@@ -15,18 +15,13 @@ public class ViewPagerAdapter extends PagerAdapter {
 	// Declare Variables
 	Context context;
 	String[] rank;
-	String[] country;
-	String[] population;
-	int[] flag;
+	String[] textAnswer;
 	LayoutInflater inflater;
 
-	public ViewPagerAdapter(Context context, String[] rank, String[] country,
-			String[] population, int[] flag) {
+	public ViewPagerAdapter(Context context, String[] rank, String[] textAnswer) {
 		this.context = context;
 		this.rank = rank;
-		this.country = country;
-		this.population = population;
-		this.flag = flag;
+		this.textAnswer = textAnswer;
 	}
 
 	@Override
@@ -43,31 +38,17 @@ public class ViewPagerAdapter extends PagerAdapter {
 	public Object instantiateItem(ViewGroup container, int position) {
 
 		// Declare Variables
-		TextView txtrank;
-		TextView txtcountry;
-		TextView txtpopulation;
-		ImageView imgflag;
+		TextView txtrank, txtAnswer;
 
 		inflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View itemView = inflater.inflate(R.layout.view_pager_item, container,
 				false);
-
-		// Locate the TextViews in viewpager_item.xml
-		txtrank = (TextView) itemView.findViewById(R.id.rank);
-		txtcountry = (TextView) itemView.findViewById(R.id.country);
-		txtpopulation = (TextView) itemView.findViewById(R.id.population);
-
+		txtrank = (TextView) itemView.findViewById(R.id.text);
+		txtAnswer = (TextView) itemView.findViewById(R.id.textAnswer);
 		// Capture position and set to the TextViews
 		txtrank.setText(rank[position]);
-		txtcountry.setText(country[position]);
-		txtpopulation.setText(population[position]);
-
-		// Locate the ImageView in viewpager_item.xml
-		imgflag = (ImageView) itemView.findViewById(R.id.flag);
-		// Capture position and set to the ImageView
-		imgflag.setImageResource(flag[position]);
-
+		txtAnswer.setText(textAnswer[position]);
 		// Add viewpager_item.xml to ViewPager
 		((ViewPager) container).addView(itemView);
 

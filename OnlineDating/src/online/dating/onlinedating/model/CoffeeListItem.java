@@ -2,7 +2,8 @@ package online.dating.onlinedating.model;
 
 public class CoffeeListItem {
 	String coffeeUserName;
-	int coffeeUserImage;
+	String coffeeUserImage;
+	Boolean isInvited;
 
 	public String getCoffeeUserName() {
 		return coffeeUserName;
@@ -12,18 +13,30 @@ public class CoffeeListItem {
 		this.coffeeUserName = coffeeUserName;
 	}
 
-	public int getCoffeeUserImage() {
+	public String getCoffeeUserImage() {
 		return coffeeUserImage;
 	}
 
-	public void setCoffeeUserImage(int coffeeUserImage) {
+	public void setCoffeeUserImage(String coffeeUserImage) {
 		this.coffeeUserImage = coffeeUserImage;
 	}
 
-	public CoffeeListItem(String coffeeUserName, int coffeeUserImage) {
+	public CoffeeListItem(String coffeeUserName, String coffeeUserImage) {
 		super();
 		this.coffeeUserName = coffeeUserName;
 		this.coffeeUserImage = coffeeUserImage;
+	}
+
+	public CoffeeListItem() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public Boolean getIsInvited() {
+		return isInvited;
+	}
+
+	public void setIsInvited(Boolean isInvited) {
+		this.isInvited = isInvited;
 	}
 
 }

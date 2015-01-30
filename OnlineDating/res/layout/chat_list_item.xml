@@ -7,12 +7,14 @@
 
     <ImageView
         android:id="@+id/userChatIcon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_weight="0.5"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
         android:src="@drawable/com_facebook_profile_default_icon" />
 
     <TextView
@@ -28,11 +30,11 @@
 
     <ImageView
         android:id="@+id/calendarImageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_marginBottom="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_weight="0.5"
         android:background="@color/counter_text_bg"
         android:src="@drawable/ic_msg" />

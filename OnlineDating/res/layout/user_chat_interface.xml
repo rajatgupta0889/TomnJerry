@@ -5,7 +5,7 @@
     android:layout_marginLeft="10dp" >
 
     <Button
-        android:id="@+id/setSettingButton"
+        android:id="@+id/sendButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -13,11 +13,11 @@
         android:text="Button" />
 
     <ImageView
-        android:id="@+id/coffeeMeetUserIcon"
+        android:id="@+id/profilePicImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignTop="@+id/setSettingButton"
+        android:layout_alignTop="@+id/sendButton"
         android:src="@drawable/ic_camera" />
 
     <ImageView
@@ -25,16 +25,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignTop="@+id/coffeeMeetUserIcon"
+        android:layout_alignTop="@+id/profilePicImageView"
         android:layout_marginLeft="14dp"
-        android:layout_toRightOf="@+id/coffeeMeetUserIcon"
+        android:layout_toRightOf="@+id/profilePicImageView"
         android:src="@drawable/ic_clip" />
 
     <View
         android:id="@+id/view1"
         android:layout_width="fill_parent"
         android:layout_height="1dp"
-        android:layout_above="@+id/setSettingButton"
+        android:layout_above="@+id/sendButton"
         android:layout_alignParentLeft="true"
         android:background="@android:color/darker_gray" />
 
@@ -43,6 +43,7 @@
         android:layout_width="250dp"
         android:layout_height="100dp"
         android:layout_above="@+id/view1"
+        android:layout_alignLeft="@+id/calendarImageView"
         android:layout_alignParentRight="true"
         android:layout_marginBottom="5dp"
         android:layout_marginRight="5dp"
@@ -64,36 +65,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/locationSearchEditTextView"
-        android:layout_marginBottom="20dp"
-        android:layout_marginRight="8dp"
-        android:layout_toLeftOf="@+id/locationSearchEditTextView"
-        android:src="@drawable/com_facebook_profile_default_icon" />
-
-    <LinearLayout
-        android:id="@+id/matchDisplayLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginBottom="5dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp" >
-
-        <ImageView
-            android:id="@+id/chatMessageUserIcon"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@drawable/com_facebook_profile_picture_blank_square" />
-
-        <TextView
-            android:id="@+id/chatMessageUserName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
-            android:text="RAJAT GUPTA"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-    </LinearLayout>
+        android:layout_marginBottom="20dp"
+        android:src="@drawable/com_facebook_profile_default_icon" />
 
     <ListView
         android:id="@+id/chatMessageListView"
@@ -101,7 +75,8 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/locationSearchEditTextView"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/matchDisplayLayout" >
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="5dp" >
     </ListView>
 
 </RelativeLayout>

@@ -15,9 +15,10 @@ public class UserMessageAdapter extends FirebaseListAdapter<UserMessageItem> {
 	LayoutInflater mInflater;
 	String mUserName;
 
-	public UserMessageAdapter(Query mRef, int mLayout, Activity activity,String mUserName) {
+	public UserMessageAdapter(Query mRef, int mLayout, int nLayout,
+			Activity activity, String mUserName) {
 
-		super(mRef, UserMessageItem.class, mLayout, activity);
+		super(mRef, UserMessageItem.class, mLayout, nLayout, activity);
 		this.mUserName = mUserName;
 		mInflater = activity.getLayoutInflater();
 		// TODO Auto-generated constructor stub

@@ -44,11 +44,18 @@
     </string-array>
 
     <array name="nav_drawer_icons">
+        <item>@drawable/ic_home_grey</item>
+        <item>@drawable/ic_my_buddies__grey</item>
+        <item>@drawable/ic_message_grey</item>
+        <item>@drawable/ic_home_grey</item>
+        <item>@drawable/ic_home_grey</item>
+    </array>
+    <array name="nav_drawer_icons_selected">
         <item>@drawable/ic_home_white</item>
-        <item>@drawable/ic_user</item>
-        <item>@drawable/ic_msg</item>
-        <item>@drawable/ic_coffee</item>
-        <item>@drawable/ic_settings</item>
+        <item>@drawable/ic_my_buddies__white</item>
+        <item>@drawable/ic_message_white</item>
+        <item>@drawable/ic_home_white</item>
+        <item>@drawable/ic_home_white</item>
     </array>
 
     <string name="user_gender_image">user gender image</string>
@@ -61,7 +68,7 @@
     <string name="user_height_info">How Tall are you</string>
     <string name="user_passion_info">Passionate about?</string>
     <string name="user_interest_info">Interest In</string>
-    <string name="notif_sample_text">Melisa Add You as a freind Tap Here to send message</string>
+    <string name="notif_sample_text">Melisa Add You as a friend Tap Here to send message</string>
     <string name="content_desc_user_req">Image of the User Sending request</string>
     <string name="content_desc_coffee_invite">Image For Coffee Invitation</string>
     <string name="content_desc_coffee_caledar">calendar image for coffee request</string>

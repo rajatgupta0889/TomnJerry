@@ -1,8 +1,11 @@
 package online.daing.onlinedating;
 
 import online.dating.onlinedating.adapter.UserMessageAdapter;
+import online.dating.onlinedating.model.User;
 import online.dating.onlinedating.model.UserMessageItem;
 import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -13,13 +16,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.facebook.Session;
-import com.firebase.client.AuthData;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
-import com.firebase.client.Firebase.AuthResultHandler;
 import com.firebase.client.FirebaseError;
-import com.firebase.client.ServerValue;
 import com.firebase.client.ValueEventListener;
 
 public class UserMessageActivity extends Activity {
@@ -33,6 +32,9 @@ public class UserMessageActivity extends Activity {
 	// stores the timestamp of my last disconnect (the last time I was seen
 	// online)
 	Firebase lastOnlineRef;
+	String id;
+	String name;
+	int icon;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,12 +42,28 @@ public class UserMessageActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		Firebase.setAndroidContext(getApplicationContext());
 		setContentView(R.layout.user_chat_interface);
+		Intent intent = getIntent();
 
-		mFirebaseRef = new Firebase(FIREBASE_URL).child("Rajat");
+		Bundle messageData = intent.getExtras();
+		if (messageData != null) {
+			id = messageData.getString("id");
+			name = messageData.getString(HomeFragment.intentNameTag);
+			icon = messageData.getInt("ImageIcon");
+		}
+		getActionBar().setTitle(name);
+		getActionBar().setIcon(R.drawable.com_facebook_button_blue);
+		mFirebaseRef = new Firebase(FIREBASE_URL).child(id);
 		con = mFirebaseRef.push();
-		TextView userName = (TextView) findViewById(R.id.chatMessageUserName);
-		author = userName.getText().toString();
-
+		if (User.tom != null) {
+			author = User.tom.getName();
+		} else {
+			SharedPreferences pref = getSharedPreferences("pref", 0);
+			String user = pref.getString(GetUserLogin.UserTom, null);
+			if (user != null) {
+				User.tom = User.getUser(user);
+				author = User.tom.getName();
+			}
+		}
 		EditText inputText = (EditText) findViewById(R.id.locationSearchEditTextView);
 		inputText
 				.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -60,7 +78,7 @@ public class UserMessageActivity extends Activity {
 					}
 				});
 
-		findViewById(R.id.setSettingButton).setOnClickListener(
+		findViewById(R.id.sendButton).setOnClickListener(
 				new View.OnClickListener() {
 					@Override
 					public void onClick(View view) {
@@ -78,10 +96,11 @@ public class UserMessageActivity extends Activity {
 		final ListView userMessageListView = (ListView) findViewById(R.id.chatMessageListView);
 		// Tell our list adapter that we only want 50 messages at a time
 		mUserMessageAdapter = new UserMessageAdapter(mFirebaseRef,
-				R.layout.user_message_list_item_left, this, author);
+				R.layout.user_message_list_item_left,
+				R.layout.user_message_list_item_right, this, author);
 		userMessageListView.setAdapter(mUserMessageAdapter);
 		userMessageListView.smoothScrollToPosition(userMessageListView
-				.getCount());
+				.getCount() - 1);
 		mUserMessageAdapter.registerDataSetObserver(new DataSetObserver() {
 			@Override
 			public void onChanged() {

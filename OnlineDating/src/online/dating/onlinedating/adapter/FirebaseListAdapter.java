@@ -17,6 +17,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import online.dating.onlinedating.model.User;
+import online.dating.onlinedating.model.UserMessageItem;
+
 /**
  * @author greg
  * @since 6/21/13
@@ -38,7 +41,7 @@ public abstract class FirebaseListAdapter<T> extends BaseAdapter {
 
 	private Query mRef;
 	private Class<T> mModelClass;
-	private int mLayout;
+	private int mLayout, nLayout;
 	private LayoutInflater mInflater;
 	private List<T> mModels;
 	private Map<String, T> mModelKeys;
@@ -62,10 +65,11 @@ public abstract class FirebaseListAdapter<T> extends BaseAdapter {
 	 *            The activity containing the ListView
 	 */
 	public FirebaseListAdapter(Query mRef, Class<T> mModelClass, int mLayout,
-			Activity activity) {
+			int nLayout, Activity activity) {
 		this.mRef = mRef;
 		this.mModelClass = mModelClass;
 		this.mLayout = mLayout;
+		this.nLayout = nLayout;
 		mInflater = activity.getLayoutInflater();
 		mModels = new ArrayList<T>();
 		mModelKeys = new HashMap<String, T>();
@@ -192,7 +196,13 @@ public abstract class FirebaseListAdapter<T> extends BaseAdapter {
 	@Override
 	public View getView(int i, View view, ViewGroup viewGroup) {
 		if (view == null) {
-			view = mInflater.inflate(mLayout, viewGroup, false);
+			UserMessageItem model = (UserMessageItem) mModels.get(i);
+
+			if (model.getAuthor().equalsIgnoreCase(User.tom.getName()))
+				view = mInflater.inflate(mLayout, viewGroup, false);
+			else {
+				view = mInflater.inflate(nLayout, viewGroup, false);
+			}
 		}
 
 		T model = mModels.get(i);

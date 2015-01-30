@@ -1,17 +1,17 @@
 package online.daing.onlinedating;
 
+import online.dating.onlinedating.Service.GetMatchService;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import online.daing.onlinedating.R;
-import online.daing.onlinedating.R.drawable;
-import online.dating.onlinedating.Service.GetMatchService;
 import android.app.IntentService;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.RingtoneManager;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
@@ -50,12 +50,12 @@ public class GcmIntentService extends IntentService implements OnTaskCompleted {
 			 */
 			if (GoogleCloudMessaging.MESSAGE_TYPE_SEND_ERROR
 					.equals(messageType)) {
-				sendNotification("Send Error: " + extras.toString());
+				sendNotification("Send Error: " + extras.toString(), "");
 				Log.d(TAG, messageType);
 			} else if (GoogleCloudMessaging.MESSAGE_TYPE_DELETED
 					.equals(messageType)) {
-				sendNotification("Deleted messagess on server: "
-						+ extras.toString());
+				sendNotification(
+						"Deleted messagess on server: " + extras.toString(), "");
 				Log.d(TAG, messageType);
 			} else if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE
 					.equals(messageType)) {
@@ -66,23 +66,28 @@ public class GcmIntentService extends IntentService implements OnTaskCompleted {
 				String message = extras.getString("message");
 				match.setListener(this);
 				if (message.contains("match")) {
-					match.execute(message.split(":")[1]);
-
+					match.execute(message.split(":")[1], "match");
+				}
+				if (message.contains("coffee")) {
+					System.out.println("Inside message coffee "
+							+ message.split(":")[1]);
+					match.execute(message.split(":")[1], "coffee");
 				} else {
-					sendNotification(message);
+					sendNotification(message, "");
 				}
-				for (int i = 0; i < 5; i++) {
-					Log.i(TAG,
-							"Working ... " + (i + 1) + "/5 @"
-									+ SystemClock.elapsedRealtime());
-					try {
-						Thread.sleep(5000);
 
-					} catch (InterruptedException exp) {
-
-					}
-
-				}
+				// for (int i = 0; i < 5; i++) {
+				// Log.i(TAG,
+				// "Working ... " + (i + 1) + "/5 @"
+				// + SystemClock.elapsedRealtime());
+				// try {
+				// Thread.sleep(5000);
+				//
+				// } catch (InterruptedException exp) {
+				//
+				// }
+				//
+				// }
 				Log.i(TAG, "Completed work @ " + SystemClock.elapsedRealtime());
 				Log.i(TAG, "Recieved @ " + extras.toString());
 			}
@@ -91,22 +96,40 @@ public class GcmIntentService extends IntentService implements OnTaskCompleted {
 		GcmBroadcastReceiver.completeWakefulIntent(intent);
 	}
 
-	private void sendNotification(String msg) {
+	private void sendNotification(String msg, String resultType) {
 		// TODO Auto-generated method stub
 		mNotificationManager = (NotificationManager) this
 				.getSystemService(Context.NOTIFICATION_SERVICE);
 		Intent intent = null;
-		String message;
+		String message = null;
 		intent = new Intent(this, LoginActivity.class);
 		Log.d(TAG, msg);
-		intent.putExtra("Match", msg);
-		PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-				intent, PendingIntent.FLAG_UPDATE_CURRENT);
-		if (msg.contains("fbUserId")) {
+		Log.d(TAG, resultType);
+		if (resultType.equals("match")) {
+			SharedPreferences pref = getApplicationContext()
+					.getSharedPreferences("matchPref", 0);
+			SharedPreferences.Editor editor = pref.edit();
+			editor.putString("MatchInfo", msg);
+			editor.commit();
 			message = "You got the new Match ";
+			Log.d("Result TYpe ", resultType);
+
 			try {
 				JSONObject obj = new JSONObject(msg);
 				message = message + obj.getString("name");
+				intent.putExtra("Match", message);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else if (resultType.equals("coffee")) {
+			message = "You got the coffee request from ";
+			try {
+				JSONObject obj = new JSONObject(msg);
+				JSONObject invitee = obj.getJSONObject("invitee");
+				message = message + invitee.getString("name");
+				intent.putExtra("coffee", message);
+				System.out.println("Message " + message);
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -114,6 +137,10 @@ public class GcmIntentService extends IntentService implements OnTaskCompleted {
 		} else {
 			message = msg;
 		}
+		intent.putExtra("resultType", resultType);
+		intent.putExtra("match", msg);
+		PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
+				intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
 				this)
@@ -121,7 +148,11 @@ public class GcmIntentService extends IntentService implements OnTaskCompleted {
 				.setContentTitle("Dating App Notification")
 				.setStyle(
 						new NotificationCompat.BigTextStyle().bigText(message))
-				.setContentText(message).setAutoCancel(true);
+				.setContentText(message)
+				.setAutoCancel(true)
+				.setSound(
+						RingtoneManager
+								.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
 
 		mBuilder.setContentIntent(contentIntent);
 		mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
@@ -137,14 +168,13 @@ public class GcmIntentService extends IntentService implements OnTaskCompleted {
 	@Override
 	public void OnResult(String result) {
 		// TODO Auto-generated method stub
-		SharedPreferences pref = getApplicationContext().getSharedPreferences(
-				"matchPref", 0);
-		SharedPreferences.Editor editor = pref.edit();
-		editor.putString("MatchInfo", result);
-		editor.commit();
-
-		sendNotification(result);
 
 	}
 
+	@Override
+	public void onResult(String result, String resultType) {
+		// TODO Auto-generated method stu
+
+		sendNotification(result, resultType);
+	}
 }

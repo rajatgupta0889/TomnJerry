@@ -2,6 +2,8 @@ package online.dating.onlinedating.adapter;
 
 import java.util.ArrayList;
 
+import com.google.android.gms.internal.ma;
+
 import online.daing.onlinedating.R;
 import online.dating.onlinedating.model.UserDetailItem;
 import online.dating.onlinedating.model.UserInfoItem;
@@ -11,7 +13,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -21,6 +23,12 @@ public class UserInfoExpandListAdapter extends BaseExpandableListAdapter {
 	private Context _context;
 	private ArrayList<UserInfoItem> _userInfoItems; // header titles
 	private UserDetailItem _userDetailItems;
+	CheckBox softwareCB;
+	CheckBox graphicsCB;
+	CheckBox managerCB;
+	CheckBox accountantCB;
+	CheckBox analystCb;
+	CheckBox researcherCb;
 
 	// child data in format of header title, child title
 	public UserInfoExpandListAdapter(Context context,
@@ -86,8 +94,9 @@ public class UserInfoExpandListAdapter extends BaseExpandableListAdapter {
 				.findViewById(R.id.user_info_image);
 		TextView textItem = (TextView) convertView
 				.findViewById(R.id.user_info_text);
-//		Button selectButton = (Button) convertView.findViewById(R.id.button1);
-//		selectButton.setText("Select");
+		// Button selectButton = (Button)
+		// convertView.findViewById(R.id.button1);
+		// selectButton.setText("Select");
 		imageIcon.setImageResource(item.getUser_info_image());
 		textItem.setText(item.getUser_info_text());
 
@@ -147,9 +156,28 @@ public class UserInfoExpandListAdapter extends BaseExpandableListAdapter {
 			}
 		} else if (groupPosition == 1) {
 			convertView = infalInflater.inflate(R.layout.user_passion, null);
+			CheckBox travelingCheckBox = (CheckBox) convertView
+					.findViewById(R.id.travelingCB);
+			CheckBox partyingCheckBox = (CheckBox) convertView
+					.findViewById(R.id.partyingCB);
+			CheckBox sportCheckBox = (CheckBox) convertView
+					.findViewById(R.id.sportCB);
+			CheckBox hikingCheckBox = (CheckBox) convertView
+					.findViewById(R.id.hikingCB);
+			CheckBox cyclingCheckBox = (CheckBox) convertView
+					.findViewById(R.id.cyclingCB);
+			CheckBox paintingCheckBox = (CheckBox) convertView
+					.findViewById(R.id.paintingCB);
+			setPadding(travelingCheckBox);
+			setPadding(partyingCheckBox);
+			setPadding(sportCheckBox);
+			setPadding(hikingCheckBox);
+			setPadding(cyclingCheckBox);
+			setPadding(paintingCheckBox);
 
 		} else if (groupPosition == 2) {
 			convertView = infalInflater.inflate(R.layout.user_sex, null);
+			convertView.setPadding(0, 0, 0, 0);
 			RadioButton radioMale = (RadioButton) convertView
 					.findViewById(R.id.male);
 			RadioButton radioFemale = (RadioButton) convertView
@@ -161,10 +189,70 @@ public class UserInfoExpandListAdapter extends BaseExpandableListAdapter {
 			}
 		} else if (groupPosition == 3) {
 			convertView = infalInflater.inflate(R.layout.user_profession, null);
+			softwareCB = (CheckBox) convertView.findViewById(R.id.SoftwareCB);
+			graphicsCB = (CheckBox) convertView.findViewById(R.id.graphicsCB);
+			managerCB = (CheckBox) convertView.findViewById(R.id.managerCB);
+			accountantCB = (CheckBox) convertView
+					.findViewById(R.id.accountantCB);
+			analystCb = (CheckBox) convertView.findViewById(R.id.analystCB);
+			researcherCb = (CheckBox) convertView.findViewById(R.id.researchCB);
+			setPadding(softwareCB);
+			setPadding(graphicsCB);
+			setPadding(managerCB);
+			setPadding(accountantCB);
+			setPadding(analystCb);
+			setPadding(researcherCb);
+
+			OnClickListener listener = new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					init();
+					CheckBox rb = (CheckBox) v;
+					switch (rb.getId()) {
+					case R.id.SoftwareCB:
+						softwareCB.setChecked(true);
+						break;
+					case R.id.graphicsCB:
+						graphicsCB.setChecked(true);
+						break;
+					case R.id.managerCB:
+						managerCB.setChecked(true);
+						break;
+					case R.id.accountantCB:
+						accountantCB.setChecked(true);
+						break;
+					case R.id.analystCB:
+						analystCb.setChecked(true);
+						break;
+					case R.id.researchCB:
+						researcherCb.setChecked(true);
+						break;
+					default:
+						break;
+					}
+
+				}
+			};
+
+			softwareCB.setOnClickListener(listener);
+			graphicsCB.setOnClickListener(listener);
+			accountantCB.setOnClickListener(listener);
+			analystCb.setOnClickListener(listener);
+			researcherCb.setOnClickListener(listener);
+			managerCB.setOnClickListener(listener);
 
 		}
 
 		return convertView;
+	}
+
+	public void init() {
+		researcherCb.setChecked(false);
+		graphicsCB.setChecked(false);
+		managerCB.setChecked(false);
+		softwareCB.setChecked(false);
+		analystCb.setChecked(false);
+		accountantCB.setChecked(false);
 	}
 
 	@Override
@@ -173,4 +261,10 @@ public class UserInfoExpandListAdapter extends BaseExpandableListAdapter {
 		return true;
 	}
 
+	public void setPadding(CheckBox cb) {
+		final float scale = _context.getResources().getDisplayMetrics().density;
+
+		cb.setPadding(cb.getPaddingLeft() + (int) (10.0f * scale + 0.5f),
+				cb.getPaddingTop(), cb.getPaddingRight(), cb.getPaddingBottom());
+	}
 }
