@@ -166,7 +166,8 @@ public class HomeFragment extends Fragment implements OnClickListener {
 
 		Calendar cal = Calendar.getInstance();
 		Long mil1 = cal.getTimeInMillis();
-		cal.add(Calendar.DATE, 1);
+		if (cal.get(Calendar.HOUR) > 10)
+			cal.add(Calendar.DATE, 1);
 		cal.set(Calendar.HOUR_OF_DAY, 10);
 		cal.set(Calendar.MINUTE, 00);
 		cal.set(Calendar.SECOND, 00);

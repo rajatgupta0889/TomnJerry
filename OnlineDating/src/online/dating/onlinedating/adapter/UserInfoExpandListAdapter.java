@@ -205,8 +205,10 @@ public class UserInfoExpandListAdapter extends BaseExpandableListAdapter {
 					CheckBox rb = (CheckBox) v;
 					switch (rb.getId()) {
 					case R.id.travelingCB:
-						if (passionArrayList.contains(rb.getText().toString())) {
-							passionArrayList.remove(rb.getText().toString());
+						if (passionArrayList.contains(rb.getText().toString()
+								.trim())) {
+							passionArrayList.remove(rb.getText().toString()
+									.trim());
 
 						} else {
 							passionArrayList.add(rb.getText().toString());
@@ -214,50 +216,68 @@ public class UserInfoExpandListAdapter extends BaseExpandableListAdapter {
 						passion[0] = !passion[0];
 						break;
 					case R.id.partyingCB:
-						if (passionArrayList.contains(rb.getText().toString())) {
-							passionArrayList.remove(rb.getText().toString());
+						if (passionArrayList.contains(rb.getText().toString()
+								.trim())) {
+							passionArrayList.remove(rb.getText().toString()
+									.trim());
 						} else {
-							passionArrayList.add(rb.getText().toString());
+							passionArrayList
+									.add(rb.getText().toString().trim());
 						}
 						passion[1] = !passion[1];
 						break;
 					case R.id.sportCB:
-						if (passionArrayList.contains(rb.getText().toString())) {
-							passionArrayList.remove(rb.getText().toString());
+						if (passionArrayList.contains(rb.getText().toString()
+								.trim())) {
+							passionArrayList.remove(rb.getText().toString()
+									.trim());
 						} else {
-							passionArrayList.add(rb.getText().toString());
+							passionArrayList
+									.add(rb.getText().toString().trim());
 						}
 						passion[2] = !passion[2];
 						break;
 					case R.id.hikingCB:
-						if (passionArrayList.contains(rb.getText().toString())) {
-							passionArrayList.remove(rb.getText().toString());
+						if (passionArrayList.contains(rb.getText().toString()
+								.trim())) {
+							passionArrayList.remove(rb.getText().toString()
+									.trim());
 						} else {
-							passionArrayList.add(rb.getText().toString());
+							passionArrayList
+									.add(rb.getText().toString().trim());
 						}
 						passion[3] = !passion[3];
 						break;
 					case R.id.cyclingCB:
-						if (passionArrayList.contains(rb.getText().toString())) {
-							passionArrayList.remove(rb.getText().toString());
+						if (passionArrayList.contains(rb.getText().toString()
+								.trim())) {
+							passionArrayList.remove(rb.getText().toString()
+									.trim());
 						} else {
-							passionArrayList.add(rb.getText().toString());
+							passionArrayList
+									.add(rb.getText().toString().trim());
 						}
 						passion[4] = !passion[4];
 						break;
 					case R.id.paintingCB:
-						if (passionArrayList.contains(rb.getText().toString())) {
-							passionArrayList.remove(rb.getText().toString());
+						if (passionArrayList.contains(rb.getText().toString()
+								.trim())) {
+							passionArrayList.remove(rb.getText().toString()
+									.trim());
 						} else {
-							passionArrayList.add(rb.getText().toString());
+							passionArrayList
+									.add(rb.getText().toString().trim());
 						}
 						passion[5] = !passion[5];
 						break;
 					default:
-						if (passionArrayList.contains(rb.getText().toString())) {
-							passionArrayList.remove(rb.getText().toString());
+						if (passionArrayList.contains(rb.getText().toString()
+								.trim())) {
+							passionArrayList.remove(rb.getText().toString()
+									.trim());
 						} else {
-							passionArrayList.add(rb.getText().toString());
+							passionArrayList
+									.add(rb.getText().toString().trim());
 						}
 						passion[5] = !passion[5];
 						break;

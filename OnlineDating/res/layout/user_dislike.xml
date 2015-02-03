@@ -48,7 +48,7 @@
         android:button="@android:color/transparent"
         android:drawableLeft="@drawable/yellow_cb_selector"
         android:drawablePadding="10dp"
-        android:text="Her Intetrests"
+        android:text="Not Educated Enough"
         android:textColor="@color/white" />
 
     <CheckBox
@@ -61,7 +61,7 @@
         android:button="@android:color/transparent"
         android:drawableLeft="@drawable/blue_cb_selector"
         android:drawablePadding="10dp"
-        android:text="Her Work Position"
+        android:text="Not Attractive Enough"
         android:textColor="@color/white"
         android:textColorHint="@color/white" />
 
@@ -75,7 +75,7 @@
         android:button="@android:color/transparent"
         android:drawableLeft="@drawable/orange_cb_selector"
         android:drawablePadding="10dp"
-        android:text="Height"
+        android:text="Not Rich Enough"
         android:textColor="@color/white" />
 
     <CheckBox
@@ -88,7 +88,7 @@
         android:button="@android:color/transparent"
         android:drawableLeft="@drawable/green_cb_selector"
         android:drawablePadding="10dp"
-        android:text="Profile Images"
+        android:text="Not Intellectual Enough&apos;"
         android:textColor="@color/white" />
 
     <Button

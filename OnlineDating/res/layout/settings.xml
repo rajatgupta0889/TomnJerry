@@ -5,11 +5,43 @@
     android:background="#c13d52" >
 
     <LinearLayout
-        android:id="@+id/linearLayout1"
+        android:id="@+id/linearLayout4"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/customborderforsettinglayout"
+        android:gravity="center|left"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/userInfoTV"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:text="Profile Information"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/infoEditButton"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/setting_button_selector"
+            android:text="Edit"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/linearLayout4"
         android:layout_marginTop="10dp"
         android:background="@drawable/customborderforsettinglayout"
         android:gravity="center|left"

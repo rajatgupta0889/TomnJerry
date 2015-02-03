@@ -52,7 +52,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/setLocationLayout"
+        android:id="@+id/profLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -90,7 +90,7 @@
         android:layout_height="200dp"
         android:layout_above="@+id/acceptButton"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/setLocationLayout"
+        android:layout_below="@+id/profLayout"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:background="@drawable/customborder" >

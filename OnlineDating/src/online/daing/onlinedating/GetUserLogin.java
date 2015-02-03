@@ -25,6 +25,7 @@ public class GetUserLogin extends AsyncTask<Void, Void, String> {
 		super();
 		this.context = context;
 		this.proDialog = proDialog;
+		proDialog = new ProgressDialog(context);
 		this.vm = vm;
 	}
 
@@ -42,7 +43,6 @@ public class GetUserLogin extends AsyncTask<Void, Void, String> {
 	protected void onPreExecute() {
 		// TODO Auto-generated method stub
 		if (proDialog != null) {
-			proDialog = new ProgressDialog(context);
 			proDialog.setMessage("Logging In");
 			proDialog.setCanceledOnTouchOutside(false);
 			proDialog.show();

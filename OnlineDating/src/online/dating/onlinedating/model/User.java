@@ -202,15 +202,60 @@ public class User {
 			userObj.setDeviceToken(array[8]);
 			userObj.setOs(array[9]);
 			if (array[10].contains(",")) {
-				userObj.setImageList(new ArrayList<String>(Arrays
-						.asList(array[10].split(","))));
+				if (array[10].contains("[") && array[10].contains("]")) {
+					userObj.setImageList(new ArrayList<String>(Arrays
+							.asList(array[10].substring(
+									array[10].lastIndexOf("[") + 1,
+									array[10].lastIndexOf("]")).split(","))));
+				} else {
+					userObj.setImageList(new ArrayList<String>(Arrays
+							.asList(array[10].split(","))));
+
+				}
+
+			} else {
+				if (array[10].isEmpty())
+					userObj.setImageList(new ArrayList<String>());
+				else {
+					ArrayList<String> temp = new ArrayList<String>();
+					temp.add(array[10].substring(
+							array[10].lastIndexOf("[") + 1,
+							array[10].indexOf("]")));
+					userObj.setImageList(temp);
+				}
 			}
 			if (array.length > 11) {
 				if (array[11].contains(",")) {
-					userObj.setPassion(new ArrayList<String>(Arrays
-							.asList(array[10].split(","))));
+					if (array[11].contains("[") && array[11].contains("]")) {
+						String temp = array[11].substring(
+								array[11].lastIndexOf("[") + 1,
+								array[11].indexOf("]"));
+
+						String[] tempArray = temp.split(",");
+
+						for (int i = 0; i < tempArray.length; i++) {
+							tempArray[i] = tempArray[i].trim();
+						}
+
+						ArrayList<String> tempList = new ArrayList<String>(
+								Arrays.asList(tempArray));
+
+						userObj.setPassion(tempList);
+					} else {
+						userObj.setPassion(new ArrayList<String>(Arrays
+								.asList(array[11].split(","))));
+					}
 				} else {
-					userObj.setPassion(new ArrayList<String>());
+					if (array[11].isEmpty())
+						userObj.setPassion(new ArrayList<String>());
+
+					else {
+						ArrayList<String> temp = new ArrayList<String>();
+						temp.add(array[11].substring(
+								array[11].lastIndexOf("[") + 1,
+								array[11].indexOf("]")));
+						userObj.setPassion(temp);
+					}
 				}
 			}
 
@@ -223,49 +268,49 @@ public class User {
 
 	}
 
-	public static User getUser(JSONObject user) {
-		User userObj = null;
-		if (user != null) {
-			userObj = new User();
-			Log.d("User", " " + user);
-
-			try {
-				userObj.setName(user.getString("name"));
-				userObj.setEmail(user.getString("name"));
-				userObj.setFbUserId(user.getString("name"));
-				userObj.setGender(user.getString("name"));
-				userObj.setAge(user.getString("name"));
-				userObj.setUserToken(user.getString("name"));
-				userObj.setLocationX(Double.parseDouble(user.getString("name")));
-				userObj.setLocationY(Double.parseDouble(user.getString("name")));
-				userObj.setDeviceToken(user.getString("name"));
-				userObj.setOs(user.getString("name"));
-				JSONArray array = user.getJSONArray("images");
-				ArrayList<String> temp = new ArrayList<String>();
-				for (int i = 0; i < array.length(); i++) {
-					temp.add(array.getString(i));
-				}
-
-				userObj.setImageList(temp);
-				JSONArray array1 = user.getJSONArray("passion");
-				if (array1.length() > 1) {
-					ArrayList<String> temp1 = new ArrayList<String>();
-					for (int i = 0; i < array.length(); i++) {
-						temp1.add(array.getString(i));
-					}
-					userObj.setPassion(temp1);
-					userObj.setProfession(user.getString("profession"));
-					userObj.setOrientation(user.getString("orientation"));
-					userObj.setHeight(user.getString("height"));
-				}
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-		}
-
-		return userObj;
-
-	}
+	// public static User getUser(JSONObject user) {
+	// User userObj = null;
+	// if (user != null) {
+	// userObj = new User();
+	// Log.d("User", " " + user);
+	//
+	// try {
+	// userObj.setName(user.getString("name"));
+	// userObj.setEmail(user.getString("email"));
+	// userObj.setFbUserId(user.getString("name"));
+	// userObj.setGender(user.getString("name"));
+	// userObj.setAge(user.getString("name"));
+	// userObj.setUserToken(user.getString("name"));
+	// userObj.setLocationX(Double.parseDouble(user.getString("name")));
+	// userObj.setLocationY(Double.parseDouble(user.getString("name")));
+	// userObj.setDeviceToken(user.getString("name"));
+	// userObj.setOs(user.getString("name"));
+	// JSONArray array = user.getJSONArray("images");
+	// ArrayList<String> temp = new ArrayList<String>();
+	// for (int i = 0; i < array.length(); i++) {
+	// temp.add(array.getString(i));
+	// }
+	//
+	// userObj.setImageList(temp);
+	// JSONArray array1 = user.getJSONArray("passion");
+	// if (array1.length() > 1) {
+	// ArrayList<String> temp1 = new ArrayList<String>();
+	// for (int i = 0; i < array.length(); i++) {
+	// temp1.add(array.getString(i));
+	// }
+	// userObj.setPassion(temp1);
+	// userObj.setProfession(user.getString("profession"));
+	// userObj.setOrientation(user.getString("orientation"));
+	// userObj.setHeight(user.getString("height"));
+	// }
+	// } catch (JSONException e) {
+	// // TODO Auto-generated catch block
+	// e.printStackTrace();
+	// }
+	//
+	// }
+	//
+	// return userObj;
+	//
+	// }
 }

@@ -1,6 +1,7 @@
 package online.daing.onlinedating;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import online.dating.onlinedating.model.ServiceHandler;
 
@@ -59,7 +60,6 @@ public class UserDislikeActivity extends Activity implements
 				// TODO Auto-generated method stub
 				try {
 					dislIkeData = new JSONStringer();
-					reasonForPass.add("not_educated_enough");
 
 					dislIkeData.object().key("reasonForPass").array()
 							.value(reasonForPass).endArray().key("fbUserId")
@@ -117,10 +117,15 @@ public class UserDislikeActivity extends Activity implements
 	@Override
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 		// TODO Auto-generated method stub
+		String reason = ((CheckBox) buttonView).getText().toString();
+		String[] array = reason.split(" ");
+		if (array.length > 2)
+			reason = array[0] + "_" + array[1] + "_" + array[3];
+
 		if (isChecked) {
-			reasonForPass.add(((CheckBox) buttonView).getText().toString());
+			reasonForPass.add(reason.toLowerCase());
 		} else {
-			reasonForPass.remove(((CheckBox) buttonView).getText().toString());
+			reasonForPass.remove(reason.toLowerCase());
 		}
 	}
 

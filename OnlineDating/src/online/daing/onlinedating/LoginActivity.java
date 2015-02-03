@@ -13,7 +13,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
-import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
@@ -24,11 +24,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -52,7 +50,7 @@ public class LoginActivity extends ActionBarActivity implements
 	private CharSequence mTitle;
 
 	// slide menu items
-	private String[] navMenuTitles;
+	// private String[] navMenuTitles;
 	private TypedArray navMenuIcons, navMenuIconSelected;
 
 	private ArrayList<NavDrawerItem> navDrawerItems;
@@ -62,7 +60,11 @@ public class LoginActivity extends ActionBarActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
-		getActionBar().setDisplayShowHomeEnabled(false);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setIcon(
+				new ColorDrawable(getResources().getColor(
+						android.R.color.transparent)));// also required
+
 		if (User.tom == null) {
 			SharedPreferences pref = getSharedPreferences("pref", 0);
 			String user = pref.getString(GetUserLogin.UserTom, null);
@@ -76,10 +78,11 @@ public class LoginActivity extends ActionBarActivity implements
 
 		// orientation = (Spinner) findViewById(R.id.spinner_orientation);
 
-		mTitle = mDrawerTitle = getTitle();
+		// mTitle = mDrawerTitle = getTitle();
 
 		// load slide menu items
-		navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
+		// navMenuTitles =
+		// getResources().getStringArray(R.array.nav_drawer_items);
 		// nav drawer icons from resources
 		navMenuIcons = getResources()
 				.obtainTypedArray(R.array.nav_drawer_icons);
@@ -119,7 +122,6 @@ public class LoginActivity extends ActionBarActivity implements
 		mDrawerList.setAdapter(adapter);
 
 		// enabling action bar app icon and behaving it as toggle button
-		getActionBar().setDisplayHomeAsUpEnabled(true);
 		getActionBar().setHomeButtonEnabled(true);
 
 		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
@@ -239,7 +241,7 @@ public class LoginActivity extends ActionBarActivity implements
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		// if nav drawer is opened, hide the action items
-		boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
+		// boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
 		// menu.findItem(R.id.action_settings).setVisible(!drawerOpen);
 		return super.onPrepareOptionsMenu(menu);
 	}
@@ -303,7 +305,7 @@ public class LoginActivity extends ActionBarActivity implements
 			// update selected item and title, then close the drawer
 			mDrawerList.setItemChecked(position, true);
 			mDrawerList.setSelection(position);
-			setTitle(navMenuTitles[position]);
+			// setTitle(navMenuTitles[position]);
 			mDrawerLayout.closeDrawer(mDrawerList);
 		} else {
 			// error in creating fragment

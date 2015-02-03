@@ -55,7 +55,6 @@ import com.facebook.widget.LoginButton;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
-import com.google.android.gms.internal.lp;
 import com.viewpagerindicator.CirclePageIndicator;
 
 @SuppressLint("NewApi")
@@ -63,6 +62,8 @@ public class MainFragement extends Fragment {
 
 	private static final String TAG = "MainFragment";
 	private static String url = "http://54.88.90.102:1337/";
+	String baseImageUrl = "https://s3-ap-southeast-1.amazonaws.com/tomnjerry/profile-pics/";
+
 	public static int logIn = 0;
 	private UiLifecycleHelper uiHelper;
 	ProgressDialog proDialog;
@@ -412,6 +413,8 @@ public class MainFragement extends Fragment {
 											Log.d("MainFragement",
 													"Sending String "
 															+ vm.toString());
+											proDialog = new ProgressDialog(
+													getActivity());
 											GetUserLogin login = new GetUserLogin(
 													getActivity(), proDialog,
 													vm);
@@ -422,66 +425,71 @@ public class MainFragement extends Fragment {
 													// TODO Auto-generated
 													// method
 													// stub
-													new AsyncTask<Void, Void, Void>() {
-
-														@Override
-														protected Void doInBackground(
-																Void... params) {
-															// TODO
-															// Auto-generated
-															// method stub
-															Bitmap userIcon = getFacebookProfilePicture(userID);
-															ByteArrayOutputStream baos = new ByteArrayOutputStream();
-															userIcon.compress(
-																	Bitmap.CompressFormat.JPEG,
-																	100, baos);
-															byte[] b = baos
-																	.toByteArray();
-															String imageEncoded = Base64
-																	.encodeToString(
-																			b,
-																			Base64.DEFAULT);
-
-															JSONStringer data = null;
-															try {
-																data = new JSONStringer()
-																		.object()
-																		.key("data")
-																		.value(imageEncoded)
-																		.endObject();
-																ServiceHandler sh = new ServiceHandler();
-																String result = sh
-																		.makeServiceCall(
-																				GetUserLogin.url
-																						+ "image",
-																				ServiceHandler.POST,
-																				data);
-																System.out
-																		.println("Result "
-																				+ result);
-															} catch (JSONException e) {
-																// TODO
-																// Auto-generated
-																// catch block
-																e.printStackTrace();
-															}
-															return null;
-														}
-
-													}.execute();
 
 												}
 
 												@Override
 												public void OnResult(
 														String result) {
-
+													Log.d("On Result", result);
 													SharedPreferences pref = context
 															.getSharedPreferences(
 																	"pref", 0);
 													SharedPreferences.Editor editor = pref
 															.edit();
 													if (User.tom != null) {
+														try {
+															JSONObject obj = new JSONObject(
+																	result);
+															JSONArray objArray = obj
+																	.getJSONArray("images");
+															if (objArray != null) {
+																ArrayList<String> imageList = new ArrayList<String>();
+																for (int i = 0; i < objArray
+																		.length(); i++) {
+																	imageList
+																			.add(objArray
+																					.getString(i));
+																}
+																User.tom.setImageList(imageList);
+																if (result
+																		.contains("passions")) {
+																	JSONArray passionArray = obj
+																			.getJSONArray("passions");
+																	JSONArray passionArray1 = passionArray
+																			.getJSONArray(0);
+																	ArrayList<String> temp = new ArrayList<String>();
+																	for (int i = 0; i < passionArray1
+																			.length(); i++) {
+
+																		temp.add(passionArray1
+																				.getString(i));
+																	}
+																	User.tom.setPassion(temp);
+																}
+																if (result
+																		.contains("orientaion")) {
+																	User.tom.setOrientation(obj
+																			.getString("orientation"));
+																}
+																if (result
+																		.contains("height")) {
+																	User.tom.setHeight(obj
+																			.getString("height"));
+																}
+																if (result
+																		.contains("profession")) {
+																	User.tom.setProfession(obj
+																			.getString("profession"));
+																}
+															}
+														} catch (JSONException e) {
+															// TODO
+															// Auto-generated
+															// catch block
+															e.printStackTrace();
+														}
+
 														editor.putString(
 																GetUserLogin.UserTom,
 																User.tom.toString());
@@ -494,7 +502,132 @@ public class MainFragement extends Fragment {
 														Log.d(TAG,
 																"User is null");
 													}
+													if (User.tom.getImageList() != null
+															&& User.tom
+																	.getImageList()
+																	.isEmpty()) {
+														new AsyncTask<Void, String, String>() {
 
+															@Override
+															protected void onPostExecute(
+																	String result) {
+																// TODO
+																// Auto-generated
+																// method stub
+																super.onPostExecute(result);
+																JSONArray obj;
+																try {
+																	obj = new JSONArray(
+																			result);
+																	JSONObject jsonObj = obj
+																			.getJSONObject(0);
+																	JSONArray objArray = jsonObj
+																			.getJSONArray("images");
+																	String imageName = objArray
+																			.getString(objArray
+																					.length() - 1);
+																	System.out
+																			.println("ImageName "
+																					+ imageName);
+																	User.tom.getImageList()
+																			.add(baseImageUrl
+																					+ imageName);
+
+																	SharedPreferences pref = context
+																			.getSharedPreferences(
+																					"pref",
+																					0);
+																	SharedPreferences.Editor editor = pref
+																			.edit();
+																	editor.putString(
+																			GetUserLogin.UserTom,
+																			User.tom.toString());
+																	editor.commit();
+																	SharedPreferences profpref = context
+																			.getSharedPreferences(
+																					"profilePref",
+																					0);
+
+																	SharedPreferences.Editor editorProf = profpref
+																			.edit();
+																	editorProf
+																			.putString(
+																					"profilePic",
+																					User.tom.getImageList()
+																							.get(0));
+																	editorProf
+																			.commit();
+																} catch (JSONException e) {
+																	// TODO
+																	// Auto-generated
+																	// catch
+																	// block
+																	e.printStackTrace();
+																}
+
+															}
+
+															@Override
+															protected String doInBackground(
+																	Void... params) {
+																// TODO
+																// Auto-generated
+																// method stub
+																Bitmap userIcon = getFacebookProfilePicture(userID);
+																ByteArrayOutputStream baos = new ByteArrayOutputStream();
+																userIcon.compress(
+																		Bitmap.CompressFormat.JPEG,
+																		100,
+																		baos);
+																byte[] b = baos
+																		.toByteArray();
+																String imageEncoded = Base64
+																		.encodeToString(
+																				b,
+																				Base64.DEFAULT);
+																String result = null;
+																JSONStringer data = null;
+																try {
+																	data = new JSONStringer()
+																			.object()
+																			.key("data")
+																			.value(imageEncoded)
+																			.endObject();
+																	ServiceHandler sh = new ServiceHandler();
+																	result = sh
+																			.makeServiceCall(
+																					GetUserLogin.url
+																							+ "image",
+																					ServiceHandler.POST,
+																					data);
+																	System.out
+																			.println("Result "
+																					+ result);
+																} catch (JSONException e) {
+																	// TODO
+																	// Auto-generated
+																	// catch
+																	// block
+																	e.printStackTrace();
+																}
+																return result;
+															}
+
+														}.execute();
+													} else {
+														SharedPreferences profpref = context
+																.getSharedPreferences(
+																		"profilePref",
+																		0);
+														SharedPreferences.Editor editorProf = profpref
+																.edit();
+														editorProf
+																.putString(
+																		"profilePic",
+																		User.tom.getImageList()
+																				.get(0));
+														editorProf.commit();
+													}
 													Intent intent = new Intent(
 															getActivity(),
 															ProfileUpdateActivity.class);

@@ -5,121 +5,9 @@
     android:background="@android:color/white" >
 
     <RelativeLayout
-        android:id="@+id/topRelativeLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="120dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginBottom="10dp" >
-
-        <RelativeLayout
-            android:id="@+id/profileImageRelativeLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="10dp" >
-
-            <ImageView
-                android:id="@+id/profilePicImageView"
-                android:layout_width="100dp"
-                android:layout_height="120dp"
-                android:contentDescription="@string/user_profile_pic"
-                android:src="@drawable/com_facebook_profile_picture_blank_square" />
-
-            <ImageView
-                android:id="@+id/editImageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_alignRight="@+id/profilePicImageView"
-                android:src="@android:drawable/ic_menu_edit" />
-        </RelativeLayout>
-
-        <ImageView
-            android:id="@+id/calendarImageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/userName"
-            android:layout_below="@+id/userName"
-            android:contentDescription="@string/user_gender_image"
-            android:src="@android:drawable/ic_input_add" />
-
-        <View
-            android:id="@+id/view1"
-            android:layout_width="200dp"
-            android:layout_height="1dp"
-            android:layout_alignBottom="@+id/userName"
-            android:layout_alignParentRight="true"
-            android:layout_centerHorizontal="true"
-            android:background="@android:color/darker_gray" />
-
-        <TextView
-            android:id="@+id/userName"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_alignLeft="@+id/view1"
-            android:layout_alignTop="@+id/profileImageRelativeLayout"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
-            android:text="" />
-
-        <TextView
-            android:id="@+id/userAge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/calendarImageView"
-            android:layout_marginBottom="6dp"
-            android:layout_toEndOf="@+id/calendarImageView"
-            android:layout_toRightOf="@+id/calendarImageView"
-            android:gravity="center"
-            android:text="@string/age" />
-
-        <TextView
-            android:id="@+id/userLoc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/calendarImageView"
-            android:layout_marginBottom="6dp"
-            android:layout_marginLeft="31dp"
-            android:layout_toRightOf="@+id/view3"
-            android:text="@string/user_location" />
-
-        <TextView
-            android:id="@+id/userDesignation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/view1"
-            android:layout_below="@+id/view3"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="5dp"
-            android:text="@string/usesr_designation" />
-
-        <View
-            android:id="@+id/view2"
-            android:layout_width="200dp"
-            android:layout_height="1dp"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/calendarImageView"
-            android:layout_marginTop="10dp"
-            android:background="@android:color/darker_gray" />
-
-        <View
-            android:id="@+id/view3"
-            android:layout_width="1dp"
-            android:layout_height="50dp"
-            android:layout_alignBottom="@id/view2"
-            android:layout_alignTop="@+id/view1"
-            android:layout_marginLeft="15dp"
-            android:layout_toRightOf="@+id/userAge"
-            android:background="@android:color/darker_gray"
-            android:paddingLeft="10dp" />
-    </RelativeLayout>
-
-    <RelativeLayout
         android:id="@+id/listLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/topRelativeLayout"
         android:animateLayoutChanges="true"
         android:background="@drawable/bng"
         android:paddingTop="10dp" >
@@ -148,18 +36,6 @@
                 android:divider="#fb4e6a"
                 android:groupIndicator="@null"
                 android:smoothScrollbar="true" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/pullLayout"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/triangle"
-            android:gravity="center"
-            android:rotation="180"
-            android:visibility="gone" >
         </RelativeLayout>
 
         <TextView

@@ -18,7 +18,7 @@ public class PagesFragment extends Fragment implements OnClickListener {
 	public PagesFragment() {
 	}
 
-	Button editButtton, shareButton, logOutButton;
+	Button editButtton, shareButton, logOutButton, userInfoButton;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -28,6 +28,7 @@ public class PagesFragment extends Fragment implements OnClickListener {
 		editButtton.setOnClickListener(this);
 		shareButton.setOnClickListener(this);
 		logOutButton.setOnClickListener(this);
+		userInfoButton.setOnClickListener(this);
 		return rootView;
 	}
 
@@ -35,6 +36,7 @@ public class PagesFragment extends Fragment implements OnClickListener {
 		editButtton = (Button) view.findViewById(R.id.editButton);
 		shareButton = (Button) view.findViewById(R.id.shareButton);
 		logOutButton = (Button) view.findViewById(R.id.logOutButton);
+		userInfoButton = (Button) view.findViewById(R.id.infoEditButton);
 	}
 
 	@Override
@@ -57,10 +59,19 @@ public class PagesFragment extends Fragment implements OnClickListener {
 		case R.id.logOutButton:
 			userLogOutAction();
 			break;
+		case R.id.infoEditButton:
+			userInfo();
+			break;
 
 		default:
 			break;
 		}
+	}
+
+	private void userInfo() {
+		// TODO Auto-generated method stub
+		Intent intent = new Intent(getActivity(), UserInfoActivity.class);
+		startActivity(intent);
 	}
 
 	private void userLogOutAction() {
@@ -70,7 +81,8 @@ public class PagesFragment extends Fragment implements OnClickListener {
 		SharedPreferences pref = getActivity().getSharedPreferences("pref", 0);
 		SharedPreferences.Editor editor = pref.edit();
 		editor.putString(GetUserLogin.UserTom, null);
-		Toast.makeText(getActivity(), "you are logged ouy", Toast.LENGTH_SHORT).show();
+		Toast.makeText(getActivity(), "you are logged out", Toast.LENGTH_SHORT)
+				.show();
 		editor.commit();
 		Intent intent = new Intent(getActivity(), MainActivity.class);
 		startActivity(intent);

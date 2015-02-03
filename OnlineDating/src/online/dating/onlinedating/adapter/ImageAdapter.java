@@ -52,10 +52,10 @@ public class ImageAdapter extends PagerAdapter {
 		profileImage = (ImageView) itemView
 				.findViewById(R.id.profileMatchImageView);
 		// Capture position and set to the ImageView
-//		ImageLoader imageLoader = new ImageLoader(context);
-//		imageLoader.DisplayImage(imageUrl.get(position),
-//				R.drawable.com_facebook_profile_default_icon, profileImage);
-		profileImage.setImageResource(R.drawable.user_profile);
+		ImageLoader imageLoader = new ImageLoader(context);
+		imageLoader.DisplayImage(imageUrl.get(position),
+				R.drawable.com_facebook_profile_default_icon, profileImage);
+		// profileImage.setImageResource(R.drawable.user_profile);
 		// Add viewpager_item.xml to ViewPager
 		((ViewPager) container).addView(itemView);
 

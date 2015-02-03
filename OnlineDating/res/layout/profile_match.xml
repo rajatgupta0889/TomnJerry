@@ -44,8 +44,8 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="5dp"
                 android:layout_weight="1"
-                android:paddingBottom="5dp"
                 android:gravity="center"
+                android:paddingBottom="5dp"
                 android:text="Marrianne, 29"
                 android:textColor="@android:color/white" />
 

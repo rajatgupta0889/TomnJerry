@@ -82,7 +82,7 @@ public class CoffeeMeetUpActivity extends Activity implements OnClickListener {
 		userIconIV = (ImageView) findViewById(R.id.profilePicImageView);
 		askButton = (Button) findViewById(R.id.acceptButton);
 		setDateLayout = (LinearLayout) findViewById(R.id.setDateLayout);
-		setLocationLayout = (LinearLayout) findViewById(R.id.setLocationLayout);
+		setLocationLayout = (LinearLayout) findViewById(R.id.profLayout);
 	}
 
 	@Override
@@ -144,7 +144,7 @@ public class CoffeeMeetUpActivity extends Activity implements OnClickListener {
 		case R.id.setDateLayout:
 			setDateTime();
 			break;
-		case R.id.setLocationLayout:
+		case R.id.profLayout:
 			setLocation();
 			break;
 

@@ -137,14 +137,18 @@
             android:name=".ProfileUpdateActivity"
             android:label="Update"
             android:parentActivityName=".LoginActivity"
-            android:screenOrientation="portrait"
-             >
-            
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".CoffeeMeetUpRequestActivity"
             android:label="Meet UP"
             android:launchMode="singleTop"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".UserInfoActivity"
+            android:launchMode="singleTop"
+            android:parentActivityName=".LoginActivity"
             android:screenOrientation="portrait" >
         </activity>
     </application>

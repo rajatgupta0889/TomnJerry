@@ -13,28 +13,16 @@
         android:orientation="vertical" >
     </LinearLayout>
 
-    <com.viewpagerindicator.CirclePageIndicator
-        android:id="@+id/imageIndicator"
+    <ImageView
+        android:id="@+id/userImageView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottomLayout"
         android:layout_alignParentTop="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
-        app:radius="5dp" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/imageIndicator"
-        android:gravity="top"
-        android:orientation="vertical" >
-
-        <android.support.v4.view.ViewPager
-            android:id="@+id/imagePager"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_gravity="top"
-            android:layout_weight="1" />
-    </LinearLayout>
+        android:src="@drawable/user_profile" />
     <!--  -->
 
     <LinearLayout
@@ -51,11 +39,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="10dp"
-            android:layout_weight="1"
             android:src="@drawable/ic_profession" />
 
         <TextView
-            android:id="@+id/matchProfessionTextView"
+            android:id="@+id/userProfessionTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -79,14 +66,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_weight="1"
             android:src="@drawable/ic_passion" />
 
         <TextView
-            android:id="@+id/passionTextView"
+            android:id="@+id/userPassionTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_gravity="left|center"
             android:layout_marginLeft="15dp"
             android:layout_weight="2"
             android:text="Music, Partying, Football, Hyking"
@@ -94,46 +80,35 @@
             android:textSize="16sp" />
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/setDateLayout"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_above="@+id/profLayout"
         android:background="#ef5c78" >
 
-        <ImageView
-            android:id="@+id/userLikeImageView"
+        <TextView
+            android:id="@+id/userAgeTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="10dp"
-            android:layout_weight="0.5"
-            android:src="@drawable/ic_user_like" />
-
-        <ImageView
-            android:id="@+id/userDisLikeImageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_weight="0.5"
-            android:src="@drawable/ic_dislike" />
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="25dp"
+            android:text="28"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
             android:gravity="center"
             android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/matchNameTextView"
+                android:id="@+id/userNameTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -143,7 +118,7 @@
                 android:textSize="22sp" />
 
             <TextView
-                android:id="@+id/matchLocationTextView"
+                android:id="@+id/userLocationTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -151,31 +126,6 @@
                 android:textColor="@android:color/white"
                 android:textSize="22sp" />
         </LinearLayout>
-
-        <ImageView
-            android:id="@+id/matchGenderImageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="10dp"
-            android:layout_weight="0.5"
-            android:src="@drawable/ic_female" />
-
-        <TextView
-            android:id="@+id/matchAgeTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
-            android:text="28"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@android:color/white"
-            android:textSize="18sp" />
-    </LinearLayout>
+    </RelativeLayout>
 
 </RelativeLayout>

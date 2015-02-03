@@ -22,6 +22,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.facebook.Session;
+import com.facebook.internal.Utility;
 
 public class SplashScreen extends Activity implements OnTaskCompleted {
 	// Splash screen timer
@@ -31,6 +32,7 @@ public class SplashScreen extends Activity implements OnTaskCompleted {
 	ProgressBar progBar;
 	private int mProgressStatus = 0;
 	private Handler mHandler = new Handler();
+	String applicationId;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,15 +42,16 @@ public class SplashScreen extends Activity implements OnTaskCompleted {
 				"pref", 0);
 		context = this;
 		progBar = (ProgressBar) findViewById(R.id.splashProgress);
-		
+		progBar.setVisibility(View.GONE);
 		// pref.edit().putString(GetUserLogin.UserTom, null);
 		// pref.edit().commit();
 		// System.out.println(pref.getString(GetUserLogin.UserTom, null));
 		new Thread(new Runnable() {
 			public void run() {
 				while (mProgressStatus < 100) {
-					mProgressStatus = doWork();
 
+					progBar.incrementProgressBy(1);
+					
 					// Update the progress bar
 					mHandler.post(new Runnable() {
 						public void run() {
@@ -58,16 +61,17 @@ public class SplashScreen extends Activity implements OnTaskCompleted {
 				}
 			}
 
-			private int doWork() {
-				// TODO Auto-generated method stub
-				return mProgressStatus++;
-			}
 		}).start();
-		if (pref.getString(GetUserLogin.UserTom, null) != null
-				&& Session.getActiveSession() != null) {
+		if (pref.getString(GetUserLogin.UserTom, null) != null) {
 			try {
+				if (Session.getActiveSession() == null) {
+					applicationId = Utility.getMetadataApplicationId(context);
+					Session session = new Session.Builder(context)
+							.setApplicationId(applicationId).build();
+					Session.setActiveSession(session);
+				}
 				String user = pref.getString(GetUserLogin.UserTom, null);
-
+				progBar.setVisibility(View.VISIBLE);
 				Log.d("User in Splash", user);
 				if (user != null) {
 					String[] token = user.split(";");
@@ -154,9 +158,31 @@ public class SplashScreen extends Activity implements OnTaskCompleted {
 						System.out.println("Login Result" + res);
 						JSONArray imageArray = res.getJSONArray("images");
 						for (int i = 0; i < imageArray.length(); i++) {
-							temp.add(imageArray.getString(0));
+							temp.add(imageArray.getString(i));
 						}
 						User.tom.setImageList(temp);
+						if (result.contains("passions")) {
+							temp = new ArrayList<String>();
+							JSONArray passionArray = res
+									.getJSONArray("passions");
+							JSONArray passionArray1 = passionArray
+									.getJSONArray(0);
+							for (int i = 0; i < passionArray1.length(); i++) {
+								temp.add(passionArray1.getString(i));
+							}
+							User.tom.setPassion(temp);
+						}
+						if (result.contains("orientaion")) {
+							User.tom.setOrientation(res
+									.getString("orientation"));
+						}
+						if (result.contains("height")) {
+							User.tom.setHeight(res.getString("height"));
+						}
+						if (result.contains("profession")) {
+							User.tom.setProfession(res.getString("profession"));
+						}
+
 						User.tom.setUserToken(res.getString("id"));
 
 						SharedPreferences.Editor editor = userPref.edit();

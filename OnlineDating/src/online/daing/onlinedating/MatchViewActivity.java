@@ -2,17 +2,14 @@ package online.daing.onlinedating;
 
 import java.util.ArrayList;
 
+import online.dating.onlinedating.adapter.ImageAdapter;
+import online.dating.onlinedating.model.ServiceHandler;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONStringer;
 
-import com.google.android.gms.internal.mz;
-import com.viewpagerindicator.CirclePageIndicator;
-
-import online.dating.onlinedating.adapter.ImageAdapter;
-import online.dating.onlinedating.adapter.ViewPagerAdapter;
-import online.dating.onlinedating.model.ServiceHandler;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,14 +17,15 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.viewpagerindicator.CirclePageIndicator;
 
 public class MatchViewActivity extends Activity implements OnClickListener {
 	ImageView likeImageView;
@@ -37,6 +35,7 @@ public class MatchViewActivity extends Activity implements OnClickListener {
 	TextView profileLocationTextView;
 	ImageView profileGenderImageView;
 	TextView profileAgeTextView;
+	TextView passionTextView, profTextView;
 	String matchName, matchAge, matchLocation;
 	String match;
 	String fbUserId;
@@ -45,6 +44,8 @@ public class MatchViewActivity extends Activity implements OnClickListener {
 	ImageAdapter adapter;
 	CirclePageIndicator mIndicator;
 	ArrayList<String> imageUrl;
+	LinearLayout profLayout, passionLayout;
+	String passionString, professionString;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +80,32 @@ public class MatchViewActivity extends Activity implements OnClickListener {
 
 				vm = new JSONStringer();
 				vm.object().key("fbUserId").value(fbUserId).endObject();
+				JSONArray temp = matchObj.getJSONArray("passions");
+				if (!temp.isNull(0)) {
+					for (int i = 0; i < temp.length(); i++) {
+						if (passionString == null || passionString.isEmpty()) {
+							passionString = temp.getString(i);
+						} else {
+							passionString = passionString + ","
+									+ temp.getString(i);
+						}
+					}
+				}
+				if (passionString != null && !passionString.isEmpty())
+					passionTextView.setText(passionString);
+				else {
+					passionTextView.setText("Tap here to ask " + matchName
+							+ " passion");
+					passionLayout.setOnClickListener(this);
+				}
+				professionString = matchObj.getString("profession");
+				if (professionString != null && !professionString.isEmpty())
+					profTextView.setText(professionString);
+				else {
+					profTextView.setText("Tap here to ask " + matchName
+							+ " profession");
+					profLayout.setOnClickListener(this);
+				}
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -105,13 +132,16 @@ public class MatchViewActivity extends Activity implements OnClickListener {
 		profileGenderImageView = (ImageView) findViewById(R.id.matchGenderImageView);
 		profileNameTextView = (TextView) findViewById(R.id.matchNameTextView);
 		profileLocationTextView = (TextView) findViewById(R.id.matchLocationTextView);
-		profileGenderImageView = (ImageView) findViewById(R.id.matchGenderImageView);
 		profileAgeTextView = (TextView) findViewById(R.id.matchAgeTextView);
 		viewPager = (ViewPager) findViewById(R.id.imagePager);
 		// Pass results to ViewPagerAdapter Class
 		imageUrl = new ArrayList<String>();
 		// ViewPager Indicator
 		mIndicator = (CirclePageIndicator) findViewById(R.id.imageIndicator);
+		profTextView = (TextView) findViewById(R.id.matchProfessionTextView);
+		passionTextView = (TextView) findViewById(R.id.passionTextView);
+		passionLayout = (LinearLayout) findViewById(R.id.matchPassionLayout);
+		profLayout = (LinearLayout) findViewById(R.id.profLayout);
 
 	}
 
@@ -149,6 +179,7 @@ public class MatchViewActivity extends Activity implements OnClickListener {
 		case R.id.userLikeImageView:
 			likeAction();
 			break;
+
 		default:
 			break;
 		}
