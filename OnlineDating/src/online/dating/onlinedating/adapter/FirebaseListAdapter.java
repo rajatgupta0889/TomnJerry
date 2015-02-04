@@ -195,17 +195,15 @@ public abstract class FirebaseListAdapter<T> extends BaseAdapter {
 
 	@Override
 	public View getView(int i, View view, ViewGroup viewGroup) {
-		if (view == null) {
-			UserMessageItem model = (UserMessageItem) mModels.get(i);
+		T model = mModels.get(i);
 
-			if (model.getAuthor().equalsIgnoreCase(User.tom.getName()))
-				view = mInflater.inflate(mLayout, viewGroup, false);
-			else {
-				view = mInflater.inflate(nLayout, viewGroup, false);
-			}
+		if (((UserMessageItem) model).getAuthor().equalsIgnoreCase(
+				User.tom.getName()))
+			view = mInflater.inflate(mLayout, viewGroup, false);
+		else {
+			view = mInflater.inflate(nLayout, viewGroup, false);
 		}
 
-		T model = mModels.get(i);
 		// Call out to subclass to marshall this model into the provided view
 		populateView(view, model);
 		return view;

@@ -75,12 +75,11 @@ public class UserInfoActivity extends Activity implements OnClickListener {
 			}
 			SharedPreferences profilePref = getSharedPreferences("profilePref",
 					0);
-			System.out.println(profilePref.getString("profilePic", ""));
+			System.out.println(profilePref.getString("profilePic", "").trim());
 			ImageLoader imageLoader = new ImageLoader(this);
-			imageLoader
-					.DisplayImage(profilePref.getString("profilePic", ""),
-							R.drawable.com_facebook_profile_default_icon,
-							userImageView);
+			imageLoader.DisplayImage(profilePref.getString("profilePic", "")
+					.trim(), R.drawable.com_facebook_profile_default_icon,
+					userImageView);
 
 			userImageView.setOnClickListener(this);
 			ArrayList<String> temp = User.tom.getPassion();

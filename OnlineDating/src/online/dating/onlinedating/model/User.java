@@ -214,9 +214,10 @@ public class User {
 				}
 
 			} else {
-				if (array[10].isEmpty())
+				if (array[10].contains("[]"))
 					userObj.setImageList(new ArrayList<String>());
 				else {
+
 					ArrayList<String> temp = new ArrayList<String>();
 					temp.add(array[10].substring(
 							array[10].lastIndexOf("[") + 1,

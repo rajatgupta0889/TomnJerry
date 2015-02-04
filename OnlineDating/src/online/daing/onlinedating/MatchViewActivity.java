@@ -91,30 +91,10 @@ public class MatchViewActivity extends Activity implements OnClickListener {
 					JSONArray temp = temp1.getJSONArray(0);
 					for (int i = 0; i < temp.length(); i++) {
 						if (passionString == null || passionString.isEmpty()) {
-							if (temp.getString(i).contains("[")
-									&& temp.getString(i).contains("]")) {
-								passionString = temp.getString(i).substring(
-										temp.getString(i).lastIndexOf("[") + 1,
-										temp.getString(i).indexOf("]"));
-							} else {
-								if (temp.getString(i).contains("[")) {
-									passionString = temp
-											.getString(i)
-											.substring(
-													temp.getString(i)
-															.lastIndexOf("[") + 1);
-								}
-							}
+							passionString = temp.getString(i);
 						} else {
-							if (temp.getString(i).contains("]")) {
-								passionString = passionString
-										+ ", "
-										+ temp.getString(i).substring(
-												temp.getString(i).indexOf("]"));
-							} else {
-								passionString = passionString + ", "
-										+ temp.getString(i);
-							}
+							passionString = passionString + ", "
+									+ temp.getString(i);
 						}
 					}
 				}

@@ -1,7 +1,6 @@
 package online.daing.onlinedating;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 import online.dating.onlinedating.model.ServiceHandler;
 
@@ -62,8 +61,8 @@ public class UserDislikeActivity extends Activity implements
 					dislIkeData = new JSONStringer();
 
 					dislIkeData.object().key("reasonForPass").array()
-							.value(reasonForPass).endArray().key("fbUserId")
-							.value(fbUserId).endObject();
+							.value(reasonForPass.get(0)).endArray()
+							.key("fbUserId").value(fbUserId).endObject();
 					System.out.println(dislIkeData);
 					SharedPreferences matchPref = getSharedPreferences(
 							"matchPref", 0);
@@ -120,7 +119,7 @@ public class UserDislikeActivity extends Activity implements
 		String reason = ((CheckBox) buttonView).getText().toString();
 		String[] array = reason.split(" ");
 		if (array.length > 2)
-			reason = array[0] + "_" + array[1] + "_" + array[3];
+			reason = array[0] + "_" + array[1] + "_" + array[2];
 
 		if (isChecked) {
 			reasonForPass.add(reason.toLowerCase());

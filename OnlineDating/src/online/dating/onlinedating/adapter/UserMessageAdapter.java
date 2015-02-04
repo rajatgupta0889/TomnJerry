@@ -52,6 +52,7 @@ public class UserMessageAdapter extends FirebaseListAdapter<UserMessageItem> {
 		} else {
 			imageLoader.DisplayImage(model.getImageIcon(),
 					R.drawable.com_facebook_profile_default_icon, imgIcon);
+			
 
 		}
 

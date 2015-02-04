@@ -379,7 +379,7 @@ public class MainFragement extends Fragment {
 													.getString("email"), user
 													.getString("id"), user
 													.getString("gender"),
-													latitude, longitude, "",
+													longitude, latitude, "",
 													getRegistrationId(context),
 													"android", age,
 													new ArrayList<String>());
@@ -516,55 +516,6 @@ public class MainFragement extends Fragment {
 																// Auto-generated
 																// method stub
 																super.onPostExecute(result);
-																JSONArray obj;
-																try {
-																	obj = new JSONArray(
-																			result);
-																	JSONObject jsonObj = obj
-																			.getJSONObject(0);
-																	JSONArray objArray = jsonObj
-																			.getJSONArray("images");
-																	String imageName = objArray
-																			.getString(objArray
-																					.length() - 1);
-																	System.out
-																			.println("ImageName "
-																					+ imageName);
-																	User.tom.getImageList()
-																			.add(baseImageUrl
-																					+ imageName);
-
-																	SharedPreferences pref = context
-																			.getSharedPreferences(
-																					"pref",
-																					0);
-																	SharedPreferences.Editor editor = pref
-																			.edit();
-																	editor.putString(
-																			GetUserLogin.UserTom,
-																			User.tom.toString());
-																	editor.commit();
-																	SharedPreferences profpref = context
-																			.getSharedPreferences(
-																					"profilePref",
-																					0);
-
-																	SharedPreferences.Editor editorProf = profpref
-																			.edit();
-																	editorProf
-																			.putString(
-																					"profilePic",
-																					User.tom.getImageList()
-																							.get(0));
-																	editorProf
-																			.commit();
-																} catch (JSONException e) {
-																	// TODO
-																	// Auto-generated
-																	// catch
-																	// block
-																	e.printStackTrace();
-																}
 
 															}
 

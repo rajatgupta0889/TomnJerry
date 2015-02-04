@@ -1,17 +1,12 @@
 package online.daing.onlinedating;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
 import online.dating.onlinedating.Service.ImageLoader;
 import online.dating.onlinedating.adapter.MyPagerAdapter;
-import online.dating.onlinedating.adapter.UserInfoExpandListAdapter;
-import online.dating.onlinedating.model.User;
-import online.dating.onlinedating.model.UserDetailItem;
-import online.dating.onlinedating.model.UserInfoItem;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,16 +23,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.Animation.AnimationListener;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.ExpandableListView;
-import android.widget.ExpandableListView.OnGroupExpandListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class HomeFragment extends Fragment implements OnClickListener {
@@ -51,7 +40,6 @@ public class HomeFragment extends Fragment implements OnClickListener {
 	public HomeFragment() {
 	}
 
-	private int lastExpandedPosition = -1;
 	// private int mProgressStatus = 0;
 	String UserId;
 
@@ -109,8 +97,8 @@ public class HomeFragment extends Fragment implements OnClickListener {
 							Locale.getDefault());
 					JSONObject loc = matchObj.getJSONObject("location");
 					List<Address> addresses = geoCoder.getFromLocation(
-							Double.parseDouble(loc.getString("x")),
-							Double.parseDouble(loc.getString("y")), 1);
+							Double.parseDouble(loc.getString("y")),
+							Double.parseDouble(loc.getString("x")), 1);
 
 					if (addresses.size() > 0) {
 						String Location = addresses.get(0).getLocality();
@@ -166,7 +154,8 @@ public class HomeFragment extends Fragment implements OnClickListener {
 
 		Calendar cal = Calendar.getInstance();
 		Long mil1 = cal.getTimeInMillis();
-		if (cal.get(Calendar.HOUR) > 10 || cal.get(Calendar.AM_PM) == Calendar.PM )
+		if (cal.get(Calendar.HOUR) > 10
+				|| cal.get(Calendar.AM_PM) == Calendar.PM)
 			cal.add(Calendar.DATE, 1);
 		cal.set(Calendar.HOUR_OF_DAY, 10);
 		cal.set(Calendar.MINUTE, 00);

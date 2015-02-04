@@ -91,11 +91,19 @@ public class ProfilePicActivity extends Activity implements OnClickListener {
 			SharedPreferences profilePref = getSharedPreferences("profilePref",
 					0);
 			String image_url = profilePref.getString("profilePic", "");
+			if (User.tom.getImageList().isEmpty()) {
+				System.out.println("Inside URLL " + image_url);
+				User.tom.getImageList().add(image_url);
+			}
+
+			System.out.println("Image URL " + image_url);
 			ImageLoader imageLoader = new ImageLoader(this);
 			imageLoader.DisplayImage(image_url,
 					R.drawable.com_facebook_profile_default_icon,
 					profilePicImageView);
 			if (User.tom.getImageList().size() > 0) {
+				System.out.println(" User First Image "
+						+ User.tom.getImageList().get(0));
 				imageLoader.DisplayImage(User.tom.getImageList().get(0),
 						R.drawable.com_facebook_profile_default_icon,
 						profilePicImageView1);
