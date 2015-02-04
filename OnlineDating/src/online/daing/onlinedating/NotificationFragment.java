@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class NotificationFragment extends Fragment {
 	private ArrayList<NotificationItem> notificationItems;
@@ -43,12 +44,20 @@ public class NotificationFragment extends Fragment {
 				} else if (extra.getString("resultType").equalsIgnoreCase(
 						"coffee")) {
 					String message = extra.getString("coffee");
-					
+
 					notificationItems.add(new NotificationItem(
 							R.drawable.com_facebook_logo, true, message));
 					/* Other intent handling */
 				}
 			}
+		}
+		TextView notifTextview = (TextView) rootView
+				.findViewById(R.id.notifTextView);
+		if (notificationItems.size() < 1) {
+
+			notifTextview.setVisibility(View.VISIBLE);
+		} else {
+			notifTextview.setVisibility(View.INVISIBLE);
 		}
 		adapter = new NotificationListAdapter(getActivity(), notificationItems);
 		mNotificationList.setAdapter(adapter);

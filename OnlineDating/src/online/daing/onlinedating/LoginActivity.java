@@ -217,7 +217,7 @@ public class LoginActivity extends ActionBarActivity implements
 
 		// update selected item and title, then close the drawer
 
-		setTitle("Notification");
+		// setTitle("Notification");
 
 	}
 
@@ -249,7 +249,7 @@ public class LoginActivity extends ActionBarActivity implements
 	@Override
 	public void setTitle(CharSequence title) {
 		mTitle = title;
-		getActionBar().setTitle(mTitle);
+		// getActionBar().setTitle(mTitle);
 	}
 
 	/**

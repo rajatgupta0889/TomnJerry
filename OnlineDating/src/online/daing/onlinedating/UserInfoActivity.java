@@ -56,8 +56,8 @@ public class UserInfoActivity extends Activity implements OnClickListener {
 				Double locy = User.tom.getLocationY();
 				Geocoder geoCoder = new Geocoder(this, Locale.getDefault());
 				try {
-					List<Address> addresses = geoCoder.getFromLocation(locx,
-							locy, 1);
+					List<Address> addresses = geoCoder.getFromLocation(locy,
+							locx, 1);
 
 					if (addresses.size() > 0) {
 						Location = addresses.get(0).getLocality();
@@ -75,6 +75,7 @@ public class UserInfoActivity extends Activity implements OnClickListener {
 			}
 			SharedPreferences profilePref = getSharedPreferences("profilePref",
 					0);
+			System.out.println(profilePref.getString("profilePic", ""));
 			ImageLoader imageLoader = new ImageLoader(this);
 			imageLoader
 					.DisplayImage(profilePref.getString("profilePic", ""),

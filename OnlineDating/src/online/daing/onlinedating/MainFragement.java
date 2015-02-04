@@ -307,6 +307,7 @@ public class MainFragement extends Fragment {
 		mIndicator = (CirclePageIndicator) view.findViewById(R.id.indicator);
 		mIndicator.setViewPager(viewPager);
 		((CirclePageIndicator) mIndicator).setSnap(true);
+
 		authButton.setFragment(this);
 		Log.i(TAG, authButton.getText().toString());
 		// if (Session.getActiveSession().getAccessToken() != null) {

@@ -26,7 +26,7 @@ import com.facebook.internal.Utility;
 
 public class SplashScreen extends Activity implements OnTaskCompleted {
 	// Splash screen timer
-	private static int SPLASH_TIME_OUT = 3000;
+	private static int SPLASH_TIME_OUT = 2000;
 	public JSONStringer vm;
 	public Context context;
 	ProgressBar progBar;

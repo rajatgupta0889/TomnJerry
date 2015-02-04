@@ -78,6 +78,7 @@ public class PagesFragment extends Fragment implements OnClickListener {
 		// TODO Auto-generated method stub
 		Session session = Session.getActiveSession();
 		session.closeAndClearTokenInformation();
+		Session.setActiveSession(null);
 		SharedPreferences pref = getActivity().getSharedPreferences("pref", 0);
 		SharedPreferences.Editor editor = pref.edit();
 		editor.putString(GetUserLogin.UserTom, null);

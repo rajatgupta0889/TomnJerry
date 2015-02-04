@@ -68,6 +68,10 @@ public class MatchViewActivity extends Activity implements OnClickListener {
 				fbUserId = matchObj.getString("fbUserId");
 				matchName = matchObj.getString("name");
 				// matchAge = matchObj.getString("age");
+				if (matchObj.getString("gender").equals("male")) {
+					profileGenderImageView
+							.setImageResource((R.drawable.ic_male));
+				}
 				JSONArray imagesArray = matchObj.getJSONArray("images");
 				for (int i = 0; i < imagesArray.length() && i < 5; i++) {
 					imageUrl.add(imagesArray.getString(i));
@@ -80,14 +84,37 @@ public class MatchViewActivity extends Activity implements OnClickListener {
 
 				vm = new JSONStringer();
 				vm.object().key("fbUserId").value(fbUserId).endObject();
-				JSONArray temp = matchObj.getJSONArray("passions");
-				if (!temp.isNull(0)) {
+
+				JSONArray temp1 = matchObj.getJSONArray("passions");
+
+				if (!temp1.isNull(0)) {
+					JSONArray temp = temp1.getJSONArray(0);
 					for (int i = 0; i < temp.length(); i++) {
 						if (passionString == null || passionString.isEmpty()) {
-							passionString = temp.getString(i);
+							if (temp.getString(i).contains("[")
+									&& temp.getString(i).contains("]")) {
+								passionString = temp.getString(i).substring(
+										temp.getString(i).lastIndexOf("[") + 1,
+										temp.getString(i).indexOf("]"));
+							} else {
+								if (temp.getString(i).contains("[")) {
+									passionString = temp
+											.getString(i)
+											.substring(
+													temp.getString(i)
+															.lastIndexOf("[") + 1);
+								}
+							}
 						} else {
-							passionString = passionString + ","
-									+ temp.getString(i);
+							if (temp.getString(i).contains("]")) {
+								passionString = passionString
+										+ ", "
+										+ temp.getString(i).substring(
+												temp.getString(i).indexOf("]"));
+							} else {
+								passionString = passionString + ", "
+										+ temp.getString(i);
+							}
 						}
 					}
 				}
