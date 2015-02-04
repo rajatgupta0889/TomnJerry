@@ -60,9 +60,6 @@ public class UserDislikeActivity extends Activity implements
 				try {
 					dislIkeData = new JSONStringer();
 
-					dislIkeData.object().key("reasonForPass").array()
-							.value(reasonForPass.get(0)).endArray()
-							.key("fbUserId").value(fbUserId).endObject();
 					System.out.println(dislIkeData);
 					SharedPreferences matchPref = getSharedPreferences(
 							"matchPref", 0);
@@ -70,6 +67,9 @@ public class UserDislikeActivity extends Activity implements
 					editor.putString("MatchInfo", null);
 					editor.commit();
 					if (!reasonForPass.isEmpty()) {
+						dislIkeData.object().key("reasonForPass").array()
+								.value(reasonForPass.get(0)).endArray()
+								.key("fbUserId").value(fbUserId).endObject();
 						new UserRejectMatch().execute(dislIkeData);
 						Toast.makeText(getApplicationContext(),
 								"Dislike The user", Toast.LENGTH_SHORT).show();
